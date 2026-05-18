@@ -1,49 +1,34 @@
 {
   "events": [
     {
-      "id": "learning-hub-s6",
-      "series": "Learning Hub",
-      "name": "Learning Hub — Session 6",
-      "date": "2025-05-17",
-      "date_display": "Saturday 17 May 2025",
-      "time": "6:00pm – 8:00pm",
-      "location": "Johnsonville Community Centre",
+      "topic_tbc": true,
       "city": "Wellington",
-      "description": "This week's session focuses on curriculum changes for parents and AI basics for youth.",
-      "note": "Food is served. Free entry.",
-      "cost": "Free",
-      "registration": true,
-      "topic_tbc": false
-    },
-    {
-      "id": "learning-hub-s7",
-      "series": "Learning Hub",
       "name": "Learning Hub — Session 7",
+      "time": "6:00pm – 8:00pm",
+      "cost": "Free",
       "date": "2025-05-31",
       "date_display": "Saturday 31 May 2025",
-      "time": "6:00pm – 8:00pm",
-      "location": "Johnsonville Community Centre",
-      "city": "Wellington",
-      "description": "Topic to be announced.",
       "note": "Food is served. Free entry.",
-      "cost": "Free",
+      "location": "Johnsonville Community Centre",
+      "series": "Learning Hub",
       "registration": true,
-      "topic_tbc": true
+      "id": "learning-hub-s7",
+      "description": "Topic to be announced."
     },
     {
-      "id": "learning-hub-s8",
-      "series": "Learning Hub",
+      "topic_tbc": true,
+      "city": "Wellington",
       "name": "Learning Hub — Session 8",
+      "time": "6:00pm – 8:00pm",
+      "cost": "Free",
       "date": "2025-06-14",
       "date_display": "Saturday 14 June 2025",
-      "time": "6:00pm – 8:00pm",
-      "location": "Johnsonville Community Centre",
-      "city": "Wellington",
-      "description": "Topic to be announced.",
       "note": "Food is served. Free entry.",
-      "cost": "Free",
+      "location": "Johnsonville Community Centre",
+      "series": "Learning Hub",
       "registration": true,
-      "topic_tbc": true
+      "id": "learning-hub-s8",
+      "description": "Topic to be announced."
     }
   ]
 }
