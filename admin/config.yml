@@ -1,0 +1,52 @@
+backend:
+  name: github
+  repo: manasdoon/dbctnz-website
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  # ── EVENTS ──
+  - name: "events"
+    label: "Events"
+    label_singular: "Event"
+    file: "events.json"
+    description: "Manage upcoming events. Past events are hidden automatically on the website."
+    fields:
+      - name: "events"
+        label: "Events List"
+        widget: "list"
+        fields:
+          - { name: "id",           label: "ID (no spaces, use hyphens)",  widget: "string" }
+          - { name: "series",       label: "Series (e.g. Learning Hub)",   widget: "string" }
+          - { name: "name",         label: "Event Name",                   widget: "string" }
+          - { name: "date",         label: "Date",                         widget: "datetime", format: "YYYY-MM-DD", date_format: "DD MMM YYYY", time_format: false }
+          - { name: "date_display", label: "Date Display (e.g. Saturday 17 May 2025)", widget: "string" }
+          - { name: "time",         label: "Time (e.g. 6:00pm – 8:00pm)", widget: "string" }
+          - { name: "location",     label: "Venue Name",                   widget: "string" }
+          - { name: "city",         label: "City",                         widget: "string" }
+          - { name: "description",  label: "Description",                  widget: "text" }
+          - { name: "note",         label: "Additional Note (e.g. Food is served)", widget: "string" }
+          - { name: "cost",         label: "Cost (e.g. Free or $15)",      widget: "string" }
+          - { name: "registration", label: "Registration Required?",       widget: "boolean", default: true }
+          - { name: "topic_tbc",    label: "Topic TBC?",                   widget: "boolean", default: false }
+
+  # ── PUBLICATIONS ──
+  - name: "publications"
+    label: "Publications"
+    label_singular: "Publication"
+    folder: "content/publications"
+    create: true
+    slug: "{{slug}}"
+    description: "Articles, press releases, journals and essays."
+    fields:
+      - { name: "title",    label: "Title",                              widget: "string" }
+      - { name: "category", label: "Category",                          widget: "select", options: ["article", "press", "journal", "essay"] }
+      - { name: "date",     label: "Date",                              widget: "datetime", format: "YYYY-MM-DD", date_format: "DD MMM YYYY", time_format: false }
+      - { name: "author",   label: "Author Name",                       widget: "string" }
+      - { name: "role",     label: "Author Role",                       widget: "string" }
+      - { name: "bio",      label: "Author Bio",                        widget: "text" }
+      - { name: "excerpt",  label: "Excerpt (2-3 sentences)",           widget: "text" }
+      - { name: "tags",     label: "Tags (comma separated)",            widget: "string" }
+      - { name: "body",     label: "Full Article Content",              widget: "markdown" }
