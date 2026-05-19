@@ -206,7 +206,7 @@ footer{background:#111c28;padding:48px 40px 24px;}
 <!-- ── RIBBON ── -->
 <div class="ribbon" id="ribbon">
   <i class="ti ti-speakerphone"></i>
-  <span>Learning Hub Session 2 — Saturday 30 May 2026 · Johnsonville Community Centre, Wellington · <a href="https://docs.google.com/forms/d/1xLTUR6PWN4yFUoPu4y5OUrdjY4Bqbr0aXZw1Fm9POkQ/viewform">Register Free →</a></span>
+  <span>Learning Hub Session 2 — Saturday 30 May 2026 · Johnsonville Community Centre, Wellington · <a href="https://forms.gle/JUenhWUEXi5PE8RT6">Register Free →</a></span>
   <button class="ribbon-close" onclick="document.getElementById('ribbon').style.display='none'" aria-label="Close">&times;</button>
 </div>
 
@@ -525,7 +525,7 @@ function renderEvents() {
     var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
     var tbc = ev.topic_tbc ? '<span class="badge badge-tbc">Topic TBC</span>' : '';
     var regBtn = ev.registration
-      ? '<a href="https://www.dbctnz.org.nz/register?event=' + ev.id + '" class="btn btn-ochre" style="font-size:12px;padding:8px 16px;width:100%;justify-content:center;"><i class="ti ti-calendar-check"></i> Register Free</a>'
+      ? '<a href="https://forms.gle/JUenhWUEXi5PE8RT6" target="_blank" class="btn btn-ochre" style="font-size:12px;padding:8px 16px;width:100%;justify-content:center;"><i class="ti ti-calendar-check"></i> Register Free</a>'
       : '<span class="btn btn-primary" style="font-size:12px;padding:8px 16px;width:100%;justify-content:center;">Free — No Registration</span>';
     grid.innerHTML += '<div class="event-card">' +
       '<div class="event-card-top">' +
