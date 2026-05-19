@@ -1,7 +1,7 @@
 {
   "events": [
     {
-      "topic_tbc": true,
+      "topic_tbc": false,
       "city": "Wellington",
       "name": "Learning Hub — Session 7",
       "time": "6:00pm – 8:00pm",
