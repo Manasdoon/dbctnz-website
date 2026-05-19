@@ -200,7 +200,6 @@ footer{background:#111c28;padding:48px 40px 24px;}
   .section{padding:52px 0;}
 }
 </style>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
@@ -517,9 +516,7 @@ hero.addEventListener('mouseenter', function(){ clearInterval(timer); });
 hero.addEventListener('mouseleave', resetTimer);
 resetTimer();
 
-// ── EVENTS FROM JSON ──
-var eventsData = {"events":[{"id":"learning-hub-s1","series":"Learning Hub","name":"Learning Hub — Session 1","date":"2026-05-16","date_display":"Saturday 16 May 2026","time":"6:00pm – 8:00pm","location":"Johnsonville Community Centre","city":"Wellington","description":"This week's session focuses on curriculum changes for parents and AI basics for youth.","note":"Food is served. Free entry.","cost":"Free","registration":true,"topic_tbc":false},{"id":"learning-hub-s2","series":"Learning Hub","name":"Learning Hub — Session 2","date":"2026-05-30","date_display":"Saturday 30 May 2026","time":"6:00pm – 8:00pm","location":"Johnsonville Community Centre","city":"Wellington","description":"Topic to be announced.","note":"Food is served. Free entry.","cost":"Free","registration":true,"topic_tbc":true},{"id":"learning-hub-s3","series":"Learning Hub","name":"Learning Hub — Session 3","date":"2026-06-13","date_display":"Saturday 13 June 2026","time":"6:00pm – 8:00pm","location":"Johnsonville Community Centre","city":"Wellington","description":"Topic to be announced.","note":"Food is served. Free entry.","cost":"Free","registration":true,"topic_tbc":true}]};
-
+// ── EVENTS FROM JSON — dynamic fetch ──
 function renderEvents() {
   var grid = document.getElementById('events-grid');
   eventsData.events.forEach(function(ev) {
@@ -547,7 +544,21 @@ function renderEvents() {
     '</div>';
   });
 }
-renderEvents();
+
+// Fetch events.json dynamically so Decap CMS updates reflect immediately
+fetch('/events.json')
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    eventsData = data;
+    renderEvents();
+  })
+  .catch(function() {
+    // Fallback — render empty state if fetch fails
+    renderEvents();
+  });
+
+var eventsData = {"events":[]};
+
 
 // ── SCROLL REVEAL ──
 (function() {
@@ -558,16 +569,5 @@ renderEvents();
 })();
 </script>
 
-<script>
-if (window.netlifyIdentity) {
-  window.netlifyIdentity.on("init", function(user) {
-    if (!user) {
-      window.netlifyIdentity.on("login", function() {
-        document.location.href = "/admin/";
-      });
-    }
-  });
-}
-</script>
 </body>
 </html>
