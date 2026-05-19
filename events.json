@@ -1,19 +1,19 @@
 {
   "events": [
     {
-      "topic_tbc": true,
+      "topic_tbc": false,
       "city": "Wellington",
       "name": "Learning Hub — Session 7",
       "time": "6:00pm – 8:00pm",
       "cost": "Free",
-      "date": "2025-05-31",
+      "date": "2025-05-30",
       "date_display": "Saturday 31 May 2025",
       "note": "Food is served. Free entry.",
       "location": "Johnsonville Community Centre",
       "series": "Learning Hub",
       "registration": true,
       "id": "learning-hub-s7",
-      "description": "Topic to be announced."
+      "description": "Topic for parents is: \nCulture & Identity in Supporting Belonging & Participation.\nImportance of first language in supporting good learning outcome and wellbeing.\nValuing Students’ Cultural Backgrounds.\nImportance of Home-School Connections.\n\nTopic for Youth/Kids is:\nBuilding confidence via sports.\nIntroduction to traditional games and guiding thought behind those. \nQualities enhanced via sports.\nPhysical education and its benefits in today's world. "
     },
     {
       "topic_tbc": true,
