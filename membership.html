@@ -40,7 +40,6 @@
     line-height: 1.6;
   }
 
-  /* ── PAGE LAYOUT ── */
   .page-wrap {
     display: grid;
     grid-template-columns: 380px 1fr;
@@ -116,10 +115,7 @@
     line-height: 1.2;
     margin-bottom: 16px;
   }
-  .panel-heading em {
-    color: var(--ochre-lt);
-    font-style: italic;
-  }
+  .panel-heading em { color: var(--ochre-lt); font-style: italic; }
   .panel-sub {
     font-size: 13px;
     color: rgba(255,255,255,0.55);
@@ -143,8 +139,7 @@
     line-height: 1.5;
   }
   .benefit-icon {
-    width: 28px;
-    height: 28px;
+    width: 28px; height: 28px;
     border-radius: 50%;
     background: rgba(137,164,199,0.15);
     border: 1px solid rgba(137,164,199,0.2);
@@ -154,10 +149,7 @@
     flex-shrink: 0;
     margin-top: 1px;
   }
-  .benefit-icon .ti {
-    font-size: 13px;
-    color: var(--glacial);
-  }
+  .benefit-icon .ti { font-size: 13px; color: var(--glacial); }
 
   .charity-strip {
     margin-top: 36px;
@@ -168,11 +160,7 @@
     gap: 8px;
   }
   .charity-strip .ti { color: var(--ochre-lt); font-size: 14px; }
-  .charity-strip a {
-    font-size: 11px;
-    color: var(--glacial);
-    text-decoration: none;
-  }
+  .charity-strip a { font-size: 11px; color: var(--glacial); text-decoration: none; }
   .charity-strip a:hover { color: #fff; text-decoration: underline; }
 
   /* ── RIGHT PANEL ── */
@@ -183,92 +171,39 @@
   }
 
   /* ── PROGRESS STEPS ── */
-  .steps {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    margin-bottom: 40px;
-  }
-  .step {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--muted);
-  }
+  .steps { display: flex; align-items: center; margin-bottom: 40px; }
+  .step { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
   .step.active { color: var(--navy); }
   .step.done { color: var(--forest); }
   .step-num {
-    width: 26px;
-    height: 26px;
+    width: 26px; height: 26px;
     border-radius: 50%;
     border: 1.5px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 500;
-    background: #fff;
-    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 500;
+    background: #fff; flex-shrink: 0;
     transition: all 0.3s;
   }
-  .step.active .step-num {
-    background: var(--navy);
-    border-color: var(--navy);
-    color: #fff;
-  }
-  .step.done .step-num {
-    background: var(--forest);
-    border-color: var(--forest);
-    color: #fff;
-  }
-  .step-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-    margin: 0 10px;
-  }
+  .step.active .step-num { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .step.done .step-num { background: var(--forest); border-color: var(--forest); color: #fff; }
+  .step-line { flex: 1; height: 1px; background: var(--border); margin: 0 10px; }
   .step-line.done { background: var(--forest); }
 
-  /* ── SECTION TITLES ── */
+  /* ── FORM ── */
   .form-section-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
-    color: var(--navy);
-    margin-bottom: 4px;
-    font-weight: 400;
+    font-size: 26px; color: var(--navy);
+    margin-bottom: 4px; font-weight: 400;
   }
-  .form-section-sub {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 28px;
-  }
+  .form-section-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
 
-  /* ── FORM FIELDS ── */
-  .field-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
   .field-row.single { grid-template-columns: 1fr; }
-  .field-row.thirds { grid-template-columns: 1fr 1fr 1fr; }
 
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  .field label {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--navy);
-    letter-spacing: 0.02em;
-  }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label { font-size: 12px; font-weight: 500; color: var(--navy); letter-spacing: 0.02em; }
   .field label .req { color: var(--ochre); margin-left: 2px; }
-  .field input,
-  .field select,
-  .field textarea {
+  .field input, .field select, .field textarea {
     border: 1.5px solid var(--border);
     border-radius: var(--radius);
     padding: 10px 14px;
@@ -277,274 +212,153 @@
     color: var(--text);
     background: #fff;
     transition: border-color 0.2s, box-shadow 0.2s;
-    outline: none;
-    width: 100%;
+    outline: none; width: 100%;
   }
-  .field input:focus,
-  .field select:focus,
-  .field textarea:focus {
+  .field input:focus, .field select:focus, .field textarea:focus {
     border-color: var(--navy-lt);
     box-shadow: 0 0 0 3px rgba(58,97,134,0.1);
   }
-  .field input.error,
-  .field select.error {
+  .field input.error, .field select.error {
     border-color: #c0392b;
     box-shadow: 0 0 0 3px rgba(192,57,43,0.1);
   }
-  .field .error-msg {
-    font-size: 11px;
-    color: #c0392b;
-    display: none;
-  }
-  .field input.error ~ .error-msg,
-  .field select.error ~ .error-msg {
-    display: block;
-  }
+  .field .error-msg { font-size: 11px; color: #c0392b; display: none; }
+  .field input.error ~ .error-msg, .field select.error ~ .error-msg { display: block; }
   .field textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
   .field select {
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    padding-right: 36px;
+    background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px;
   }
   .field-hint { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-  /* ── DIVIDER ── */
-  .form-divider {
-    height: 1px;
-    background: var(--border);
-    margin: 28px 0;
-  }
+  .form-divider { height: 1px; background: var(--border); margin: 28px 0; }
   .form-divider-label {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 11px; color: var(--muted);
+    letter-spacing: 0.08em; text-transform: uppercase;
     margin: 28px 0 20px;
   }
-  .form-divider-label::before,
-  .form-divider-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
+  .form-divider-label::before, .form-divider-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
   }
 
-  /* ── CHECKBOX ── */
   .checkbox-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 12px;
-    cursor: pointer;
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-bottom: 12px; cursor: pointer;
   }
   .checkbox-row input[type=checkbox] {
-    width: 16px;
-    height: 16px;
-    margin-top: 2px;
-    accent-color: var(--navy);
-    flex-shrink: 0;
-    cursor: pointer;
+    width: 16px; height: 16px; margin-top: 2px;
+    accent-color: var(--navy); flex-shrink: 0; cursor: pointer;
   }
-  .checkbox-row span {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
+  .checkbox-row span { font-size: 12px; color: var(--muted); line-height: 1.5; }
   .checkbox-row a { color: var(--navy-lt); }
 
-  /* ── SUBMIT BUTTON ── */
   .submit-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 28px;
-    gap: 16px;
+    display: flex; align-items: center;
+    justify-content: space-between; margin-top: 28px; gap: 16px;
   }
   .btn-submit {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--navy);
-    color: #fff;
-    border: none;
-    border-radius: 30px;
-    padding: 14px 32px;
-    font-size: 14px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-    cursor: pointer;
+    display: flex; align-items: center; gap: 10px;
+    background: var(--navy); color: #fff;
+    border: none; border-radius: 30px; padding: 14px 32px;
+    font-size: 14px; font-family: 'DM Sans', sans-serif;
+    font-weight: 500; cursor: pointer;
     transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
     letter-spacing: 0.02em;
   }
-  .btn-submit:hover {
-    background: var(--navy-mid);
-    box-shadow: 0 4px 16px rgba(26,35,50,0.2);
-    transform: translateY(-1px);
-  }
+  .btn-submit:hover { background: var(--navy-mid); box-shadow: 0 4px 16px rgba(26,35,50,0.2); transform: translateY(-1px); }
   .btn-submit:active { transform: translateY(0); }
-  .btn-submit.loading {
-    background: var(--navy-mid);
-    pointer-events: none;
-  }
+  .btn-submit.loading { background: var(--navy-mid); pointer-events: none; }
   .btn-submit .ti { font-size: 16px; }
   .btn-spinner {
     width: 16px; height: 16px;
     border: 2px solid rgba(255,255,255,0.3);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    display: none;
+    border-top-color: #fff; border-radius: 50%;
+    animation: spin 0.7s linear infinite; display: none;
   }
   .btn-submit.loading .btn-spinner { display: block; }
-  .btn-submit.loading .btn-text,
-  .btn-submit.loading .ti { display: none; }
+  .btn-submit.loading .btn-text, .btn-submit.loading .ti { display: none; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  .privacy-note {
-    font-size: 11px;
-    color: var(--muted);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
+  .privacy-note { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
   .privacy-note .ti { font-size: 13px; }
 
   /* ── SUCCESS STATE ── */
   .success-screen {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    min-height: 60vh;
-    padding: 40px 0;
+    display: none; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; min-height: 60vh; padding: 40px 0;
     animation: fadeUp 0.5s ease both;
   }
-  @keyframes fadeUp {
-    from { opacity:0; transform:translateY(20px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
   .success-icon {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: #eaf2e8;
-    border: 2px solid #b0cca8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 72px; height: 72px; border-radius: 50%;
+    background: #eaf2e8; border: 2px solid #b0cca8;
+    display: flex; align-items: center; justify-content: center;
     margin-bottom: 24px;
     animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
   }
-  @keyframes popIn {
-    from { transform: scale(0); opacity:0; }
-    to   { transform: scale(1); opacity:1; }
-  }
+  @keyframes popIn { from { transform: scale(0); opacity:0; } to { transform: scale(1); opacity:1; } }
   .success-icon .ti { font-size: 32px; color: var(--forest); }
-  .success-h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 32px;
-    color: var(--navy);
-    font-weight: 400;
-    margin-bottom: 8px;
-  }
-  .success-sub {
-    font-size: 14px;
-    color: var(--muted);
-    margin-bottom: 24px;
-    max-width: 440px;
-    line-height: 1.7;
-  }
+  .success-h2 { font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--navy); font-weight: 400; margin-bottom: 8px; }
+  .success-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; max-width: 440px; line-height: 1.7; }
+
   .membership-card {
-    background: var(--navy);
-    border-radius: var(--radius-lg);
-    padding: 28px 32px;
-    width: 100%;
-    max-width: 420px;
-    margin: 0 auto 28px;
-    position: relative;
-    overflow: hidden;
-    text-align: left;
+    background: var(--navy); border-radius: var(--radius-lg);
+    padding: 28px 32px; width: 100%; max-width: 420px;
+    margin: 0 auto 28px; position: relative; overflow: hidden; text-align: left;
   }
   .membership-card::before {
-    content: '';
-    position: absolute;
-    top: -40px; right: -40px;
-    width: 180px; height: 180px;
-    border-radius: 50%;
+    content: ''; position: absolute; top: -40px; right: -40px;
+    width: 180px; height: 180px; border-radius: 50%;
     background: rgba(137,164,199,0.08);
   }
   .membership-card::after {
-    content: '';
-    position: absolute;
-    bottom: -30px; left: 40px;
-    width: 140px; height: 140px;
-    border-radius: 50%;
+    content: ''; position: absolute; bottom: -30px; left: 40px;
+    width: 140px; height: 140px; border-radius: 50%;
     background: rgba(200,134,58,0.06);
   }
-  .mc-eyebrow {
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--glacial);
-    margin-bottom: 16px;
-  }
-  .mc-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
-    color: #fff;
-    font-weight: 300;
-    margin-bottom: 4px;
-  }
-  .mc-tier {
-    font-size: 12px;
-    color: var(--ochre-lt);
-    margin-bottom: 20px;
-  }
-  .mc-number-label {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 4px;
-  }
-  .mc-number {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    color: #fff;
-    letter-spacing: 0.06em;
-  }
+  .mc-eyebrow { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--glacial); margin-bottom: 16px; }
+  .mc-name { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #fff; font-weight: 300; margin-bottom: 4px; }
+  .mc-tier { font-size: 12px; color: var(--ochre-lt); margin-bottom: 20px; }
+  .mc-number-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+  .mc-number { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: #fff; letter-spacing: 0.06em; }
   .mc-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1);
   }
   .mc-footer-label { font-size: 10px; color: rgba(255,255,255,0.4); margin-bottom: 2px; }
   .mc-footer-val { font-size: 12px; color: rgba(255,255,255,0.7); }
   .mc-logo { font-family: 'Cormorant Garamond', serif; font-size: 13px; color: rgba(255,255,255,0.5); text-align: right; }
 
   .success-email-note {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #eaf2e8;
-    border: 1px solid #b0cca8;
-    border-radius: var(--radius);
-    padding: 12px 16px;
-    font-size: 12px;
-    color: var(--forest);
-    max-width: 420px;
-    margin: 0 auto;
+    display: flex; align-items: center; gap: 8px;
+    background: #eaf2e8; border: 1px solid #b0cca8;
+    border-radius: var(--radius); padding: 12px 16px;
+    font-size: 12px; color: var(--forest);
+    max-width: 420px; margin: 0 auto;
   }
   .success-email-note .ti { font-size: 16px; flex-shrink: 0; }
+
+  /* ── LOADING OVERLAY ── */
+  .loading-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(26,35,50,0.5);
+    z-index: 999;
+    align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;
+  }
+  .loading-overlay.active { display: flex; }
+  .loading-spinner {
+    width: 48px; height: 48px;
+    border: 4px solid rgba(255,255,255,0.2);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  .loading-overlay p { color: #fff; font-size: 14px; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
@@ -553,18 +367,23 @@
     .benefits-list { display: none; }
     .right-panel { padding: 32px 24px; }
     .field-row { grid-template-columns: 1fr; }
-    .field-row.thirds { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
 <body>
+
+<!-- ── LOADING OVERLAY ── -->
+<div class="loading-overlay" id="loading-overlay">
+  <div class="loading-spinner"></div>
+  <p>Submitting your application...</p>
+</div>
 
 <div class="page-wrap">
 
   <!-- ── LEFT PANEL ── -->
   <aside class="left-panel">
     <div class="logo-wrap">
-      <img src="images/uploads/main-logo.png" alt="Devbhoomi Charitable Trust NZ logo">
+      <img src="https://www.dbctnz.org.nz/images/uploads/logo1.png" alt="Devbhoomi Charitable Trust NZ logo">
       <div class="logo-text">
         Devbhoomi
         <small>Charitable Trust NZ</small>
@@ -576,37 +395,37 @@
 
     <ul class="benefits-list">
       <li>
-        <div class="benefit-icon"><i class="ti ti-calendar-event" aria-hidden="true"></i></div>
+        <div class="benefit-icon"><i class="ti ti-calendar-event"></i></div>
         <span>Priority invitations to cultural events, galas, and celebrations</span>
       </li>
       <li>
-        <div class="benefit-icon"><i class="ti ti-users" aria-hidden="true"></i></div>
+        <div class="benefit-icon"><i class="ti ti-users"></i></div>
         <span>Access to a warm, established diaspora community across Aotearoa</span>
       </li>
       <li>
-        <div class="benefit-icon"><i class="ti ti-heart-handshake" aria-hidden="true"></i></div>
+        <div class="benefit-icon"><i class="ti ti-heart-handshake"></i></div>
         <span>Support through welfare services, consulting, and community outreach</span>
       </li>
       <li>
-        <div class="benefit-icon"><i class="ti ti-mountain" aria-hidden="true"></i></div>
+        <div class="benefit-icon"><i class="ti ti-mountain"></i></div>
         <span>Stay connected to the culture, language, and stories of Uttarakhand</span>
       </li>
       <li>
-        <div class="benefit-icon"><i class="ti ti-certificate" aria-hidden="true"></i></div>
-        <span>Lifetime membership certificate and personalised membership number for NZ$50 — once only — (Currently not available)</span>
+        <div class="benefit-icon"><i class="ti ti-certificate"></i></div>
+        <span>Annual membership certificate and personalised membership number</span>
       </li>
       <li>
-        <div class="benefit-icon"><i class="ti ti-news" aria-hidden="true"></i></div>
+        <div class="benefit-icon"><i class="ti ti-news"></i></div>
         <span>Regular updates — newsletters, press releases, and community news</span>
       </li>
       <li>
-        <div class="benefit-icon"><i class="ti ti-tag" aria-hidden="true"></i></div>
+        <div class="benefit-icon"><i class="ti ti-tag"></i></div>
         <span>Exclusive discounts with registered partner businesses in the community</span>
       </li>
     </ul>
 
     <div class="charity-strip">
-      <i class="ti ti-certificate" aria-hidden="true"></i>
+      <i class="ti ti-certificate"></i>
       <a href="https://www.register.charities.govt.nz/Charity/CC61651" target="_blank">
         Registered Charity CC61651 — Charities Services NZ ↗
       </a>
@@ -616,7 +435,6 @@
   <!-- ── RIGHT PANEL ── -->
   <main class="right-panel">
 
-    <!-- Progress steps -->
     <div class="steps" id="steps-bar">
       <div class="step active" id="step-ind-1">
         <div class="step-num">1</div>
@@ -631,7 +449,6 @@
 
     <!-- ── FORM ── -->
     <form id="membership-form" novalidate>
-
       <div id="step-2">
         <h2 class="form-section-title">Your details</h2>
         <p class="form-section-sub">Please fill in your information below. Fields marked <span style="color:var(--ochre);">*</span> are required.</p>
@@ -664,11 +481,11 @@
             <input type="tel" id="phone" name="phone" placeholder="+64 21 000 0000" autocomplete="tel">
           </div>
           <div class="field" style="justify-content:flex-end;">
-            <label class="checkbox-row" style="margin-bottom:0; padding:10px 14px; border:1.5px solid var(--border); border-radius:var(--radius); background:#fff; cursor:pointer; transition:border-color 0.2s;" id="age-row">
+            <label class="checkbox-row" style="margin-bottom:0;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--radius);background:#fff;cursor:pointer;transition:border-color 0.2s;" id="age-row">
               <input type="checkbox" id="age_confirm" name="age_confirm">
               <span>I confirm that I am <strong style="color:var(--navy);">18 years of age or older</strong> <span style="color:var(--ochre);">*</span></span>
             </label>
-            <span class="error-msg" id="age-error" style="display:none; font-size:11px; color:#c0392b; margin-top:4px;">You must be 18 or older to apply</span>
+            <span class="error-msg" id="age-error" style="display:none;font-size:11px;color:#c0392b;margin-top:4px;">You must be 18 or older to apply</span>
           </div>
         </div>
 
@@ -738,7 +555,7 @@
 
         <div class="field-row single">
           <div class="field">
-            <label for="message">What brings you to Devbhoomi Trust? <span style="color:var(--muted); font-weight:400;">(optional)</span></label>
+            <label for="message">What brings you to Devbhoomi Trust? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
             <textarea id="message" name="message" placeholder="Share a little about yourself and your connection to the community..."></textarea>
           </div>
         </div>
@@ -771,55 +588,54 @@
 
         <div class="submit-row">
           <div></div>
-          <div style="display:flex; align-items:center; gap:16px;">
-            <span class="privacy-note"><i class="ti ti-lock" aria-hidden="true"></i> Your data is private and secure</span>
+          <div style="display:flex;align-items:center;gap:16px;">
+            <span class="privacy-note"><i class="ti ti-lock"></i> Your data is private and secure</span>
             <button type="submit" class="btn-submit" id="submit-btn">
               <span class="btn-text">Submit Application</span>
-              <i class="ti ti-send" aria-hidden="true"></i>
+              <i class="ti ti-send"></i>
               <div class="btn-spinner"></div>
             </button>
           </div>
         </div>
       </div>
-
     </form>
 
     <!-- ── SUCCESS SCREEN ── -->
     <div class="success-screen" id="success-screen">
-      <div class="success-icon"><i class="ti ti-check" aria-hidden="true"></i></div>
+      <div class="success-icon"><i class="ti ti-check"></i></div>
       <h2 class="success-h2">Welcome to the Trust!</h2>
-      <p class="success-sub" id="success-msg">Your membership application has been received. Here is your membership details.</p>
+      <p class="success-sub" id="success-msg">Your membership application has been received.</p>
 
       <div class="membership-card">
         <div class="mc-eyebrow">Devbhoomi Charitable Trust NZ · CC61651</div>
         <div class="mc-name" id="mc-name">— —</div>
-        <div class="mc-tier" id="mc-tier">General Member</div>
+        <div class="mc-tier" id="mc-tier">Annual Member</div>
         <div class="mc-number-label">Membership Number</div>
-        <div class="mc-number" id="mc-number">DBTNZ-0000-0000</div>
+        <div class="mc-number" id="mc-number">DBTNZ-0000</div>
         <div class="mc-footer">
           <div>
             <div class="mc-footer-label">Member since</div>
-            <div class="mc-footer-val" id="mc-since">— 2025</div>
+            <div class="mc-footer-val" id="mc-since">—</div>
           </div>
           <div>
             <div class="mc-footer-label">Valid until</div>
-            <div class="mc-footer-val" id="mc-valid">Lifetime</div>
+            <div class="mc-footer-val" id="mc-valid">—</div>
           </div>
           <div class="mc-logo">Devbhoomi<br>Charitable Trust NZ</div>
         </div>
       </div>
 
       <div class="success-email-note">
-        <i class="ti ti-mail-check" aria-hidden="true"></i>
+        <i class="ti ti-mail-check"></i>
         <span id="email-note">A confirmation email with your membership details has been sent to your email address.</span>
       </div>
 
-      <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
-        <a href="https://www.dbctnz.org.nz" style="display:inline-flex; align-items:center; gap:6px; background:var(--navy); color:#fff; border-radius:30px; padding:10px 22px; font-size:13px; text-decoration:none; font-weight:500;">
-          <i class="ti ti-home" aria-hidden="true"></i> Return to Website
+      <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+        <a href="https://www.dbctnz.org.nz" style="display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:#fff;border-radius:30px;padding:10px 22px;font-size:13px;text-decoration:none;font-weight:500;">
+          <i class="ti ti-home"></i> Return to Website
         </a>
-        <button onclick="window.print()" style="display:inline-flex; align-items:center; gap:6px; background:#fff; color:var(--navy); border:1.5px solid var(--border); border-radius:30px; padding:10px 22px; font-size:13px; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:500;">
-          <i class="ti ti-printer" aria-hidden="true"></i> Print / Save
+        <button onclick="window.print()" style="display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--navy);border:1.5px solid var(--border);border-radius:30px;padding:10px 22px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;">
+          <i class="ti ti-printer"></i> Print / Save
         </button>
       </div>
     </div>
@@ -864,10 +680,7 @@ function goToStep(n) {
     var ind = document.getElementById('step-ind-' + i);
     if (!ind) return;
     ind.classList.remove('active', 'done');
-    if (i < n) {
-      ind.classList.add('done');
-      ind.querySelector('.step-num').innerHTML = '<i class="ti ti-check" style="font-size:12px;"></i>';
-    }
+    if (i < n) { ind.classList.add('done'); ind.querySelector('.step-num').innerHTML = '<i class="ti ti-check" style="font-size:12px;"></i>'; }
     if (i === n) ind.classList.add('active');
   });
   var line1 = document.getElementById('line-1');
@@ -875,11 +688,35 @@ function goToStep(n) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ── GENERATE MEMBERSHIP NUMBER ──
-function generateMemberNumber() {
-  var year = new Date().getFullYear();
-  var rand = Math.floor(1000 + Math.random() * 9000);
-  return 'DBTNZ-' + year + '-' + rand;
+// ── CALCULATE VALIDITY DATE ──
+// Apr–Dec → 31 March NEXT year
+// Jan–Mar → 31 March SAME year
+function calculateValidity() {
+  var now   = new Date();
+  var month = now.getMonth(); // 0=Jan ... 11=Dec
+  var year  = now.getFullYear();
+  return month >= 3
+    ? "31 March " + (year + 1)
+    : "31 March " + year;
+}
+
+// ── SHOW SUCCESS SCREEN ──
+function showSuccess(firstName, lastName, memberNum, since, validUntil, email) {
+  document.getElementById('mc-name').textContent    = firstName + ' ' + lastName;
+  document.getElementById('mc-tier').textContent    = 'Annual Member';
+  document.getElementById('mc-number').textContent  = memberNum;
+  document.getElementById('mc-since').textContent   = since;
+  document.getElementById('mc-valid').textContent   = validUntil;
+  document.getElementById('success-msg').textContent =
+    'Welcome, ' + firstName + '! Your membership number is ' + memberNum + '.';
+  document.getElementById('email-note').textContent =
+    'A confirmation email with your membership number ' + memberNum + ' has been sent to ' + email + '.';
+  document.getElementById('membership-form').style.display = 'none';
+  document.getElementById('steps-bar').style.display       = 'none';
+  document.getElementById('success-screen').style.display  = 'flex';
+  document.getElementById('loading-overlay').classList.remove('active');
+  goToStep(2);
+  document.getElementById('steps-bar').style.display = 'flex';
 }
 
 // ── FORM SUBMISSION ──
@@ -888,7 +725,6 @@ document.getElementById('membership-form').addEventListener('submit', function(e
 
   // ── VALIDATION ──
   var valid = true;
-
   ['first_name', 'last_name', 'email', 'city'].forEach(function(id) {
     var el = document.getElementById(id);
     if (!el.value.trim()) { el.classList.add('error'); valid = false; }
@@ -933,103 +769,125 @@ document.getElementById('membership-form').addEventListener('submit', function(e
   var howHeard    = document.getElementById('how_heard').value;
   var message     = document.getElementById('message').value.trim();
   var newsletter  = document.getElementById('newsletter').checked ? 'Yes' : 'No';
-  var memberNum   = generateMemberNumber();
+  var validUntil  = calculateValidity();
   var now         = new Date();
   var months      = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var since       = months[now.getMonth()] + ' ' + now.getFullYear();
   var submittedAt = now.toLocaleString('en-NZ', { dateStyle: 'long', timeStyle: 'short' });
 
-  // ── EMAILJS PARAMS ──
-  var sharedParams = {
-    member_name:     firstName + ' ' + lastName,
-    first_name:      firstName,
-    last_name:       lastName,
-    email:           email,
-    phone:           phone || 'Not provided',
-    city:            city,
-    region:          region || 'Not specified',
-    district:        district || 'Not specified',
-    years_in_nz:     yearsInNZ || 'Not specified',
-    how_heard:       howHeard || 'Not specified',
-    message:         message || 'None',
-    newsletter:      newsletter,
-    membership_tier: 'Lifetime Member',
-    membership_fee:  'NZ$50 (one-time)',
-    member_number:   memberNum,
-    member_since:    since,
-    valid_until:     'Lifetime',
-    submitted_at:    submittedAt,
-    admin_email:     'info@dbctnz.org.nz',
-    reply_to:        email
-  };
+  // ── SHOW LOADING ──
+  document.getElementById('loading-overlay').classList.add('active');
+  document.getElementById('submit-btn').classList.add('loading');
 
-  // ── GOOGLE SHEETS PAYLOAD ──
-  var sheetsPayload = {
-    full_name   : firstName + ' ' + lastName,
-    email       : email,
-    phone       : phone || '',
-    city        : city,
-    region      : region || '',
-    district    : district || '',
-    years_in_nz : yearsInNZ || '',
-    how_heard   : howHeard || '',
-    newsletter  : newsletter,
-    message     : message || '',
-    member_num  : memberNum,
-    submitted_at: submittedAt
-  };
-
-  // ── LOADING STATE ──
-  var btn = document.getElementById('submit-btn');
-  btn.classList.add('loading');
-
-  // ── SHOW SUCCESS SCREEN ──
-  function showSuccess() {
-    btn.classList.remove('loading');
-    document.getElementById('mc-name').textContent   = firstName + ' ' + lastName;
-    document.getElementById('mc-tier').textContent   = 'Lifetime Member';
-    document.getElementById('mc-number').textContent = memberNum;
-    document.getElementById('mc-since').textContent  = since;
-    document.getElementById('mc-valid').textContent  = 'Lifetime';
-    document.getElementById('success-msg').textContent =
-      'Welcome, ' + firstName + '! Your membership is confirmed.';
-    document.getElementById('email-note').textContent =
-      'A confirmation email with your membership number ' + memberNum + ' has been sent to ' + email + '.';
-    document.getElementById('membership-form').style.display = 'none';
-    document.getElementById('steps-bar').style.display       = 'none';
-    document.getElementById('success-screen').style.display  = 'flex';
-    goToStep(2);
-    document.getElementById('steps-bar').style.display = 'flex';
-  }
-
-  // ── LOG TO GOOGLE SHEETS ──
-  function logToSheets() {
-    fetch(SHEETS_WEBAPP_URL, {
-      method : 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body   : JSON.stringify(sheetsPayload)
-    }).catch(function(err) {
-      console.warn('Sheet log failed (emails still sent):', err);
-    });
-  }
-
-  // ── SEND EMAILS → LOG TO SHEETS → SHOW SUCCESS ──
-  emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_APPLICANT, Object.assign({}, sharedParams, { to_email: email }))
-    .then(function() {
-      return emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_ADMIN, Object.assign({}, sharedParams, { to_email: 'info@dbctnz.org.nz' }));
+  // ── STEP 1: LOG TO GOOGLE SHEETS FIRST → GET SEQUENTIAL ID ──
+  fetch(SHEETS_WEBAPP_URL, {
+    method : 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body   : JSON.stringify({
+      full_name   : firstName + ' ' + lastName,
+      email       : email,
+      phone       : phone || '',
+      city        : city,
+      region      : region || '',
+      district    : district || '',
+      years_in_nz : yearsInNZ || '',
+      how_heard   : howHeard || '',
+      newsletter  : newsletter,
+      message     : message || '',
+      submitted_at: submittedAt
     })
-    .then(function() {
-      logToSheets();
-      showSuccess();
-    })
-    .catch(function(err) {
-      console.error('EmailJS error:', err);
-      // Still log to sheet and show success even if email fails
-      logToSheets();
-      showSuccess();
-      document.getElementById('email-note').textContent =
-        'Your membership number is ' + memberNum + '. Note: confirmation email could not be sent automatically — please contact info@dbctnz.org.nz to receive your confirmation.';
-    });
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+
+    // Use sequential ID from sheet, fallback to timestamp if sheet fails
+    var memberNum = (data.result === 'success' && data.id)
+      ? data.id
+      : 'DBTNZ-' + now.getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+
+    // ── STEP 2: SEND EMAILS WITH CORRECT SEQUENTIAL NUMBER ──
+    var sharedParams = {
+      member_name:     firstName + ' ' + lastName,
+      first_name:      firstName,
+      last_name:       lastName,
+      email:           email,
+      phone:           phone || 'Not provided',
+      city:            city,
+      region:          region || 'Not specified',
+      district:        district || 'Not specified',
+      years_in_nz:     yearsInNZ || 'Not specified',
+      how_heard:       howHeard || 'Not specified',
+      message:         message || 'None',
+      newsletter:      newsletter,
+      membership_tier: 'Annual Member',
+      membership_fee:  'NZ$10 (annual)',
+      member_number:   memberNum,
+      member_since:    since,
+      valid_until:     validUntil,
+      submitted_at:    submittedAt,
+      admin_email:     'info@dbctnz.org.nz',
+      reply_to:        email
+    };
+
+    // Send applicant email
+    return emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_APPLICANT, Object.assign({}, sharedParams, { to_email: email }))
+      .then(function() {
+        // Send admin email
+        return emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_ADMIN, Object.assign({}, sharedParams, { to_email: 'info@dbctnz.org.nz' }));
+      })
+      .then(function() {
+        showSuccess(firstName, lastName, memberNum, since, validUntil, email);
+      })
+      .catch(function(err) {
+        console.error('EmailJS error:', err);
+        // Emails failed but sheet was logged — still show success
+        showSuccess(firstName, lastName, memberNum, since, validUntil, email);
+        document.getElementById('email-note').textContent =
+          'Your membership number is ' + memberNum + '. Note: confirmation email could not be sent — please contact info@dbctnz.org.nz.';
+      });
+
+  })
+  .catch(function(err) {
+    // Sheet failed — fallback number, still try emails
+    console.error('Sheet error:', err);
+    var memberNum = 'DBTNZ-' + now.getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+
+    var sharedParams = {
+      member_name:     firstName + ' ' + lastName,
+      first_name:      firstName,
+      last_name:       lastName,
+      email:           email,
+      phone:           phone || 'Not provided',
+      city:            city,
+      region:          region || 'Not specified',
+      district:        district || 'Not specified',
+      years_in_nz:     yearsInNZ || 'Not specified',
+      how_heard:       howHeard || 'Not specified',
+      message:         message || 'None',
+      newsletter:      newsletter,
+      membership_tier: 'Annual Member',
+      membership_fee:  'NZ$10 (annual)',
+      member_number:   memberNum,
+      member_since:    since,
+      valid_until:     validUntil,
+      submitted_at:    submittedAt,
+      admin_email:     'info@dbctnz.org.nz',
+      reply_to:        email
+    };
+
+    emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_APPLICANT, Object.assign({}, sharedParams, { to_email: email }))
+      .then(function() {
+        return emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_ADMIN, Object.assign({}, sharedParams, { to_email: 'info@dbctnz.org.nz' }));
+      })
+      .then(function() {
+        showSuccess(firstName, lastName, memberNum, since, validUntil, email);
+      })
+      .catch(function() {
+        showSuccess(firstName, lastName, memberNum, since, validUntil, email);
+        document.getElementById('email-note').textContent =
+          'Your membership number is ' + memberNum + '. Note: confirmation email could not be sent — please contact info@dbctnz.org.nz.';
+      });
+  });
 
 });
 </script>
