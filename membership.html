@@ -782,7 +782,7 @@ document.getElementById('membership-form').addEventListener('submit', function(e
   // ── STEP 1: LOG TO GOOGLE SHEETS FIRST → GET SEQUENTIAL ID ──
   fetch(SHEETS_WEBAPP_URL, {
     method : 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'text/plain' },
     body   : JSON.stringify({
       full_name   : firstName + ' ' + lastName,
       email       : email,
