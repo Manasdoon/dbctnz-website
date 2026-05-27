@@ -10,7 +10,7 @@ var TEMPLATE_APPLICANT  = "template_x6icmrp";
 var TEMPLATE_ADMIN      = "template_kfgsuts";
 
 // ── GOOGLE SHEETS CONFIG ──
-var SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+var SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxRmO3gP9GBtxrCbitpkWswBAtN27WLvtTZoO65Q-RXS-xavLrde6VUNa2uEi9-Ihim/exec";
 
 // ── AGE ATTESTATION HIGHLIGHT ──
 document.addEventListener('DOMContentLoaded', function() {
@@ -100,21 +100,21 @@ document.getElementById('membership-form').addEventListener('submit', function(e
   if (!valid) return;
 
   // Collect form data
-  var firstName  = document.getElementById('first_name').value.trim();
-  var lastName   = document.getElementById('last_name').value.trim();
-  var email      = document.getElementById('email').value.trim();
-  var phone      = document.getElementById('phone').value.trim();
-  var city       = document.getElementById('city').value.trim();
-  var region     = document.getElementById('region').value;
-  var district   = document.getElementById('district').value;
-  var yearsInNZ  = document.getElementById('years_in_nz').value;
-  var howHeard   = document.getElementById('how_heard').value;
-  var message    = document.getElementById('message').value.trim();
-  var newsletter = document.getElementById('newsletter').checked ? 'Yes' : 'No';
-  var memberNum  = generateMemberNumber();
-  var now        = new Date();
-  var months     = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var since      = months[now.getMonth()] + ' ' + now.getFullYear();
+  var firstName   = document.getElementById('first_name').value.trim();
+  var lastName    = document.getElementById('last_name').value.trim();
+  var email       = document.getElementById('email').value.trim();
+  var phone       = document.getElementById('phone').value.trim();
+  var city        = document.getElementById('city').value.trim();
+  var region      = document.getElementById('region').value;
+  var district    = document.getElementById('district').value;
+  var yearsInNZ   = document.getElementById('years_in_nz').value;
+  var howHeard    = document.getElementById('how_heard').value;
+  var message     = document.getElementById('message').value.trim();
+  var newsletter  = document.getElementById('newsletter').checked ? 'Yes' : 'No';
+  var memberNum   = generateMemberNumber();
+  var now         = new Date();
+  var months      = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var since       = months[now.getMonth()] + ' ' + now.getFullYear();
   var submittedAt = now.toLocaleString('en-NZ', { dateStyle: 'long', timeStyle: 'short' });
 
   // Shared EmailJS template params
@@ -141,10 +141,27 @@ document.getElementById('membership-form').addEventListener('submit', function(e
     reply_to:        email,
   };
 
+  // Google Sheets payload
+  var sheetsPayload = {
+    full_name   : firstName + ' ' + lastName,
+    email       : email,
+    phone       : phone || '',
+    city        : city,
+    region      : region || '',
+    district    : district || '',
+    years_in_nz : yearsInNZ || '',
+    how_heard   : howHeard || '',
+    newsletter  : newsletter,
+    message     : message || '',
+    member_num  : memberNum,
+    submitted_at: submittedAt
+  };
+
   // Loading state
   var btn = document.getElementById('submit-btn');
   btn.classList.add('loading');
 
+  // ── SHOW SUCCESS SCREEN ──
   function showSuccess() {
     btn.classList.remove('loading');
     document.getElementById('mc-name').textContent    = firstName + ' ' + lastName;
@@ -164,61 +181,30 @@ document.getElementById('membership-form').addEventListener('submit', function(e
     document.getElementById('steps-bar').style.display = 'flex';
   }
 
+  // ── LOG TO GOOGLE SHEETS (reusable) ──
+  function logToSheets() {
+    return fetch(SHEETS_WEBAPP_URL, {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify(sheetsPayload)
+    }).catch(function(err) {
+      console.warn('Sheet log failed:', err);
+    });
+  }
+
   // ── SEND EMAILS THEN LOG TO GOOGLE SHEETS ──
   emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_APPLICANT, Object.assign({}, sharedParams, { to_email: email }))
     .then(function() {
       return emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_ADMIN, Object.assign({}, sharedParams, { to_email: 'info@dbctnz.org.nz' }));
     })
     .then(function() {
-
-      // ── LOG TO GOOGLE SHEETS ──
-      fetch(var SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxRmO3gP9GBtxrCbitpkWswBAtN27WLvtTZoO65Q-RXS-xavLrde6VUNa2uEi9-Ihim/exec", {
-        method : 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body   : JSON.stringify({
-          full_name   : firstName + ' ' + lastName,
-          email       : email,
-          phone       : phone || '',
-          city        : city,
-          region      : region || '',
-          district    : district || '',
-          years_in_nz : yearsInNZ || '',
-          how_heard   : howHeard || '',
-          newsletter  : newsletter,
-          message     : message || '',
-          member_num  : memberNum,
-          submitted_at: submittedAt
-        })
-      }).catch(function(err) {
-        console.warn('Sheet log failed (emails still sent):', err);
-      });
-
+      logToSheets();
       showSuccess();
     })
     .catch(function(err) {
       console.error('EmailJS error:', err);
-      // Still show success — attempt sheet log anyway
-      fetch(SHEETS_WEBAPP_URL, {
-        method : 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body   : JSON.stringify({
-          full_name   : firstName + ' ' + lastName,
-          email       : email,
-          phone       : phone || '',
-          city        : city,
-          region      : region || '',
-          district    : district || '',
-          years_in_nz : yearsInNZ || '',
-          how_heard   : howHeard || '',
-          newsletter  : newsletter,
-          message     : message || '',
-          member_num  : memberNum,
-          submitted_at: submittedAt
-        })
-      }).catch(function(sheetErr) {
-        console.warn('Sheet log also failed:', sheetErr);
-      });
-
+      // Emails failed but still log to sheet and show success screen
+      logToSheets();
       showSuccess();
       document.getElementById('email-note').textContent =
         'Your membership number is ' + memberNum + '. Note: confirmation email could not be sent automatically — please contact info@dbctnz.org.nz to receive your confirmation.';
