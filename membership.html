@@ -1,45 +1,873 @@
-// ── EMAILJS SETUP ──
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Membership Application — Devbhoomi Charitable Trust NZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<style>
+  :root {
+    --navy:    #1a2332;
+    --navy-mid:#2c3e55;
+    --navy-lt: #3a6186;
+    --glacial: #89a4c7;
+    --snow:    #f4f6f9;
+    --ochre:   #c8863a;
+    --ochre-lt:#e8a95a;
+    --cream:   #faf8f3;
+    --forest:  #4a6741;
+    --border:  #dde1ea;
+    --text:    #1a1a1a;
+    --muted:   #6b7280;
+    --success: #2d6a4f;
+    --radius:  10px;
+    --radius-lg: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── PAGE LAYOUT ── */
+  .page-wrap {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ── LEFT PANEL ── */
+  .left-panel {
+    background: var(--navy);
+    padding: 48px 40px;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .left-panel::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: rgba(137,164,199,0.06);
+    pointer-events: none;
+  }
+  .left-panel::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: rgba(200,134,58,0.06);
+    pointer-events: none;
+  }
+
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 48px;
+  }
+  .logo-wrap img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+  .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    color: #fff;
+    line-height: 1.2;
+    font-weight: 300;
+  }
+  .logo-text small {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--glacial);
+    font-weight: 400;
+    margin-top: 2px;
+  }
+
+  .panel-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    color: #fff;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .panel-heading em {
+    color: var(--ochre-lt);
+    font-style: italic;
+  }
+  .panel-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+
+  .benefits-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: auto;
+  }
+  .benefits-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.5;
+  }
+  .benefit-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(137,164,199,0.15);
+    border: 1px solid rgba(137,164,199,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .benefit-icon .ti {
+    font-size: 13px;
+    color: var(--glacial);
+  }
+
+  .charity-strip {
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .charity-strip .ti { color: var(--ochre-lt); font-size: 14px; }
+  .charity-strip a {
+    font-size: 11px;
+    color: var(--glacial);
+    text-decoration: none;
+  }
+  .charity-strip a:hover { color: #fff; text-decoration: underline; }
+
+  /* ── RIGHT PANEL ── */
+  .right-panel {
+    padding: 52px 56px 52px 64px;
+    overflow-y: auto;
+    background: var(--cream);
+  }
+
+  /* ── PROGRESS STEPS ── */
+  .steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 40px;
+  }
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .step.active { color: var(--navy); }
+  .step.done { color: var(--forest); }
+  .step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    background: #fff;
+    flex-shrink: 0;
+    transition: all 0.3s;
+  }
+  .step.active .step-num {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+  }
+  .step.done .step-num {
+    background: var(--forest);
+    border-color: var(--forest);
+    color: #fff;
+  }
+  .step-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin: 0 10px;
+  }
+  .step-line.done { background: var(--forest); }
+
+  /* ── SECTION TITLES ── */
+  .form-section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    color: var(--navy);
+    margin-bottom: 4px;
+    font-weight: 400;
+  }
+  .form-section-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  /* ── FORM FIELDS ── */
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .field-row.single { grid-template-columns: 1fr; }
+  .field-row.thirds { grid-template-columns: 1fr 1fr 1fr; }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .field label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--navy);
+    letter-spacing: 0.02em;
+  }
+  .field label .req { color: var(--ochre); margin-left: 2px; }
+  .field input,
+  .field select,
+  .field textarea {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    width: 100%;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--navy-lt);
+    box-shadow: 0 0 0 3px rgba(58,97,134,0.1);
+  }
+  .field input.error,
+  .field select.error {
+    border-color: #c0392b;
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.1);
+  }
+  .field .error-msg {
+    font-size: 11px;
+    color: #c0392b;
+    display: none;
+  }
+  .field input.error ~ .error-msg,
+  .field select.error ~ .error-msg {
+    display: block;
+  }
+  .field textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+  .field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+  .field-hint { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* ── DIVIDER ── */
+  .form-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 28px 0;
+  }
+  .form-divider-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 28px 0 20px;
+  }
+  .form-divider-label::before,
+  .form-divider-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── CHECKBOX ── */
+  .checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+    cursor: pointer;
+  }
+  .checkbox-row input[type=checkbox] {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    accent-color: var(--navy);
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .checkbox-row span {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .checkbox-row a { color: var(--navy-lt); }
+
+  /* ── SUBMIT BUTTON ── */
+  .submit-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 28px;
+    gap: 16px;
+  }
+  .btn-submit {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 32px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .btn-submit:hover {
+    background: var(--navy-mid);
+    box-shadow: 0 4px 16px rgba(26,35,50,0.2);
+    transform: translateY(-1px);
+  }
+  .btn-submit:active { transform: translateY(0); }
+  .btn-submit.loading {
+    background: var(--navy-mid);
+    pointer-events: none;
+  }
+  .btn-submit .ti { font-size: 16px; }
+  .btn-spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+  .btn-submit.loading .btn-spinner { display: block; }
+  .btn-submit.loading .btn-text,
+  .btn-submit.loading .ti { display: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .privacy-note {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .privacy-note .ti { font-size: 13px; }
+
+  /* ── SUCCESS STATE ── */
+  .success-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 60vh;
+    padding: 40px 0;
+    animation: fadeUp 0.5s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  .success-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #eaf2e8;
+    border: 2px solid #b0cca8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
+  }
+  @keyframes popIn {
+    from { transform: scale(0); opacity:0; }
+    to   { transform: scale(1); opacity:1; }
+  }
+  .success-icon .ti { font-size: 32px; color: var(--forest); }
+  .success-h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    color: var(--navy);
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+  .success-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    max-width: 440px;
+    line-height: 1.7;
+  }
+  .membership-card {
+    background: var(--navy);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto 28px;
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+  }
+  .membership-card::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(137,164,199,0.08);
+  }
+  .membership-card::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: 40px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(200,134,58,0.06);
+  }
+  .mc-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--glacial);
+    margin-bottom: 16px;
+  }
+  .mc-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    color: #fff;
+    font-weight: 300;
+    margin-bottom: 4px;
+  }
+  .mc-tier {
+    font-size: 12px;
+    color: var(--ochre-lt);
+    margin-bottom: 20px;
+  }
+  .mc-number-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 4px;
+  }
+  .mc-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: #fff;
+    letter-spacing: 0.06em;
+  }
+  .mc-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .mc-footer-label { font-size: 10px; color: rgba(255,255,255,0.4); margin-bottom: 2px; }
+  .mc-footer-val { font-size: 12px; color: rgba(255,255,255,0.7); }
+  .mc-logo { font-family: 'Cormorant Garamond', serif; font-size: 13px; color: rgba(255,255,255,0.5); text-align: right; }
+
+  .success-email-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #eaf2e8;
+    border: 1px solid #b0cca8;
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    font-size: 12px;
+    color: var(--forest);
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  .success-email-note .ti { font-size: 16px; flex-shrink: 0; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .page-wrap { grid-template-columns: 1fr; }
+    .left-panel { position: relative; height: auto; padding: 32px 28px; }
+    .benefits-list { display: none; }
+    .right-panel { padding: 32px 24px; }
+    .field-row { grid-template-columns: 1fr; }
+    .field-row.thirds { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- ── LEFT PANEL ── -->
+  <aside class="left-panel">
+    <div class="logo-wrap">
+      <img src="/images/uploads/dbctnz-logo.png" alt="Devbhoomi Charitable Trust NZ logo">
+      <div class="logo-text">
+        Devbhoomi
+        <small>Charitable Trust NZ</small>
+      </div>
+    </div>
+
+    <h1 class="panel-heading">Join our<br><em>community</em><br>today</h1>
+    <p class="panel-sub">For NZ$50 lifetime, become a member of one of New Zealand's most established Indian community organisations.</p>
+
+    <ul class="benefits-list">
+      <li>
+        <div class="benefit-icon"><i class="ti ti-calendar-event" aria-hidden="true"></i></div>
+        <span>Priority invitations to cultural events, galas, and celebrations</span>
+      </li>
+      <li>
+        <div class="benefit-icon"><i class="ti ti-users" aria-hidden="true"></i></div>
+        <span>Access to a warm, established diaspora community across Aotearoa</span>
+      </li>
+      <li>
+        <div class="benefit-icon"><i class="ti ti-heart-handshake" aria-hidden="true"></i></div>
+        <span>Support through welfare services, consulting, and community outreach</span>
+      </li>
+      <li>
+        <div class="benefit-icon"><i class="ti ti-mountain" aria-hidden="true"></i></div>
+        <span>Stay connected to the culture, language, and stories of Uttarakhand</span>
+      </li>
+      <li>
+        <div class="benefit-icon"><i class="ti ti-certificate" aria-hidden="true"></i></div>
+        <span>Lifetime membership certificate and personalised membership number for NZ$50 — once only — (Currently not available)</span>
+      </li>
+      <li>
+        <div class="benefit-icon"><i class="ti ti-news" aria-hidden="true"></i></div>
+        <span>Regular updates — newsletters, press releases, and community news</span>
+      </li>
+      <li>
+        <div class="benefit-icon"><i class="ti ti-tag" aria-hidden="true"></i></div>
+        <span>Exclusive discounts with registered partner businesses in the community</span>
+      </li>
+    </ul>
+
+    <div class="charity-strip">
+      <i class="ti ti-certificate" aria-hidden="true"></i>
+      <a href="https://www.register.charities.govt.nz/Charity/CC61651" target="_blank">
+        Registered Charity CC61651 — Charities Services NZ ↗
+      </a>
+    </div>
+  </aside>
+
+  <!-- ── RIGHT PANEL ── -->
+  <main class="right-panel">
+
+    <!-- Progress steps -->
+    <div class="steps" id="steps-bar">
+      <div class="step active" id="step-ind-1">
+        <div class="step-num">1</div>
+        <span>Your details</span>
+      </div>
+      <div class="step-line" id="line-1"></div>
+      <div class="step" id="step-ind-2">
+        <div class="step-num">2</div>
+        <span>Confirm</span>
+      </div>
+    </div>
+
+    <!-- ── FORM ── -->
+    <form id="membership-form" novalidate>
+
+      <div id="step-2">
+        <h2 class="form-section-title">Your details</h2>
+        <p class="form-section-sub">Please fill in your information below. Fields marked <span style="color:var(--ochre);">*</span> are required.</p>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="first_name">First Name <span class="req">*</span></label>
+            <input type="text" id="first_name" name="first_name" placeholder="e.g. Priya" autocomplete="given-name">
+            <span class="error-msg">Please enter your first name</span>
+          </div>
+          <div class="field">
+            <label for="last_name">Last Name <span class="req">*</span></label>
+            <input type="text" id="last_name" name="last_name" placeholder="e.g. Sharma" autocomplete="family-name">
+            <span class="error-msg">Please enter your last name</span>
+          </div>
+        </div>
+
+        <div class="field-row single">
+          <div class="field">
+            <label for="email">Email Address <span class="req">*</span></label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email">
+            <span class="error-msg">Please enter a valid email address</span>
+            <span class="field-hint">Your membership confirmation and number will be sent here</span>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="+64 21 000 0000" autocomplete="tel">
+          </div>
+          <div class="field" style="justify-content:flex-end;">
+            <label class="checkbox-row" style="margin-bottom:0; padding:10px 14px; border:1.5px solid var(--border); border-radius:var(--radius); background:#fff; cursor:pointer; transition:border-color 0.2s;" id="age-row">
+              <input type="checkbox" id="age_confirm" name="age_confirm">
+              <span>I confirm that I am <strong style="color:var(--navy);">18 years of age or older</strong> <span style="color:var(--ochre);">*</span></span>
+            </label>
+            <span class="error-msg" id="age-error" style="display:none; font-size:11px; color:#c0392b; margin-top:4px;">You must be 18 or older to apply</span>
+          </div>
+        </div>
+
+        <div class="form-divider-label">Location</div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="city">City / Town <span class="req">*</span></label>
+            <input type="text" id="city" name="city" placeholder="e.g. Auckland" autocomplete="address-level2">
+            <span class="error-msg">Please enter your city</span>
+          </div>
+          <div class="field">
+            <label for="region">Region</label>
+            <select id="region" name="region">
+              <option value="">Select region...</option>
+              <option>Auckland</option>
+              <option>Wellington</option>
+              <option>Canterbury</option>
+              <option>Waikato</option>
+              <option>Bay of Plenty</option>
+              <option>Otago</option>
+              <option>Manawatū-Whanganui</option>
+              <option>Hawke's Bay</option>
+              <option>Taranaki</option>
+              <option>Northland</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-divider-label">Connection to Uttarakhand</div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="district">District / Region of Origin</label>
+            <select id="district" name="district">
+              <option value="">Select district...</option>
+              <option>Dehradun</option>
+              <option>Haridwar</option>
+              <option>Nainital</option>
+              <option>Almora</option>
+              <option>Chamoli</option>
+              <option>Pithoragarh</option>
+              <option>Rudraprayag</option>
+              <option>Tehri Garhwal</option>
+              <option>Uttarkashi</option>
+              <option>Pauri Garhwal</option>
+              <option>Bageshwar</option>
+              <option>Champawat</option>
+              <option>Udham Singh Nagar</option>
+              <option>Other / Not from Uttarakhand</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="years_in_nz">Years in New Zealand</label>
+            <select id="years_in_nz" name="years_in_nz">
+              <option value="">Select...</option>
+              <option>Less than 1 year</option>
+              <option>1–3 years</option>
+              <option>3–5 years</option>
+              <option>5–10 years</option>
+              <option>10–20 years</option>
+              <option>20+ years</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-row single">
+          <div class="field">
+            <label for="message">What brings you to Devbhoomi Trust? <span style="color:var(--muted); font-weight:400;">(optional)</span></label>
+            <textarea id="message" name="message" placeholder="Share a little about yourself and your connection to the community..."></textarea>
+          </div>
+        </div>
+
+        <div class="field-row single" style="margin-bottom:8px;">
+          <div class="field">
+            <label for="how_heard">How did you hear about us?</label>
+            <select id="how_heard" name="how_heard">
+              <option value="">Select...</option>
+              <option>Facebook / Social Media</option>
+              <option>Friend or family member</option>
+              <option>Community event</option>
+              <option>Website search</option>
+              <option>Ministry of Ethnic Communities</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <label class="checkbox-row">
+          <input type="checkbox" id="newsletter" name="newsletter" checked>
+          <span>Send me the community newsletter and updates about upcoming events</span>
+        </label>
+        <label class="checkbox-row">
+          <input type="checkbox" id="terms" name="terms">
+          <span>I agree to the <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a> of Devbhoomi Charitable Trust NZ <span style="color:var(--ochre);">*</span></span>
+        </label>
+
+        <div class="submit-row">
+          <div></div>
+          <div style="display:flex; align-items:center; gap:16px;">
+            <span class="privacy-note"><i class="ti ti-lock" aria-hidden="true"></i> Your data is private and secure</span>
+            <button type="submit" class="btn-submit" id="submit-btn">
+              <span class="btn-text">Submit Application</span>
+              <i class="ti ti-send" aria-hidden="true"></i>
+              <div class="btn-spinner"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+    <!-- ── SUCCESS SCREEN ── -->
+    <div class="success-screen" id="success-screen">
+      <div class="success-icon"><i class="ti ti-check" aria-hidden="true"></i></div>
+      <h2 class="success-h2">Welcome to the Trust!</h2>
+      <p class="success-sub" id="success-msg">Your membership application has been received. Here is your membership details.</p>
+
+      <div class="membership-card">
+        <div class="mc-eyebrow">Devbhoomi Charitable Trust NZ · CC61651</div>
+        <div class="mc-name" id="mc-name">— —</div>
+        <div class="mc-tier" id="mc-tier">General Member</div>
+        <div class="mc-number-label">Membership Number</div>
+        <div class="mc-number" id="mc-number">DBTNZ-0000-0000</div>
+        <div class="mc-footer">
+          <div>
+            <div class="mc-footer-label">Member since</div>
+            <div class="mc-footer-val" id="mc-since">— 2025</div>
+          </div>
+          <div>
+            <div class="mc-footer-label">Valid until</div>
+            <div class="mc-footer-val" id="mc-valid">Lifetime</div>
+          </div>
+          <div class="mc-logo">Devbhoomi<br>Charitable Trust NZ</div>
+        </div>
+      </div>
+
+      <div class="success-email-note">
+        <i class="ti ti-mail-check" aria-hidden="true"></i>
+        <span id="email-note">A confirmation email with your membership details has been sent to your email address.</span>
+      </div>
+
+      <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+        <a href="https://www.dbctnz.org.nz" style="display:inline-flex; align-items:center; gap:6px; background:var(--navy); color:#fff; border-radius:30px; padding:10px 22px; font-size:13px; text-decoration:none; font-weight:500;">
+          <i class="ti ti-home" aria-hidden="true"></i> Return to Website
+        </a>
+        <button onclick="window.print()" style="display:inline-flex; align-items:center; gap:6px; background:#fff; color:var(--navy); border:1.5px solid var(--border); border-radius:30px; padding:10px 22px; font-size:13px; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:500;">
+          <i class="ti ti-printer" aria-hidden="true"></i> Print / Save
+        </button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// ── EMAILJS INIT ──
 (function() {
-  emailjs.init({
-    publicKey: "JnZEBEJJB_xzuH0dh",
-  });
+  emailjs.init({ publicKey: "JnZEBEJJB_xzuH0dh" });
 })();
 
-var EMAILJS_SERVICE_ID  = "service_s5tav14";
-var TEMPLATE_APPLICANT  = "template_x6icmrp";
-var TEMPLATE_ADMIN      = "template_kfgsuts";
+var EMAILJS_SERVICE_ID = "service_s5tav14";
+var TEMPLATE_APPLICANT = "template_x6icmrp";
+var TEMPLATE_ADMIN     = "template_kfgsuts";
 
 // ── GOOGLE SHEETS CONFIG ──
 var SHEETS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxRmO3gP9GBtxrCbitpkWswBAtN27WLvtTZoO65Q-RXS-xavLrde6VUNa2uEi9-Ihim/exec";
 
 // ── AGE ATTESTATION HIGHLIGHT ──
 document.addEventListener('DOMContentLoaded', function() {
-  var ageEl = document.getElementById('age_confirm');
+  var ageEl  = document.getElementById('age_confirm');
   var ageRow = document.getElementById('age-row');
   if (ageEl && ageRow) {
     ageEl.addEventListener('change', function() {
       if (this.checked) {
         ageRow.style.borderColor = 'var(--forest)';
-        ageRow.style.background = '#eaf2e8';
+        ageRow.style.background  = '#eaf2e8';
         document.getElementById('age-error').style.display = 'none';
       } else {
         ageRow.style.borderColor = '';
-        ageRow.style.background = '#fff';
+        ageRow.style.background  = '#fff';
       }
     });
   }
 });
 
-// ── SINGLE TIER ──
-var selectedTier = 'member';
-
 // ── STEP NAVIGATION ──
 function goToStep(n) {
-  [1,2].forEach(function(i) {
+  [1, 2].forEach(function(i) {
     var ind = document.getElementById('step-ind-' + i);
     if (!ind) return;
-    ind.classList.remove('active','done');
-    if (i < n) { ind.classList.add('done'); ind.querySelector('.step-num').innerHTML = '<i class="ti ti-check" style="font-size:12px;"></i>'; }
+    ind.classList.remove('active', 'done');
+    if (i < n) {
+      ind.classList.add('done');
+      ind.querySelector('.step-num').innerHTML = '<i class="ti ti-check" style="font-size:12px;"></i>';
+    }
     if (i === n) ind.classList.add('active');
   });
   var line1 = document.getElementById('line-1');
@@ -54,29 +882,24 @@ function generateMemberNumber() {
   return 'DBTNZ-' + year + '-' + rand;
 }
 
-// ── TIER DISPLAY NAMES ──
-var tierNames = { member: 'Lifetime Member' };
-
 // ── FORM SUBMISSION ──
 document.getElementById('membership-form').addEventListener('submit', function(e) {
   e.preventDefault();
 
-  // Validation
+  // ── VALIDATION ──
   var valid = true;
-  var required = ['first_name', 'last_name', 'email', 'city'];
-  required.forEach(function(id) {
+
+  ['first_name', 'last_name', 'email', 'city'].forEach(function(id) {
     var el = document.getElementById(id);
     if (!el.value.trim()) { el.classList.add('error'); valid = false; }
     else el.classList.remove('error');
   });
 
-  // Email format
   var emailEl = document.getElementById('email');
   if (emailEl.value && !/^[^@]+@[^@]+\.[^@]+$/.test(emailEl.value)) {
     emailEl.classList.add('error'); valid = false;
   }
 
-  // Age attestation
   var ageEl  = document.getElementById('age_confirm');
   var ageRow = document.getElementById('age-row');
   var ageErr = document.getElementById('age-error');
@@ -91,7 +914,6 @@ document.getElementById('membership-form').addEventListener('submit', function(e
     ageErr.style.display     = 'none';
   }
 
-  // Terms
   if (!document.getElementById('terms').checked) {
     alert('Please agree to the Terms & Conditions to continue.');
     valid = false;
@@ -99,7 +921,7 @@ document.getElementById('membership-form').addEventListener('submit', function(e
 
   if (!valid) return;
 
-  // Collect form data
+  // ── COLLECT DATA ──
   var firstName   = document.getElementById('first_name').value.trim();
   var lastName    = document.getElementById('last_name').value.trim();
   var email       = document.getElementById('email').value.trim();
@@ -117,7 +939,7 @@ document.getElementById('membership-form').addEventListener('submit', function(e
   var since       = months[now.getMonth()] + ' ' + now.getFullYear();
   var submittedAt = now.toLocaleString('en-NZ', { dateStyle: 'long', timeStyle: 'short' });
 
-  // Shared EmailJS template params
+  // ── EMAILJS PARAMS ──
   var sharedParams = {
     member_name:     firstName + ' ' + lastName,
     first_name:      firstName,
@@ -138,10 +960,10 @@ document.getElementById('membership-form').addEventListener('submit', function(e
     valid_until:     'Lifetime',
     submitted_at:    submittedAt,
     admin_email:     'info@dbctnz.org.nz',
-    reply_to:        email,
+    reply_to:        email
   };
 
-  // Google Sheets payload
+  // ── GOOGLE SHEETS PAYLOAD ──
   var sheetsPayload = {
     full_name   : firstName + ' ' + lastName,
     email       : email,
@@ -157,42 +979,41 @@ document.getElementById('membership-form').addEventListener('submit', function(e
     submitted_at: submittedAt
   };
 
-  // Loading state
+  // ── LOADING STATE ──
   var btn = document.getElementById('submit-btn');
   btn.classList.add('loading');
 
   // ── SHOW SUCCESS SCREEN ──
   function showSuccess() {
     btn.classList.remove('loading');
-    document.getElementById('mc-name').textContent    = firstName + ' ' + lastName;
-    document.getElementById('mc-tier').textContent    = 'Lifetime Member';
-    document.getElementById('mc-number').textContent  = memberNum;
-    document.getElementById('mc-since').textContent   = since;
-    document.getElementById('mc-valid').textContent   = 'Lifetime';
+    document.getElementById('mc-name').textContent   = firstName + ' ' + lastName;
+    document.getElementById('mc-tier').textContent   = 'Lifetime Member';
+    document.getElementById('mc-number').textContent = memberNum;
+    document.getElementById('mc-since').textContent  = since;
+    document.getElementById('mc-valid').textContent  = 'Lifetime';
     document.getElementById('success-msg').textContent =
       'Welcome, ' + firstName + '! Your membership is confirmed.';
     document.getElementById('email-note').textContent =
       'A confirmation email with your membership number ' + memberNum + ' has been sent to ' + email + '.';
     document.getElementById('membership-form').style.display = 'none';
     document.getElementById('steps-bar').style.display       = 'none';
-    var ss = document.getElementById('success-screen');
-    ss.style.display = 'flex';
+    document.getElementById('success-screen').style.display  = 'flex';
     goToStep(2);
     document.getElementById('steps-bar').style.display = 'flex';
   }
 
-  // ── LOG TO GOOGLE SHEETS (reusable) ──
+  // ── LOG TO GOOGLE SHEETS ──
   function logToSheets() {
-    return fetch(SHEETS_WEBAPP_URL, {
+    fetch(SHEETS_WEBAPP_URL, {
       method : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body   : JSON.stringify(sheetsPayload)
     }).catch(function(err) {
-      console.warn('Sheet log failed:', err);
+      console.warn('Sheet log failed (emails still sent):', err);
     });
   }
 
-  // ── SEND EMAILS THEN LOG TO GOOGLE SHEETS ──
+  // ── SEND EMAILS → LOG TO SHEETS → SHOW SUCCESS ──
   emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_APPLICANT, Object.assign({}, sharedParams, { to_email: email }))
     .then(function() {
       return emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_ADMIN, Object.assign({}, sharedParams, { to_email: 'info@dbctnz.org.nz' }));
@@ -203,10 +1024,15 @@ document.getElementById('membership-form').addEventListener('submit', function(e
     })
     .catch(function(err) {
       console.error('EmailJS error:', err);
-      // Emails failed but still log to sheet and show success screen
+      // Still log to sheet and show success even if email fails
       logToSheets();
       showSuccess();
       document.getElementById('email-note').textContent =
         'Your membership number is ' + memberNum + '. Note: confirmation email could not be sent automatically — please contact info@dbctnz.org.nz to receive your confirmation.';
     });
+
 });
+</script>
+
+</body>
+</html>
