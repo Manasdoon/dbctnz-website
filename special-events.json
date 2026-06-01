@@ -1,36 +1,36 @@
 {
   "special_events": [
     {
-      "id": "bank-of-baroda-2026",
-      "name": "Bank of Baroda (NZ) Ltd.",
-      "subtitle": "Mega Account Opening Festival",
-      "category": "Banking Event",
-      "date": "2026-06-06",
-      "date_display": "Saturday 6th June 2026",
-      "time": "9:30 AM – 4:00 PM",
-      "location": "55 Featherston Street, Wellington 6011",
-      "flyer_image": "/images/uploads/bank-of-baroda-flyer.jpg",
-      "link_url": "https://www.barodanzltd.co.nz/",
-      "link_label": "Visit Website",
-      "header_color_from": "#e85c1a",
+      "active": true,
       "header_color_to": "#f07030",
-      "active": true
+      "link_url": "https://www.barodanzltd.co.nz/",
+      "name": "Bank of Baroda (NZ) Ltd.",
+      "time": "9:30 AM – 4:00 PM",
+      "date": "2026-06-06",
+      "link_label": "Visit Website",
+      "date_display": "Saturday 6th June 2026",
+      "location": "55 Featherston Street, Wellington 6011",
+      "subtitle": "Mega Account Opening Festival",
+      "header_color_from": "#e85c1a",
+      "id": "bank-of-baroda-2026",
+      "flyer_image": "/images/uploads/bank-of-baroda-flyer.jpg",
+      "category": "Banking Event"
     },
     {
-      "id": "sapta-thandavam-2026",
-      "name": "Sapta Thandavam",
-      "subtitle": "Natraj School of Dance",
-      "category": "Dance Production",
-      "date": "2026-06-06",
-      "date_display": "Saturday 6th June 2026",
-      "time": "Show 1: 3:00 PM – 5:00 PM | Show 2: 7:00 PM – 9:00 PM",
-      "location": "The Little Theatre, 2 Queens Drive, Lower Hutt",
-      "flyer_image": "/images/uploads/sapta-thandavam-flyer.jpg",
-      "link_url": "https://www.eventbrite.co.nz/e/sapta-thandavam-tickets-1986969362852",
-      "link_label": "Get Tickets",
-      "header_color_from": "#3b1a08",
+      "active": true,
       "header_color_to": "#7a3010",
-      "active": true
+      "link_url": "https://www.eventbrite.co.nz/e/sapta-thandavam-tickets-1986969362852",
+      "name": "Sapta Thandavam",
+      "time": "Show 1: 3:00 PM – 5:00 PM | Show 2: 7:00 PM – 9:00 PM",
+      "date": "2026-06-06",
+      "link_label": "Get Tickets",
+      "date_display": "Saturday 6th June 2026",
+      "location": "The Little Theatre, 2 Queens Drive, Lower Hutt",
+      "subtitle": "Natraj School of Dance",
+      "header_color_from": "#3b1a08",
+      "id": "sapta-thandavam-2026",
+      "flyer_image": "/images/uploads/sapta-thandavam-flyer-1-.jpg",
+      "category": "Dance Production"
     }
   ]
 }
