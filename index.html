@@ -605,7 +605,24 @@ hamburger.addEventListener('click', function() {
 menuOverlay.addEventListener('click', closeMenu);
 // Close menu when any link in the drawer is clicked (after navigation)
 mobileMenu.addEventListener('click', function(e) {
-  if (e.target.tagName === 'A') { setTimeout(closeMenu, 50); }
+ mobileMenu.addEventListener('click', function(e) {
+  var link = e.target.closest('A');
+  if (!link) return;
+
+  var href = link.getAttribute('href');
+
+  // Internal anchor links (e.g. #section)
+  if (href && href.startsWith('#')) {
+    e.preventDefault();
+    closeMenu();
+    setTimeout(function() {
+      var target = document.querySelector(href);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    }, 300); // wait for menu close animation
+  } else {
+    // External/page links — close menu but don't block navigation
+    closeMenu();
+  }
 });
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMenu(); });
 
