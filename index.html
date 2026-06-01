@@ -523,122 +523,118 @@ footer{background:#111c28;padding:48px 40px 24px;}
 </footer>
 
 <script>
-// ── CAROUSEL ──
-var slides = document.querySelectorAll('.carousel-slide');
-var dots   = document.querySelectorAll('.car-dot');
-var current = 0, timer;
-function goToSlide(n) {
-  slides[current].classList.remove('active');
-  dots[current].classList.remove('active');
-  current = (n + slides.length) % slides.length;
-  slides[current].classList.add('active');
-  dots[current].classList.add('active');
-  resetTimer();
-}
-window.nextSlide = function(){ goToSlide(current+1); };
-window.prevSlide = function(){ goToSlide(current-1); };
-function resetTimer(){ clearInterval(timer); timer = setInterval(function(){ goToSlide(current+1); }, 5000); }
-var hero = document.querySelector('.hero');
-hero.addEventListener('mouseenter', function(){ clearInterval(timer); });
-hero.addEventListener('mouseleave', resetTimer);
-resetTimer();
+document.addEventListener('DOMContentLoaded', function() {
 
-// ── EVENTS FROM JSON — dynamic fetch ──
-function renderEvents() {
-  var grid = document.getElementById('events-grid');
-  eventsData.events.forEach(function(ev) {
-    var d = new Date(ev.date);
-    var day = d.getDate();
-    var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
-    var tbc = ev.topic_tbc ? '<span class="badge badge-tbc">Topic TBC</span>' : '';
-    var regBtn = ev.registration
-      ? '<a href="https://forms.gle/JUenhWUEXi5PE8RT6" target="_blank" class="btn btn-ochre" style="font-size:12px;padding:8px 16px;width:100%;justify-content:center;"><i class="ti ti-calendar-check"></i> Register Free</a>'
-      : '<span class="btn btn-primary" style="font-size:12px;padding:8px 16px;width:100%;justify-content:center;">Free — No Registration</span>';
-    grid.innerHTML += '<div class="event-card">' +
-      '<div class="event-card-top">' +
-        '<div class="event-date-box"><div class="ev-day">' + day + '</div><div class="ev-month">' + month + '</div></div>' +
-        '<div class="event-card-meta"><div class="ev-series">' + ev.series + '</div><div class="ev-title">' + ev.name + '</div></div>' +
-      '</div>' +
-      '<div class="event-card-body">' +
-        '<div class="ev-detail"><i class="ti ti-clock" aria-hidden="true"></i>' + ev.time + '</div>' +
-        '<div class="ev-detail"><i class="ti ti-map-pin" aria-hidden="true"></i>' + ev.location + ', ' + ev.city + '</div>' +
-        '<div class="ev-desc">' + ev.description + ' ' + ev.note + '</div>' +
-        '<div class="ev-badges"><span class="badge badge-free"><i class="ti ti-check" style="font-size:10px;"></i> ' + ev.cost + '</span>' +
-        (ev.registration ? '<span class="badge badge-reg"><i class="ti ti-calendar" style="font-size:10px;"></i> Registration required</span>' : '') +
-        '<span class="badge badge-food"><i class="ti ti-tools-kitchen-2" style="font-size:10px;"></i> Food served</span>' + tbc + '</div>' +
-        regBtn +
-      '</div>' +
-    '</div>';
-  });
-}
-
-// Fetch events.json dynamically so Decap CMS updates reflect immediately
-fetch('/events.json')
-  .then(function(r) { return r.json(); })
-  .then(function(data) {
-    eventsData = data;
-    renderEvents();
-  })
-  .catch(function() {
-    // Fallback — render empty state if fetch fails
-    renderEvents();
-  });
-
-var eventsData = {"events":[]};
-
-
-// ── HAMBURGER MENU ──
-var hamburger = document.getElementById('hamburger');
-var mobileMenu = document.getElementById('mobile-menu');
-var menuOverlay = document.getElementById('menu-overlay');
-function openMenu() {
-  hamburger.classList.add('open');
-  mobileMenu.classList.add('open');
-  menuOverlay.classList.add('open');
-  hamburger.setAttribute('aria-expanded','true');
-  mobileMenu.setAttribute('aria-hidden','false');
-}
-function closeMenu() {
-  hamburger.classList.remove('open');
-  mobileMenu.classList.remove('open');
-  menuOverlay.classList.remove('open');
-  hamburger.setAttribute('aria-expanded','false');
-  mobileMenu.setAttribute('aria-hidden','true');
-}
-hamburger.addEventListener('click', function() {
-  if (mobileMenu.classList.contains('open')) { closeMenu(); } else { openMenu(); }
-});
-menuOverlay.addEventListener('click', closeMenu);
-// Close menu when any link in the drawer is clicked (after navigation)
-mobileMenu.addEventListener('click', function(e) {
- mobileMenu.addEventListener('click', function(e) {
-  var link = e.target.closest('A');
-  if (!link) return;
-
-  var href = link.getAttribute('href');
-
-  // Internal anchor links (e.g. #section)
-  if (href && href.startsWith('#')) {
-    e.preventDefault();
-    closeMenu();
-    setTimeout(function() {
-      var target = document.querySelector(href);
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
-    }, 300); // wait for menu close animation
-  } else {
-    // External/page links — close menu but don't block navigation
-    closeMenu();
+  // ── CAROUSEL ──
+  var slides = document.querySelectorAll('.carousel-slide');
+  var dots   = document.querySelectorAll('.car-dot');
+  var current = 0, timer;
+  function goToSlide(n) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+    resetTimer();
   }
-});
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMenu(); });
+  window.nextSlide = function(){ goToSlide(current+1); };
+  window.prevSlide = function(){ goToSlide(current-1); };
+  function resetTimer(){ clearInterval(timer); timer = setInterval(function(){ goToSlide(current+1); }, 5000); }
+  var hero = document.querySelector('.hero');
+  hero.addEventListener('mouseenter', function(){ clearInterval(timer); });
+  hero.addEventListener('mouseleave', resetTimer);
+  resetTimer();
 
-// ── SCROLL REVEAL ──
-(function() {
+  // ── EVENTS FROM JSON ──
+  var eventsData = {"events":[]};  // BUG 1 FIX: moved above fetch so fallback works
+
+  function renderEvents() {
+    var grid = document.getElementById('events-grid');
+    eventsData.events.forEach(function(ev) {
+      var d = new Date(ev.date);
+      var day = d.getDate();
+      var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+      var tbc = ev.topic_tbc ? '<span class="badge badge-tbc">Topic TBC</span>' : '';
+      var regBtn = ev.registration
+        ? '<a href="https://forms.gle/JUenhWUEXi5PE8RT6" target="_blank" class="btn btn-ochre" style="font-size:12px;padding:8px 16px;width:100%;justify-content:center;"><i class="ti ti-calendar-check"></i> Register Free</a>'
+        : '<span class="btn btn-primary" style="font-size:12px;padding:8px 16px;width:100%;justify-content:center;">Free — No Registration</span>';
+      grid.innerHTML += '<div class="event-card">' +
+        '<div class="event-card-top">' +
+          '<div class="event-date-box"><div class="ev-day">' + day + '</div><div class="ev-month">' + month + '</div></div>' +
+          '<div class="event-card-meta"><div class="ev-series">' + ev.series + '</div><div class="ev-title">' + ev.name + '</div></div>' +
+        '</div>' +
+        '<div class="event-card-body">' +
+          '<div class="ev-detail"><i class="ti ti-clock" aria-hidden="true"></i>' + ev.time + '</div>' +
+          '<div class="ev-detail"><i class="ti ti-map-pin" aria-hidden="true"></i>' + ev.location + ', ' + ev.city + '</div>' +
+          '<div class="ev-desc">' + ev.description + ' ' + ev.note + '</div>' +
+          '<div class="ev-badges"><span class="badge badge-free"><i class="ti ti-check" style="font-size:10px;"></i> ' + ev.cost + '</span>' +
+          (ev.registration ? '<span class="badge badge-reg"><i class="ti ti-calendar" style="font-size:10px;"></i> Registration required</span>' : '') +
+          '<span class="badge badge-food"><i class="ti ti-tools-kitchen-2" style="font-size:10px;"></i> Food served</span>' + tbc + '</div>' +
+          regBtn +
+        '</div>' +
+      '</div>';
+    });
+  }
+
+  fetch('/events.json')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      eventsData = data;
+      renderEvents();
+    })
+    .catch(function() {
+      renderEvents();
+    });
+
+  // ── HAMBURGER MENU ──
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobile-menu');
+  var menuOverlay = document.getElementById('menu-overlay');
+  function openMenu() {
+    hamburger.classList.add('open');
+    mobileMenu.classList.add('open');
+    menuOverlay.classList.add('open');
+    hamburger.setAttribute('aria-expanded','true');
+    mobileMenu.setAttribute('aria-hidden','false');
+  }
+  function closeMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    menuOverlay.classList.remove('open');
+    hamburger.setAttribute('aria-expanded','false');
+    mobileMenu.setAttribute('aria-hidden','true');
+  }
+  hamburger.addEventListener('click', function() {
+    if (mobileMenu.classList.contains('open')) { closeMenu(); } else { openMenu(); }
+  });
+  menuOverlay.addEventListener('click', closeMenu);
+
+  // BUG 2 FIX: removed duplicate nested mobileMenu listener
+  mobileMenu.addEventListener('click', function(e) {
+    var link = e.target.closest('A');
+    if (!link) return;
+    var href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      e.preventDefault();
+      closeMenu();
+      setTimeout(function() {
+        var target = document.querySelector(href);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    } else {
+      closeMenu();
+    }
+  });  // BUG 3 FIX: added missing closing }); for mobileMenu listener
+
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMenu(); });
+
+  // ── SCROLL REVEAL ──
   var io = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) { if(e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
   }, {threshold: 0.1});
   document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
-})();
+
+});
 </script>
 
 </body>
