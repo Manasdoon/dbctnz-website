@@ -262,17 +262,17 @@ footer{background:#111c28;padding:48px 40px 24px;}
 <div class="mobile-menu-overlay" id="menu-overlay" onclick="closeMenu()"></div>
 <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
   <nav class="mobile-nav-links">
-    <a href="#about" class="mobile-nav-link" onclick="closeMenu()">About</a>
-    <a href="#initiatives" class="mobile-nav-link" onclick="closeMenu()">Initiatives</a>
-    <a href="#events" class="mobile-nav-link" onclick="closeMenu()">Events</a>
+    <a href="#about" class="mobile-nav-link">About</a>
+    <a href="#initiatives" class="mobile-nav-link">Initiatives</a>
+    <a href="#events" class="mobile-nav-link">Events</a>
     <a href="https://www.dbctnz.org.nz/our-story" class="mobile-nav-link">Our Story</a>
     <a href="https://www.dbctnz.org.nz/special-events" class="mobile-nav-link">Special Events</a>
     <a href="https://www.dbctnz.org.nz/publications" class="mobile-nav-link">Publications</a>
-    <a href="#media" class="mobile-nav-link" onclick="closeMenu()">Media</a>
-    <a href="#contact" class="mobile-nav-link" onclick="closeMenu()">Contact</a>
+    <a href="#media" class="mobile-nav-link">Media</a>
+    <a href="#contact" class="mobile-nav-link">Contact</a>
   </nav>
   <div class="mobile-nav-cta">
-    <a href="#donate" class="btn btn-outline" onclick="closeMenu()">Donate</a>
+    <a href="#donate" class="btn btn-outline">Donate</a>
     <a href="https://www.dbctnz.org.nz/membership" class="btn btn-ochre">Join the Trust</a>
   </div>
 </div>
@@ -591,7 +591,6 @@ function openMenu() {
   menuOverlay.classList.add('open');
   hamburger.setAttribute('aria-expanded','true');
   mobileMenu.setAttribute('aria-hidden','false');
-  document.body.style.overflow = 'hidden';
 }
 function closeMenu() {
   hamburger.classList.remove('open');
@@ -599,10 +598,14 @@ function closeMenu() {
   menuOverlay.classList.remove('open');
   hamburger.setAttribute('aria-expanded','false');
   mobileMenu.setAttribute('aria-hidden','true');
-  document.body.style.overflow = '';
 }
 hamburger.addEventListener('click', function() {
   if (mobileMenu.classList.contains('open')) { closeMenu(); } else { openMenu(); }
+});
+menuOverlay.addEventListener('click', closeMenu);
+// Close menu when any link in the drawer is clicked (after navigation)
+mobileMenu.addEventListener('click', function(e) {
+  if (e.target.tagName === 'A') { setTimeout(closeMenu, 50); }
 });
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMenu(); });
 
