@@ -186,6 +186,25 @@ footer{background:#111c28;padding:48px 40px 24px;}
 .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
 
+/* ── HAMBURGER BUTTON ── */
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;width:40px;height:40px;background:none;border:none;cursor:pointer;padding:4px;border-radius:8px;gap:5px;margin-left:12px;transition:background 0.15s;}
+.nav-hamburger:hover{background:var(--snow);}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:transform 0.3s ease,opacity 0.3s ease;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* ── MOBILE DRAWER ── */
+.mobile-menu{position:fixed;top:0;right:0;bottom:0;width:280px;background:#fff;z-index:999;box-shadow:-4px 0 24px rgba(26,35,50,0.15);transform:translateX(100%);transition:transform 0.3s ease;display:flex;flex-direction:column;padding-top:80px;}
+.mobile-menu.open{transform:translateX(0);}
+.mobile-menu-overlay{display:none;position:fixed;inset:0;background:rgba(26,35,50,0.4);z-index:998;opacity:0;transition:opacity 0.3s;}
+.mobile-menu-overlay.open{opacity:1;}
+.mobile-nav-links{display:flex;flex-direction:column;padding:8px 0;}
+.mobile-nav-link{padding:14px 28px;font-size:14px;color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);transition:color 0.15s,background 0.15s;}
+.mobile-nav-link:hover{color:var(--navy);background:var(--snow);}
+.mobile-nav-cta{display:flex;flex-direction:column;gap:10px;padding:24px 28px;margin-top:auto;border-top:1px solid var(--border);}
+.mobile-nav-cta .btn{justify-content:center;}
+
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
   .hero-content{padding:0 32px;} .hero-h1{font-size:36px;}
@@ -195,7 +214,9 @@ footer{background:#111c28;padding:48px 40px 24px;}
   .wwd-grid{grid-template-columns:1fr 1fr;}
   .events-grid{grid-template-columns:1fr;}
   .footer-grid{grid-template-columns:1fr 1fr;}
-  .nav-links{display:none;}
+  .nav-links,.nav-cta{display:none;}
+  .nav-hamburger{display:flex;}
+  .mobile-menu-overlay{display:block;}
   .container{padding:0 20px;}
   .section{padding:52px 0;}
 }
@@ -231,8 +252,30 @@ footer{background:#111c28;padding:48px 40px 24px;}
       <a href="#donate" class="btn btn-outline" style="font-size:12px; padding:7px 14px;">Donate</a>
       <a href="https://www.dbctnz.org.nz/membership" class="btn btn-ochre" style="font-size:12px; padding:7px 16px;">Join the Trust</a>
     </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+
+<!-- ── MOBILE DRAWER ── -->
+<div class="mobile-menu-overlay" id="menu-overlay" onclick="closeMenu()"></div>
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <nav class="mobile-nav-links">
+    <a href="#about" class="mobile-nav-link" onclick="closeMenu()">About</a>
+    <a href="#initiatives" class="mobile-nav-link" onclick="closeMenu()">Initiatives</a>
+    <a href="#events" class="mobile-nav-link" onclick="closeMenu()">Events</a>
+    <a href="https://www.dbctnz.org.nz/our-story" class="mobile-nav-link">Our Story</a>
+    <a href="https://www.dbctnz.org.nz/special-events" class="mobile-nav-link">Special Events</a>
+    <a href="https://www.dbctnz.org.nz/publications" class="mobile-nav-link">Publications</a>
+    <a href="#media" class="mobile-nav-link" onclick="closeMenu()">Media</a>
+    <a href="#contact" class="mobile-nav-link" onclick="closeMenu()">Contact</a>
+  </nav>
+  <div class="mobile-nav-cta">
+    <a href="#donate" class="btn btn-outline" onclick="closeMenu()">Donate</a>
+    <a href="https://www.dbctnz.org.nz/membership" class="btn btn-ochre">Join the Trust</a>
+  </div>
+</div>
 
 <!-- ── HERO ── -->
 <section class="hero" id="home">
@@ -537,6 +580,31 @@ fetch('/events.json')
 
 var eventsData = {"events":[]};
 
+
+// ── HAMBURGER MENU ──
+var hamburger = document.getElementById('hamburger');
+var mobileMenu = document.getElementById('mobile-menu');
+var menuOverlay = document.getElementById('menu-overlay');
+function openMenu() {
+  hamburger.classList.add('open');
+  mobileMenu.classList.add('open');
+  menuOverlay.classList.add('open');
+  hamburger.setAttribute('aria-expanded','true');
+  mobileMenu.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+}
+function closeMenu() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  menuOverlay.classList.remove('open');
+  hamburger.setAttribute('aria-expanded','false');
+  mobileMenu.setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+}
+hamburger.addEventListener('click', function() {
+  if (mobileMenu.classList.contains('open')) { closeMenu(); } else { openMenu(); }
+});
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMenu(); });
 
 // ── SCROLL REVEAL ──
 (function() {
