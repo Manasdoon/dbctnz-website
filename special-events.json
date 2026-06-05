@@ -47,6 +47,23 @@
       "id": "bank-of-baroda-2026",
       "flyer_image": "/images/uploads/bank-of-baroda-flyer.jpg",
       "category": "Banking Event"
+    },
+    {
+      "active": true,
+      "header_color_to": "#2c3e55",
+      "link_url": "RSVP",
+      "name": "Sambhojana Utsav",
+      "time": "10am - 4pm",
+      "tagline": "Sri Venkateswara Swamy Temple of Wellington brings you a joy of eating together for a noble cause. ",
+      "date": "2026-06-20",
+      "link_label": "https://www.svwt.org.nz/events-1/sambhojana-utsav-2026",
+      "date_display": "20th June 2026",
+      "location": "Indian Cultural Centre 119/121 Nelson St",
+      "subtitle": "Sri Venkateswara Swamy Temple of Wellington",
+      "header_color_from": "#b71cc0",
+      "id": "Sambhojana_Utsav",
+      "flyer_image": "/images/uploads/sambhojana-utsav.jpg",
+      "category": "Food fair"
     }
   ]
 }
