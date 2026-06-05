@@ -2,19 +2,19 @@
   "special_events": [
     {
       "active": true,
-      "header_color_to": "#f07030",
-      "link_url": "https://www.barodanzltd.co.nz/",
-      "name": "Bank of Baroda (NZ) Ltd.",
-      "time": "9:30 AM – 4:00 PM",
-      "date": "2026-06-06",
-      "link_label": "Visit Website",
-      "date_display": "Saturday 6th June 2026",
-      "location": "55 Featherston Street, Wellington 6011",
-      "subtitle": "Mega Account Opening Festival",
-      "header_color_from": "#e85c1a",
-      "id": "bank-of-baroda-2026",
-      "flyer_image": "/images/uploads/bank-of-baroda-flyer.jpg",
-      "category": "Banking Event"
+      "header_color_to": "#2c3e55",
+      "link_url": "https://forms.gle/LR52NDg5wKZ8CuQ48",
+      "name": "2nd Screening of Krishnavtaram, Hridiyam 1. ",
+      "time": "3 pm ",
+      "date": "2026-06-13",
+      "link_label": "Book Now",
+      "date_display": "Saturday 13th June 2026",
+      "location": "Monterey Cinema 68 Queen Street, Upper Hutt Central, Upper Hutt 5018",
+      "subtitle": "After full house of 1st show Forum films, Hindu Foundation NZ and Devbhoomi Charitable trust NZ brings you 2nd show of the movie.",
+      "header_color_from": "#e27016",
+      "id": "Krishnavataram-2nd-Show",
+      "flyer_image": "/images/uploads/krishna-2nd.jpg",
+      "category": "Movie "
     },
     {
       "active": true,
@@ -34,19 +34,19 @@
     },
     {
       "active": true,
-      "header_color_to": "#2c3e55",
-      "link_url": "https://forms.gle/LR52NDg5wKZ8CuQ48",
-      "name": "2nd Screening of Krishnavtaram, Hridiyam 1. ",
-      "time": "3 pm ",
-      "date": "2026-06-13",
-      "link_label": "Book Now",
-      "date_display": "Saturday 13th June 2026",
-      "location": "Monterey Cinema 68 Queen Street, Upper Hutt Central, Upper Hutt 5018",
-      "subtitle": "After full house of 1st show Forum films, Hindu Foundation NZ and Devbhoomi Charitable trust NZ brings you 2nd show of the movie.",
-      "header_color_from": "#e27016",
-      "id": "Krishnavataram-2nd-Show",
-      "flyer_image": "/images/uploads/krishna-2nd.jpg",
-      "category": "Movie "
+      "header_color_to": "#f07030",
+      "link_url": "https://www.barodanzltd.co.nz/",
+      "name": "Bank of Baroda (NZ) Ltd.",
+      "time": "9:30 AM – 4:00 PM",
+      "date": "2026-06-06",
+      "link_label": "Visit Website",
+      "date_display": "Saturday 6th June 2026",
+      "location": "55 Featherston Street, Wellington 6011",
+      "subtitle": "Mega Account Opening Festival",
+      "header_color_from": "#e85c1a",
+      "id": "bank-of-baroda-2026",
+      "flyer_image": "/images/uploads/bank-of-baroda-flyer.jpg",
+      "category": "Banking Event"
     }
   ]
 }
