@@ -18,22 +18,6 @@
     },
     {
       "active": true,
-      "header_color_to": "#7a3010",
-      "link_url": "https://www.eventbrite.co.nz/e/sapta-thandavam-tickets-1986969362852",
-      "name": "Sapta Thandavam",
-      "time": "Show 1: 3:00 PM – 5:00 PM | Show 2: 7:00 PM – 9:00 PM",
-      "date": "2026-06-06",
-      "link_label": "Get Tickets",
-      "date_display": "Saturday 6th June 2026",
-      "location": "The Little Theatre, 2 Queens Drive, Lower Hutt",
-      "subtitle": "Natraj School of Dance",
-      "header_color_from": "#3b1a08",
-      "id": "sapta-thandavam-2026",
-      "flyer_image": "/images/uploads/sapta-thandavam-flyer-1-.jpg",
-      "category": "Dance Production"
-    },
-    {
-      "active": true,
       "header_color_to": "#2c3e55",
       "link_url": "https://www.svwt.org.nz/events-1/sambhojana-utsav-2026",
       "name": "Sambhojana Utsav",
@@ -48,22 +32,6 @@
       "id": "Sambhojana_Utsav",
       "flyer_image": "/images/uploads/sambhojana-utsav.jpg",
       "category": "Food fair"
-    },
-    {
-      "active": true,
-      "header_color_to": "#f07030",
-      "link_url": "https://www.barodanzltd.co.nz/",
-      "name": "Bank of Baroda (NZ) Ltd.",
-      "time": "9:30 AM – 4:00 PM",
-      "date": "2026-06-06",
-      "link_label": "Visit Website",
-      "date_display": "Saturday 6th June 2026",
-      "location": "55 Featherston Street, Wellington 6011",
-      "subtitle": "Mega Account Opening Festival",
-      "header_color_from": "#e85c1a",
-      "id": "bank-of-baroda-2026",
-      "flyer_image": "/images/uploads/bank-of-baroda-flyer.jpg",
-      "category": "Banking Event"
     }
   ]
 }
