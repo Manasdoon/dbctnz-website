@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow"><!-- TODO: remove when going public -->
+<title>List your business — DBCT NZ Community Directory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1F2D3D; --navy-soft:#2A3B4D;
+    --ochre:#C0832C; --ochre-deep:#A66E22;
+    --cream:#FBF7EF; --cream-deep:#F2EEE4;
+    --card:#FFFFFF; --line:#E6DDCB; --line-soft:#EFE7D7;
+    --text:#2B2B2B; --muted:#6B6B6B;
+    --ok:#2E7D52; --err:#B23B3B;
+    --radius:12px; --maxw:640px;
+    --shadow:0 10px 40px rgba(31,45,61,.10);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--cream-deep);
+    color:var(--text);
+    font-family:"DM Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    padding:32px 16px 64px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto}
+
+  /* Header */
+  .masthead{text-align:center;margin-bottom:22px}
+  .masthead img{width:172px;max-width:62%;height:auto;display:inline-block;margin-bottom:12px}
+  .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--ochre-deep);font-weight:600}
+  .masthead h1{
+    font-family:"Cormorant Garamond",Georgia,serif;
+    font-weight:600;color:var(--navy);
+    font-size:30px;line-height:1.15;margin:6px 0 4px;
+  }
+  .masthead p{margin:0;color:var(--muted);font-size:14.5px}
+
+  /* Card */
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;
+  }
+
+  /* Progress */
+  .progress{padding:22px 28px 0}
+  .pips{display:flex;justify-content:space-between;gap:6px;margin-bottom:14px}
+  .pip{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+  .pip .dot{
+    width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+    font-size:12.5px;font-weight:600;background:var(--cream-deep);
+    color:var(--muted);border:1.5px solid var(--line);transition:all .25s ease;
+  }
+  .pip .lbl{font-size:10.5px;letter-spacing:.02em;color:var(--muted);text-align:center;
+    line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .pip.done .dot{background:var(--ochre);border-color:var(--ochre);color:#fff}
+  .pip.active .dot{background:var(--navy);border-color:var(--navy);color:#fff;transform:scale(1.08)}
+  .pip.active .lbl{color:var(--navy);font-weight:600}
+  .bar{height:5px;background:var(--cream-deep);border-radius:99px;overflow:hidden}
+  .bar > span{display:block;height:100%;width:16.6%;background:var(--ochre);
+    border-radius:99px;transition:width .35s cubic-bezier(.4,0,.2,1)}
+  .stepmeta{margin:14px 2px 0;font-size:13px;color:var(--muted)}
+  .stepmeta b{color:var(--navy);font-weight:600}
+
+  /* Steps */
+  form{margin:0}
+  .step{display:none;padding:24px 28px 4px;animation:fade .3s ease}
+  .step.is-active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .step h2{
+    font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;
+    color:var(--navy);font-size:25px;margin:0 0 4px;
+  }
+  .step .lead{color:var(--muted);font-size:14.5px;margin:0 0 20px}
+  .placeholder{
+    border:1px dashed var(--line);border-radius:10px;background:var(--cream);
+    padding:22px;color:var(--muted);font-size:14px;text-align:center;
+  }
+
+  /* Footer nav */
+  .nav{display:flex;justify-content:space-between;align-items:center;gap:12px;
+    padding:20px 28px 26px;border-top:1px solid var(--line-soft);margin-top:18px}
+  .btn{font-family:inherit;font-size:15px;font-weight:600;border-radius:8px;
+    padding:12px 26px;cursor:pointer;border:1.5px solid transparent;transition:all .18s ease}
+  .btn:focus-visible{outline:3px solid rgba(192,131,44,.45);outline-offset:2px}
+  .btn-primary{background:var(--navy);color:var(--cream)}
+  .btn-primary:hover{background:var(--navy-soft)}
+  .btn-ghost{background:transparent;color:var(--navy);border-color:var(--line)}
+  .btn-ghost:hover{border-color:var(--navy);background:var(--cream)}
+  .btn[hidden]{display:none}
+
+  /* Form controls (shared by all field steps) */
+  .field{margin-bottom:18px}
+  .field > label{display:block;font-size:13.5px;font-weight:600;color:var(--navy);margin-bottom:6px}
+  .field .req{color:var(--ochre-deep)}
+  .field .opt{color:var(--muted);font-weight:400;font-size:12px}
+  .field .hint{font-size:12px;color:var(--muted);margin-top:5px}
+  .control,select.control{
+    width:100%;font-family:inherit;font-size:15px;color:var(--text);
+    background:var(--card);border:1.5px solid var(--line);border-radius:8px;
+    padding:11px 13px;transition:border-color .15s ease,box-shadow .15s ease;
+  }
+  select.control{appearance:none;-webkit-appearance:none;cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236B6B6B' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 14px center;padding-right:38px}
+  .control:focus{outline:none;border-color:var(--ochre);box-shadow:0 0 0 3px rgba(192,131,44,.18)}
+  .control.invalid{border-color:var(--err);box-shadow:0 0 0 3px rgba(178,59,59,.12)}
+  .field .error{display:none;font-size:12px;color:var(--err);margin-top:5px}
+  .field.show-error .error{display:block}
+  .row2{display:flex;gap:14px}
+  .row2 > .field{flex:1;min-width:0}
+  .check{display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:14px;color:var(--text)}
+  .check input{width:18px;height:18px;margin-top:2px;accent-color:var(--ochre);flex:none;cursor:pointer}
+  .hidden{display:none}
+  @media (max-width:560px){ .row2{flex-direction:column;gap:0} }
+
+  /* Char counter (Step 2) */
+  textarea.control{resize:vertical;min-height:96px;line-height:1.5}
+  .counter{font-size:12px;color:var(--muted);margin-top:5px;text-align:right}
+  .counter.warn{color:var(--err);font-weight:600}
+
+  /* Service tag pills (Step 2) */
+  .pills{display:flex;flex-wrap:wrap;gap:9px;margin-top:4px}
+  .pill{font-family:inherit;font-size:13.5px;font-weight:500;color:var(--navy);
+    background:var(--cream);border:1.5px solid var(--line);border-radius:999px;
+    padding:8px 16px;cursor:pointer;transition:all .15s ease;user-select:none}
+  .pill:hover{border-color:var(--ochre)}
+  .pill:focus-visible{outline:3px solid rgba(192,131,44,.45);outline-offset:2px}
+  .pill[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+  .pill[disabled]{opacity:.4;cursor:not-allowed}
+  .pill[disabled]:hover{border-color:var(--line)}
+  .pillcount{font-size:12px;color:var(--muted);margin-top:9px}
+  .pillcount b{color:var(--navy)}
+
+  /* Privacy notice (Step 3) */
+  .notice{display:flex;gap:11px;align-items:flex-start;background:var(--cream);
+    border:1px solid var(--line);border-left:4px solid var(--ochre);
+    border-radius:8px;padding:13px 16px;font-size:13.5px;color:var(--text);line-height:1.55;margin-bottom:20px}
+  .notice strong{color:var(--navy)}
+  .notice-ico{font-size:16px;line-height:1.4;flex:none}
+  .hint.priv{color:var(--ochre-deep);font-weight:500}
+
+  /* Koha & payment (Step 4) */
+  .koha-note{margin:0 0 12px;font-size:13px;color:var(--muted);line-height:1.5}
+  .skip-koha{display:inline-flex;align-items:center;gap:9px;margin-top:16px;cursor:pointer;
+    font-size:13.5px;color:var(--muted)}
+  .skip-koha input{width:17px;height:17px;accent-color:var(--ochre);cursor:pointer;flex:none}
+  .skip-koha:hover{color:var(--navy)}
+  .amounts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .amount{font-family:inherit;font-size:16px;font-weight:600;color:var(--navy);
+    background:var(--card);border:1.5px solid var(--line);border-radius:10px;
+    padding:15px 6px;cursor:pointer;transition:all .15s ease}
+  .amount:hover{border-color:var(--ochre)}
+  .amount:focus-visible{outline:3px solid rgba(192,131,44,.45);outline-offset:2px}
+  .amount[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+  .dollar{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+  .dollar:focus-within{border-color:var(--ochre);box-shadow:0 0 0 3px rgba(192,131,44,.18)}
+  .dollar > span{padding:0 12px;color:var(--muted);font-weight:600;font-size:15px}
+  .dollar .control{border:none;border-radius:0;box-shadow:none !important;padding-left:0}
+
+  .methods{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .method{font-family:inherit;text-align:left;background:var(--card);border:1.5px solid var(--line);
+    border-radius:10px;padding:16px;cursor:pointer;transition:all .15s ease;display:flex;flex-direction:column;gap:3px}
+  .method:hover{border-color:var(--ochre)}
+  .method:focus-visible{outline:3px solid rgba(192,131,44,.45);outline-offset:2px}
+  .method[aria-pressed="true"]{border-color:var(--navy);box-shadow:inset 0 0 0 1.5px var(--navy);background:var(--cream)}
+  .m-ico{font-size:22px}
+  .m-title{font-weight:600;color:var(--navy);font-size:15px}
+  .m-sub{font-size:12.5px;color:var(--muted)}
+  .paynote{margin-top:18px;font-size:13px;color:var(--muted);line-height:1.55;min-height:1px}
+  .paynote.show{background:var(--cream);border:1px solid var(--line);border-left:4px solid var(--ochre);
+    border-radius:8px;padding:12px 15px}
+  @media (max-width:560px){ .methods{grid-template-columns:1fr} }
+
+  /* Review (Step 5) */
+  .rev-sec{border:1px solid var(--line);border-radius:10px;margin-bottom:14px;overflow:hidden}
+  .rev-head{display:flex;justify-content:space-between;align-items:center;
+    background:var(--cream);padding:11px 16px;border-bottom:1px solid var(--line)}
+  .rev-head h3{margin:0;font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;
+    color:var(--navy);font-size:18px}
+  .rev-edit{background:none;border:none;font-family:inherit;font-size:13px;font-weight:600;
+    color:var(--ochre-deep);cursor:pointer;padding:4px 6px;border-radius:6px}
+  .rev-edit:hover{background:rgba(192,131,44,.10)}
+  .rev-edit[hidden]{display:none}
+  .rev-body{padding:12px 16px}
+  .rev-row{display:flex;gap:14px;padding:6px 0;font-size:14px}
+  .rev-row .k{color:var(--muted);width:130px;flex:none}
+  .rev-row .v{color:var(--text);font-weight:500;word-break:break-word}
+  .rev-row .v.muted{color:var(--muted);font-weight:400;font-style:italic}
+  .rev-paid{display:inline-block;background:var(--ok);color:#fff;font-size:12px;font-weight:600;
+    padding:2px 9px;border-radius:99px;margin-left:8px}
+  .submit-error{background:#fbecec;border:1px solid #e6b8b8;border-radius:8px;
+    padding:12px 15px;font-size:13.5px;color:var(--err);margin-top:8px}
+  @media (max-width:560px){ .rev-row{flex-direction:column;gap:1px} .rev-row .k{width:auto} }
+
+  /* Confirmation (Step 6) */
+  .conf{text-align:center;padding:8px 4px 4px}
+  .conf-badge{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;
+    margin:6px auto 16px;font-size:30px}
+  .conf-badge.paid{background:rgba(46,125,82,.12)}
+  .conf-badge.pending{background:var(--cream-deep)}
+  .conf h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;color:var(--navy);
+    font-size:27px;margin:0 0 8px}
+  .conf .sub{color:var(--text);font-size:15px;line-height:1.6;margin:0 auto 22px;max-width:440px}
+  .refbox{display:flex;align-items:center;justify-content:center;gap:12px;
+    background:var(--cream);border:1px solid var(--line);border-left:4px solid var(--ochre);
+    border-radius:10px;padding:14px 18px;margin:0 auto 22px;max-width:380px}
+  .refbox .rl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px}
+  .refbox .rv{font-family:"DM Sans",monospace;font-size:18px;font-weight:600;color:var(--navy);letter-spacing:.02em}
+  .copybtn{background:var(--navy);color:var(--cream);border:none;border-radius:7px;
+    font-family:inherit;font-size:13px;font-weight:600;padding:9px 14px;cursor:pointer;flex:none}
+  .copybtn:hover{background:var(--navy-soft)}
+  .copybtn.copied{background:var(--ok)}
+  .bankcard{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:16px 18px;margin:0 auto 22px;max-width:420px;text-align:left}
+  .bankcard h4{margin:0 0 10px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ochre-deep)}
+  .bankrow{display:flex;justify-content:space-between;gap:14px;padding:5px 0;font-size:14px;border-bottom:1px solid var(--line-soft)}
+  .bankrow:last-child{border-bottom:none}
+  .bankrow .bk{color:var(--muted)} .bankrow .bv{color:var(--navy);font-weight:600;text-align:right}
+  .nextlist{text-align:left;max-width:420px;margin:0 auto 24px;padding:0;list-style:none}
+  .nextlist li{position:relative;padding:5px 0 5px 26px;font-size:14px;color:var(--text);line-height:1.5}
+  .nextlist li::before{content:"✓";position:absolute;left:0;color:var(--ochre-deep);font-weight:700}
+  .conf .foot{font-size:13px;color:var(--muted);line-height:1.6}
+  .conf .foot a{color:var(--ochre-deep);text-decoration:none}
+  .homebtn{display:inline-block;margin-top:18px;background:var(--navy);color:var(--cream);
+    text-decoration:none;font-weight:600;font-size:15px;padding:12px 28px;border-radius:8px}
+  .homebtn:hover{background:var(--navy-soft)}
+
+  .trustline{text-align:center;margin:20px auto 0;font-size:12px;color:var(--muted)}
+  .trustline a{color:var(--ochre-deep);text-decoration:none}
+
+  @media (max-width:560px){
+    body{padding:20px 12px 48px}
+    .progress{padding:18px 18px 0}
+    .step{padding:20px 18px 4px}
+    .nav{padding:18px 18px 22px}
+    .pip .lbl{display:none}
+    .masthead h1{font-size:26px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="masthead">
+      <img src="/images/uploads/main-logo.png" alt="Devbhoomi Charitable Trust NZ">
+      <div class="eyebrow">Community Directory</div>
+      <h1>List your business</h1>
+      <p>Join the directory and reach our community across Aotearoa.</p>
+    </header>
+
+    <div class="card">
+      <div class="progress">
+        <div class="pips" id="pips"></div>
+        <div class="bar"><span id="barFill"></span></div>
+        <div class="stepmeta">Step <b id="stepNum">1</b> of 6 · <span id="stepTitle">Business details</span></div>
+      </div>
+
+      <form id="dbctForm" novalidate>
+        <!-- Step 1 -->
+        <section class="step is-active" data-step="1">
+          <h2>Business details</h2>
+          <p class="lead">Tell us about your business and how people can reach you.</p>
+
+          <div class="field">
+            <label for="f_businessName">Business name <span class="req">*</span></label>
+            <input class="control" id="f_businessName" data-field="businessName" type="text" maxlength="80" autocomplete="organization">
+            <div class="error">Please enter your business name.</div>
+          </div>
+
+          <div class="row2">
+            <div class="field">
+              <label for="f_category">Category <span class="req">*</span></label>
+              <select class="control" id="f_category" data-field="category">
+                <option value="">Select a category…</option>
+              </select>
+              <div class="error">Please choose a category.</div>
+            </div>
+            <div class="field">
+              <label for="f_region">Region <span class="req">*</span></label>
+              <select class="control" id="f_region" data-field="regionChoice">
+                <option value="">Select a region…</option>
+              </select>
+              <div class="error">Please choose a region.</div>
+            </div>
+          </div>
+
+          <div class="field hidden" id="otherRegionWrap">
+            <label for="f_regionOther">Your region <span class="req">*</span></label>
+            <input class="control" id="f_regionOther" data-field="regionOther" type="text" maxlength="60" placeholder="e.g. Gisborne">
+            <div class="error">Please tell us your region.</div>
+          </div>
+
+          <div class="field">
+            <label for="f_mobile">Mobile <span class="req">*</span></label>
+            <input class="control" id="f_mobile" data-field="mobile" type="tel" inputmode="tel" maxlength="20" placeholder="e.g. 021 234 5678" autocomplete="tel">
+            <div class="error">Please enter a contact mobile number.</div>
+          </div>
+
+          <div class="row2">
+            <div class="field">
+              <label for="f_landline">Landline <span class="opt">(optional)</span></label>
+              <input class="control" id="f_landline" data-field="landline" type="tel" inputmode="tel" maxlength="20" placeholder="e.g. 09 123 4567">
+            </div>
+            <div class="field">
+              <label for="f_businessEmail">Business email <span class="opt">(optional)</span></label>
+              <input class="control" id="f_businessEmail" data-field="businessEmail" type="email" maxlength="120" placeholder="e.g. hello@yourbiz.co.nz">
+              <div class="error">Please check this email address.</div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="f_website">Website or Facebook page <span class="opt">(optional)</span></label>
+            <input class="control" id="f_website" data-field="website" type="url" maxlength="200" placeholder="e.g. https://facebook.com/yourbiz">
+            <div class="error">Please enter a valid web or Facebook address.</div>
+          </div>
+
+          <div class="field">
+            <label class="check">
+              <input type="checkbox" id="f_whatsapp" data-field="whatsapp">
+              <span>This mobile is also on WhatsApp <span class="opt">— we'll show a WhatsApp option on your listing</span></span>
+            </label>
+          </div>
+        </section>
+
+        <!-- Step 2 -->
+        <section class="step" data-step="2">
+          <h2>Your listing</h2>
+          <p class="lead">Describe what you offer so visitors know what to expect.</p>
+
+          <div class="field">
+            <label for="f_description">Description <span class="req">*</span></label>
+            <textarea class="control" id="f_description" data-field="description" maxlength="300" rows="4" placeholder="A short, friendly description of your business and what you offer."></textarea>
+            <div class="counter" id="descCounter">300 characters left</div>
+            <div class="error">Please add a short description.</div>
+          </div>
+
+          <div class="field">
+            <label for="f_languages">Languages spoken <span class="opt">(optional)</span></label>
+            <input class="control" id="f_languages" data-field="languages" type="text" maxlength="120" placeholder="e.g. English, Hindi, Nepali">
+            <div class="hint">Comma-separated. Helps visitors find businesses they can talk to in their language.</div>
+          </div>
+
+          <div class="field">
+            <label>Service tags <span class="opt">(choose up to 5)</span></label>
+            <div class="pills" id="tagPills"></div>
+            <div class="pillcount"><b id="tagCount">0</b> of 5 selected</div>
+          </div>
+        </section>
+
+        <!-- Step 3 -->
+        <section class="step" data-step="3">
+          <h2>Contact person</h2>
+          <p class="lead">A private contact so the Trust can reach you about your listing.</p>
+
+          <div class="notice" id="privacyNotice">
+            <span class="notice-ico" aria-hidden="true">🔒</span>
+            <span><strong>Your details stay private.</strong> We only use your name and email to look after your listing — they're never shown publicly.</span>
+          </div>
+
+          <div class="field">
+            <label for="f_contactName">Full name <span class="req">*</span></label>
+            <input class="control" id="f_contactName" data-field="contactName" type="text" maxlength="80" autocomplete="name">
+            <div class="error">Please enter your full name.</div>
+          </div>
+
+          <div class="field">
+            <label for="f_contactEmail">Email <span class="req">*</span></label>
+            <input class="control" id="f_contactEmail" data-field="contactEmail" type="email" maxlength="120" placeholder="e.g. you@example.co.nz" autocomplete="email">
+            <div class="hint priv">🔒 Private — not published</div>
+            <div class="error">Please enter a valid email address.</div>
+          </div>
+
+          <div class="field">
+            <label for="f_contactEmailConfirm">Confirm email <span class="req">*</span></label>
+            <input class="control" id="f_contactEmailConfirm" data-field="contactEmailConfirm" type="email" maxlength="120" autocomplete="off">
+            <div class="error">The two email addresses don't match.</div>
+          </div>
+        </section>
+
+        <!-- Step 4 -->
+        <section class="step" data-step="4">
+          <h2>Koha &amp; payment</h2>
+          <p class="lead">Your koha supports the Trust and keeps the directory free for the community.</p>
+
+          <div class="field">
+            <label>Choose an amount <span class="req">*</span></label>
+            <p class="koha-note">Your koha helps keep this directory free for the community — but it's entirely optional.</p>
+            <div class="amounts" id="amountChoices">
+              <button type="button" class="amount" data-amount="20">$20</button>
+              <button type="button" class="amount" data-amount="50">$50</button>
+              <button type="button" class="amount" data-amount="100">$100</button>
+              <button type="button" class="amount" data-amount="other">Other</button>
+            </div>
+            <div class="field hidden" id="customAmountWrap" style="margin-top:14px">
+              <label for="f_customAmount">Enter amount (NZD) <span class="req">*</span></label>
+              <div class="dollar"><span>$</span><input class="control" id="f_customAmount" data-field="customAmount" type="number" inputmode="decimal" min="5" max="500" step="1" placeholder="e.g. 35"></div>
+              <div class="hint">Any amount from $5 to $500.</div>
+            </div>
+            <div class="error" id="amountError">Please choose a koha amount, or skip for now.</div>
+            <label class="skip-koha" id="skipKohaWrap">
+              <input type="checkbox" id="skipKoha">
+              <span>I'll skip this time</span>
+            </label>
+          </div>
+
+          <div id="methodBlock">
+          <div class="field">
+            <label>How would you like to pay? <span class="req">*</span></label>
+            <div class="methods" id="methodChoices">
+              <button type="button" class="method" data-method="Stripe">
+                <span class="m-ico">💳</span>
+                <span class="m-title">Pay by card</span>
+                <span class="m-sub">Secure checkout via Stripe</span>
+              </button>
+              <button type="button" class="method" data-method="Bank Transfer">
+                <span class="m-ico">🏦</span>
+                <span class="m-title">Bank transfer</span>
+                <span class="m-sub">We'll show the account details next</span>
+              </button>
+            </div>
+            <div class="error" id="methodError">Please choose a payment method.</div>
+          </div>
+          </div>
+
+          <div class="paynote" id="payNote"></div>
+        </section>
+
+        <!-- Step 5 -->
+        <section class="step" data-step="5">
+          <h2>Review &amp; confirm</h2>
+          <p class="lead">Check everything over before you submit.</p>
+          <div id="reviewBody"></div>
+          <div class="submit-error hidden" id="submitError"></div>
+        </section>
+
+        <!-- Step 6 -->
+        <section class="step" data-step="6">
+          <div id="confirmBody"></div>
+        </section>
+
+        <div class="nav">
+          <button type="button" class="btn btn-ghost" id="backBtn" hidden>Back</button>
+          <span style="flex:1"></span>
+          <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
+        </div>
+      </form>
+    </div>
+
+    <p class="trustline">Devbhoomi Charitable Trust NZ · Registered Charity
+      <a href="https://www.register.charities.govt.nz/Charity/CC61651" target="_blank" rel="noopener">CC61651</a></p>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+
+  // Backend (Apps Script web app). Used by later steps for lists / checkout / submit.
+  var API_URL = "https://script.google.com/macros/s/AKfycbw0mnY6Cvb14HoBrkWTJitOu3HpLIkgYvKNbnLkGkcOXrNWqEtIGz0DHGrc0frm4FU7Pg/exec";
+
+  var TOTAL = 6;
+  var STEP_TITLES = {
+    1:"Business details", 2:"Your listing", 3:"Contact person",
+    4:"Koha & payment", 5:"Review & confirm", 6:"Confirmation"
+  };
+  var PIP_LABELS = {1:"Business",2:"Listing",3:"Contact",4:"Koha",5:"Review",6:"Done"};
+
+  var STORE_KEY = "dbct_directory_form";
+  var STEP_KEY  = "dbct_directory_step";
+
+  // ---- State ----
+  var state = loadState();
+  var current = parseInt(sessionStorage.getItem(STEP_KEY) || "1", 10) || 1;
+
+  function loadState(){
+    try { return JSON.parse(sessionStorage.getItem(STORE_KEY)) || {}; }
+    catch(e){ return {}; }
+  }
+  function saveState(){
+    try { sessionStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch(e){}
+  }
+
+  // ---- Field binding: any element with [data-field] persists automatically ----
+  function bindFields(){
+    document.querySelectorAll("[data-field]").forEach(function(el){
+      var key = el.getAttribute("data-field");
+      var evt = (el.type === "checkbox" || el.tagName === "SELECT") ? "change" : "input";
+      el.addEventListener(evt, function(){
+        state[key] = (el.type === "checkbox") ? el.checked : el.value;
+        saveState();
+      });
+    });
+  }
+  function restoreFields(){
+    document.querySelectorAll("[data-field]").forEach(function(el){
+      var key = el.getAttribute("data-field");
+      if (state[key] === undefined) return;
+      if (el.type === "checkbox") el.checked = !!state[key];
+      else el.value = state[key];
+    });
+  }
+
+  // ---- Validation registry: later steps register validators here ----
+  // window.DBCT.validators[stepNumber] = function(){ return true|false; }
+  window.DBCT = {
+    validators:{},
+    state:state,
+    save:saveState,
+    api:API_URL,
+    goTo:goTo
+  };
+
+  // ---- Rendering ----
+  var pipsEl = document.getElementById("pips");
+  for (var i=1;i<=TOTAL;i++){
+    var pip = document.createElement("div");
+    pip.className = "pip"; pip.setAttribute("data-pip", i);
+    pip.innerHTML = '<span class="dot">'+i+'</span><span class="lbl">'+PIP_LABELS[i]+'</span>';
+    pipsEl.appendChild(pip);
+  }
+
+  function showStep(n){
+    current = Math.max(1, Math.min(TOTAL, n));
+    sessionStorage.setItem(STEP_KEY, String(current));
+
+    document.querySelectorAll(".step").forEach(function(s){
+      s.classList.toggle("is-active", parseInt(s.getAttribute("data-step"),10) === current);
+    });
+    document.querySelectorAll("[data-pip]").forEach(function(p){
+      var idx = parseInt(p.getAttribute("data-pip"),10);
+      p.classList.toggle("done", idx < current);
+      p.classList.toggle("active", idx === current);
+    });
+
+    document.getElementById("stepNum").textContent = current;
+    document.getElementById("stepTitle").textContent = STEP_TITLES[current];
+    document.getElementById("barFill").style.width = ((current/TOTAL)*100).toFixed(1) + "%";
+
+    var back = document.getElementById("backBtn");
+    var next = document.getElementById("nextBtn");
+    back.hidden = (current === 1 || current === TOTAL);
+    if (current === TOTAL){ next.hidden = true; }
+    else { next.hidden = false; next.textContent = (current === 5) ? "Submit listing" : "Next"; }
+
+    var firstField = document.querySelector('.step[data-step="'+current+'"] [data-field]');
+    if (firstField) { try { firstField.focus({preventScroll:true}); } catch(e){} }
+    if (typeof window.DBCT.onStep === "function") window.DBCT.onStep(current);
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function goTo(n){ showStep(n); }
+
+  function next(){
+    var v = window.DBCT.validators[current];
+    if (typeof v === "function" && v() === false) return; // step blocks advance (or handles its own nav)
+    // If the user came from Review via an Edit link, jump straight back to Review.
+    if (state.__returnToReview && current !== 5){
+      state.__returnToReview = false; saveState();
+      showStep(5); return;
+    }
+    showStep(current + 1);
+  }
+  function back(){ showStep(current - 1); }
+
+  document.getElementById("nextBtn").addEventListener("click", next);
+  document.getElementById("backBtn").addEventListener("click", back);
+  document.getElementById("dbctForm").addEventListener("submit", function(e){ e.preventDefault(); next(); });
+
+  // ───────────────── Step 1 — Business details (DBCT-008) ─────────────────
+  var REGION_OTHER = "Other";
+
+  function populateSelect(sel, items, chosen){
+    items.forEach(function(v){
+      var o = document.createElement("option");
+      o.value = v; o.textContent = v;
+      if (v === chosen) o.selected = true;
+      sel.appendChild(o);
+    });
+  }
+
+  function loadLists(){
+    var catSel = document.getElementById("f_category");
+    var regSel = document.getElementById("f_region");
+
+    // Use cached lists if we already fetched them this session.
+    if (state.__lists && state.__lists.categories){
+      populateSelect(catSel, state.__lists.categories, state.category);
+      populateSelect(regSel, state.__lists.regions, state.regionChoice);
+      syncOtherRegion();
+      return;
+    }
+    fetch(API_URL + "?action=lists")
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (!d || !d.ok) throw new Error("bad lists response");
+        state.__lists = { categories:d.categories, regions:d.regions };
+        saveState();
+        populateSelect(catSel, d.categories, state.category);
+        populateSelect(regSel, d.regions, state.regionChoice);
+        syncOtherRegion();
+      })
+      .catch(function(){
+        // Don't block the form if the list fetch fails — let them type if needed.
+        catSel.innerHTML = '<option value="">Select a category…</option>';
+        var note = document.createElement("option");
+        note.value = ""; note.textContent = "(couldn't load — please refresh)";
+        catSel.appendChild(note);
+      });
+  }
+
+  function syncOtherRegion(){
+    var wrap = document.getElementById("otherRegionWrap");
+    var isOther = (document.getElementById("f_region").value === REGION_OTHER);
+    wrap.classList.toggle("hidden", !isOther);
+  }
+
+  document.getElementById("f_region").addEventListener("change", syncOtherRegion);
+
+  // Resolve the region actually stored: the dropdown choice, or the free text if "Other".
+  function resolvedRegion(){
+    var choice = (state.regionChoice || "").trim();
+    if (choice === REGION_OTHER) return (state.regionOther || "").trim();
+    return choice;
+  }
+
+  function markError(fieldEl, on){
+    var input = fieldEl.querySelector(".control");
+    fieldEl.classList.toggle("show-error", on);
+    if (input) input.classList.toggle("invalid", on);
+  }
+  function fieldOf(id){ return document.getElementById(id).closest(".field"); }
+
+  function validateStep1(){
+    var ok = true;
+    // Business name
+    var nameOk = !!(state.businessName && state.businessName.trim());
+    markError(fieldOf("f_businessName"), !nameOk); ok = ok && nameOk;
+    // Category
+    var catOk = !!(state.category && state.category.trim());
+    markError(fieldOf("f_category"), !catOk); ok = ok && catOk;
+    // Region (+ Other free text)
+    var regChosen = !!(state.regionChoice && state.regionChoice.trim());
+    markError(fieldOf("f_region"), !regChosen); ok = ok && regChosen;
+    if (state.regionChoice === REGION_OTHER){
+      var otherOk = !!(state.regionOther && state.regionOther.trim());
+      markError(fieldOf("f_regionOther"), !otherOk); ok = ok && otherOk;
+    }
+    // Mobile (forgiving: needs at least 8 digits)
+    var digits = (state.mobile || "").replace(/\D/g,"");
+    var mobOk = digits.length >= 8;
+    markError(fieldOf("f_mobile"), !mobOk); ok = ok && mobOk;
+    // Optional email — only validate if something was typed
+    if (state.businessEmail && state.businessEmail.trim()){
+      var emOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(state.businessEmail.trim());
+      markError(fieldOf("f_businessEmail"), !emOk); ok = ok && emOk;
+    } else { markError(fieldOf("f_businessEmail"), false); }
+
+    if (!ok){
+      var firstBad = document.querySelector(".step[data-step='1'] .field.show-error .control");
+      if (firstBad) firstBad.focus();
+    } else {
+      // Stamp the resolved region for the handler/review to use.
+      state.region = resolvedRegion();
+      saveState();
+    }
+    return ok;
+  }
+  window.DBCT.validators[1] = validateStep1;
+
+  // ───────────────── Step 2 — Your listing (DBCT-009) ─────────────────
+  var SERVICE_TAGS = [
+    "Delivery","Online/Remote","In-store","Appointments","Consultations",
+    "Wholesale","Custom orders","Emergency/After-hours","Free quote",
+    "Mobile service","Bookings","Gift vouchers"
+  ];
+  var MAX_TAGS = 5;
+  var DESC_MAX = 300;
+
+  function selectedTags(){
+    return Array.isArray(state.servicesTags) ? state.servicesTags.slice() : [];
+  }
+
+  function renderTags(){
+    var wrap = document.getElementById("tagPills");
+    wrap.innerHTML = "";
+    var chosen = selectedTags();
+    SERVICE_TAGS.forEach(function(tag){
+      var on = chosen.indexOf(tag) !== -1;
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "pill"; b.textContent = tag;
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      if (!on && chosen.length >= MAX_TAGS) b.disabled = true;
+      b.addEventListener("click", function(){ toggleTag(tag); });
+      wrap.appendChild(b);
+    });
+    document.getElementById("tagCount").textContent = chosen.length;
+  }
+
+  function toggleTag(tag){
+    var chosen = selectedTags();
+    var i = chosen.indexOf(tag);
+    if (i !== -1) chosen.splice(i,1);
+    else { if (chosen.length >= MAX_TAGS) return; chosen.push(tag); }
+    state.servicesTags = chosen;
+    saveState();
+    renderTags();
+  }
+
+  function updateDescCounter(){
+    var ta = document.getElementById("f_description");
+    var counter = document.getElementById("descCounter");
+    var left = DESC_MAX - (ta.value || "").length;
+    counter.textContent = left + " characters left";
+    counter.classList.toggle("warn", left < 20);
+  }
+  document.getElementById("f_description").addEventListener("input", function(){
+    updateDescCounter();
+    var f = this.closest(".field"); if (f) this.classList.remove("invalid"), f.classList.remove("show-error");
+  });
+
+  function validateStep2(){
+    var descOk = !!(state.description && state.description.trim());
+    markError(fieldOf("f_description"), !descOk);
+    if (!descOk){
+      var el = document.getElementById("f_description"); if (el) el.focus();
+    }
+    return descOk; // languages & tags are optional
+  }
+  window.DBCT.validators[2] = validateStep2;
+
+  // ───────────────── Step 3 — Contact person (DBCT-010) ─────────────────
+  function isEmail(v){ return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test((v||"").trim()); }
+
+  function validateStep3(){
+    var ok = true;
+
+    var nameOk = !!(state.contactName && state.contactName.trim());
+    markError(fieldOf("f_contactName"), !nameOk); ok = ok && nameOk;
+
+    var emailOk = isEmail(state.contactEmail);
+    markError(fieldOf("f_contactEmail"), !emailOk); ok = ok && emailOk;
+
+    // Confirm must be a valid email AND match the first (case-insensitive).
+    var a = (state.contactEmail || "").trim().toLowerCase();
+    var b = (state.contactEmailConfirm || "").trim().toLowerCase();
+    var matchOk = emailOk && b.length > 0 && a === b;
+    markError(fieldOf("f_contactEmailConfirm"), !matchOk); ok = ok && matchOk;
+
+    if (!ok){
+      var firstBad = document.querySelector(".step[data-step='3'] .field.show-error .control");
+      if (firstBad) firstBad.focus();
+    }
+    return ok;
+  }
+  window.DBCT.validators[3] = validateStep3;
+
+  // ───────────────── Step 4 — Koha & payment (DBCT-011) ─────────────────
+  var KOHA_MIN = 5, KOHA_MAX = 500;
+
+  function resolvedKoha(){
+    if (state.amountChoice === "other"){
+      var n = Number(state.customAmount);
+      return isNaN(n) ? null : n;
+    }
+    var p = Number(state.amountChoice);
+    return isNaN(p) ? null : p;
+  }
+
+  function renderAmounts(){
+    var skipped = (state.kohaSkip === true);
+    document.querySelectorAll("#amountChoices .amount").forEach(function(b){
+      b.setAttribute("aria-pressed", (!skipped && b.getAttribute("data-amount") === String(state.amountChoice)) ? "true" : "false");
+    });
+    document.getElementById("customAmountWrap").classList.toggle("hidden", skipped || state.amountChoice !== "other");
+    document.getElementById("skipKoha").checked = skipped;
+    // When skipping, payment method is irrelevant — hide that whole block.
+    document.getElementById("methodBlock").classList.toggle("hidden", skipped);
+  }
+  function renderMethods(){
+    document.querySelectorAll("#methodChoices .method").forEach(function(b){
+      b.setAttribute("aria-pressed", b.getAttribute("data-method") === state.paymentMethod ? "true" : "false");
+    });
+    updatePayNote();
+  }
+  function updatePayNote(){
+    var note = document.getElementById("payNote");
+    var amt = resolvedKoha();
+    if (state.paymentMethod === "Stripe"){
+      note.className = "paynote show";
+      note.innerHTML = "You'll be taken to Stripe's secure checkout" + (amt ? " to pay <strong>$" + amt + " NZD</strong>" : "") + ", then returned here to review and finish.";
+    } else if (state.paymentMethod === "Bank Transfer"){
+      note.className = "paynote show";
+      note.innerHTML = "We'll show you the Trust's bank account details and your payment reference after you submit. Your listing goes live once payment is confirmed.";
+    } else {
+      note.className = "paynote"; note.innerHTML = "";
+    }
+  }
+
+  document.querySelectorAll("#amountChoices .amount").forEach(function(b){
+    b.addEventListener("click", function(){
+      state.kohaSkip = false; // choosing an amount cancels skip
+      state.amountChoice = b.getAttribute("data-amount");
+      if (state.amountChoice !== "other") state.customAmount = "";
+      saveState(); renderAmounts(); restoreFields();
+      document.getElementById("amountError").parentNode.classList.remove("show-error");
+      updatePayNote();
+      if (state.amountChoice === "other"){ var c=document.getElementById("f_customAmount"); if(c) c.focus(); }
+    });
+  });
+  document.getElementById("skipKoha").addEventListener("change", function(){
+    state.kohaSkip = this.checked;
+    if (state.kohaSkip){ state.amountChoice = ""; state.customAmount = ""; state.paymentMethod = ""; }
+    saveState(); renderAmounts(); renderMethods();
+    document.getElementById("amountError").parentNode.classList.remove("show-error");
+    document.getElementById("methodError").parentNode.classList.remove("show-error");
+  });
+  document.getElementById("f_customAmount").addEventListener("input", function(){
+    document.getElementById("amountError").parentNode.classList.remove("show-error");
+    updatePayNote();
+  });
+  document.querySelectorAll("#methodChoices .method").forEach(function(b){
+    b.addEventListener("click", function(){
+      state.paymentMethod = b.getAttribute("data-method");
+      saveState(); renderMethods();
+      document.getElementById("methodError").parentNode.classList.remove("show-error");
+    });
+  });
+
+  function validateStep4(){
+    // Skip path — no koha, no payment method, straight to review.
+    if (state.kohaSkip === true){
+      state.kohaAmount = 0;
+      state.paymentMethod = "Skipped";
+      saveState();
+      return true; // → Step 5 review
+    }
+
+    var amt = resolvedKoha();
+    var amtOk = amt !== null && amt >= KOHA_MIN && amt <= KOHA_MAX;
+    var amtField = document.getElementById("amountError").parentNode;
+    amtField.classList.toggle("show-error", !amtOk);
+    if (!amtOk){
+      document.getElementById("amountError").textContent =
+        (amt !== null && (amt < KOHA_MIN || amt > KOHA_MAX))
+          ? ("Amount must be between $" + KOHA_MIN + " and $" + KOHA_MAX + ".")
+          : "Please choose a koha amount, or skip for now.";
+    }
+
+    var methodOk = (state.paymentMethod === "Stripe" || state.paymentMethod === "Bank Transfer");
+    document.getElementById("methodError").parentNode.classList.toggle("show-error", !methodOk);
+
+    if (!amtOk || !methodOk) return false;
+
+    state.kohaAmount = amt;
+    saveState();
+
+    if (state.paymentMethod === "Stripe"){
+      startStripeCheckout(amt);
+      return false;
+    }
+    return true; // Bank Transfer → Step 5 review
+  }
+  window.DBCT.validators[4] = validateStep4;
+
+  function startStripeCheckout(amount){
+    var btn = document.getElementById("nextBtn");
+    var original = btn.textContent;
+    btn.disabled = true; btn.textContent = "Connecting to Stripe…";
+    postAction({ action:"createCheckout", amount:amount, email:(state.contactEmail||"") })
+      .then(function(d){
+        if (d && d.ok && d.checkoutUrl){
+          // sessionStorage persists across this redirect; we return to Step 5.
+          window.location.href = d.checkoutUrl;
+        } else {
+          throw new Error((d && d.error) || "Could not start checkout.");
+        }
+      })
+      .catch(function(err){
+        btn.disabled = false; btn.textContent = original;
+        var note = document.getElementById("payNote");
+        note.className = "paynote show";
+        note.innerHTML = "<strong style='color:var(--err)'>Payment couldn't start.</strong> " +
+          (err && err.message ? err.message : "") + " Please try again, or choose Bank transfer.";
+      });
+  }
+
+  // POST helper — text/plain avoids a CORS preflight Apps Script can't answer.
+  function postAction(payload){
+    return fetch(API_URL, {
+      method:"POST",
+      headers:{ "Content-Type":"text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.json(); });
+  }
+  window.DBCT.postAction = postAction;
+
+  // ───────────────── Step 5 — Review & confirm (DBCT-012) ─────────────────
+  function esc(s){ return String(s==null?"":s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+  function rowHtml(k, v){
+    var blank = (v == null || String(v).trim() === "");
+    return '<div class="rev-row"><span class="k">'+esc(k)+'</span>'+
+           '<span class="v'+(blank?' muted':'')+'">'+(blank?'—':esc(v))+'</span></div>';
+  }
+
+  function kohaSummary(){
+    if (state.kohaSkip === true || state.paymentMethod === "Skipped") return "Skipped for now";
+    var amt = (state.kohaAmount!=null) ? state.kohaAmount : resolvedKoha();
+    var method = state.paymentMethod || "—";
+    return "$" + (amt||0) + " NZD · " + method;
+  }
+
+  function renderReview(){
+    var paid = (state.__paid === true); // set on Stripe return (5b)
+    var tagStr = Array.isArray(state.servicesTags) && state.servicesTags.length ? state.servicesTags.join(", ") : "";
+    var regionStr = (typeof resolvedRegion === "function") ? resolvedRegion() : (state.region||"");
+
+    var sections = [
+      { title:"Business details", step:1, rows:[
+        ["Business name", state.businessName],
+        ["Category", state.category],
+        ["Region", regionStr],
+        ["Mobile", state.mobile],
+        ["Landline", state.landline],
+        ["Business email", state.businessEmail],
+        ["Website / Facebook", state.website],
+        ["WhatsApp", state.whatsapp ? "Yes" : "No"]
+      ]},
+      { title:"Your listing", step:2, rows:[
+        ["Description", state.description],
+        ["Languages", state.languages],
+        ["Service tags", tagStr]
+      ]},
+      { title:"Contact person", step:3, rows:[
+        ["Full name", state.contactName],
+        ["Email", state.contactEmail]
+      ]},
+      { title:"Koha & payment", step:4, rows:[
+        ["Koha", kohaSummary()]
+      ], locked: paid }
+    ];
+
+    var html = "";
+    sections.forEach(function(sec){
+      var editBtn = sec.locked
+        ? '<span class="rev-paid">✓ Paid</span>'
+        : '<button type="button" class="rev-edit" data-edit="'+sec.step+'">Edit</button>';
+      html += '<div class="rev-sec"><div class="rev-head"><h3>'+esc(sec.title)+'</h3>'+editBtn+'</div><div class="rev-body">';
+      sec.rows.forEach(function(r){ html += rowHtml(r[0], r[1]); });
+      html += '</div></div>';
+    });
+    document.getElementById("reviewBody").innerHTML = html;
+
+    document.querySelectorAll("#reviewBody .rev-edit").forEach(function(b){
+      b.addEventListener("click", function(){
+        state.__returnToReview = true; saveState();
+        goTo(parseInt(b.getAttribute("data-edit"),10));
+      });
+    });
+  }
+
+  // (Review/confirmation rendering is wired via window.DBCT.onStep, defined below.)
+
+  // Submit (Skip / Bank now; Stripe rows are written on return in 5b).
+  function buildSubmitPayload(){
+    return {
+      businessName: state.businessName || "",
+      category: state.category || "",
+      region: (typeof resolvedRegion === "function") ? resolvedRegion() : (state.region||""),
+      website: state.website || "",
+      businessEmail: state.businessEmail || "",
+      landline: state.landline || "",
+      mobile: state.mobile || "",
+      whatsapp: state.whatsapp ? "yes" : "no",
+      description: state.description || "",
+      languages: state.languages || "",
+      servicesTags: Array.isArray(state.servicesTags) ? state.servicesTags : [],
+      contactName: state.contactName || "",
+      contactEmail: state.contactEmail || "",
+      kohaAmount: (state.kohaAmount!=null) ? state.kohaAmount : 0,
+      paymentMethod: state.paymentMethod || "Skipped",
+      paymentReference: state.paymentReference || ""
+    };
+  }
+
+  function submitListing(){
+    // Card listings are already written on Stripe return (5b) → finish without re-inserting.
+    if (state.__paid === true && state.__submitted === true){
+      showStep(6); return false;
+    }
+    var btn = document.getElementById("nextBtn");
+    var errBox = document.getElementById("submitError");
+    var original = btn.textContent;
+    btn.disabled = true; btn.textContent = "Submitting…";
+    errBox.classList.add("hidden");
+
+    postAction(buildSubmitPayload())
+      .then(function(d){
+        if (d && d.ok){
+          state.referenceCode = d.referenceCode;
+          state.submittedMethod = d.paymentMethod;
+          state.__submitted = true;
+          state.__row = d.row;
+          saveState();
+          btn.disabled = false; btn.textContent = original;
+          showStep(6);
+        } else {
+          throw new Error((d && d.error) || "Something went wrong.");
+        }
+      })
+      .catch(function(err){
+        btn.disabled = false; btn.textContent = original;
+        errBox.textContent = "Couldn't submit: " + (err && err.message ? err.message : "please try again.") + " You can press Submit to retry.";
+        errBox.classList.remove("hidden");
+      });
+    return false; // async — we advance to Step 6 on success ourselves
+  }
+  window.DBCT.validators[5] = submitListing;
+
+  // ───────────────── Step 6 — Confirmation (DBCT-013) ─────────────────
+  var TRUST_EMAIL = "info@dbctnz.org.nz";
+  var HOME_URL = "https://www.dbctnz.org.nz";
+  var BANK_NAME = "Devbhoomi Charitable Trust";
+  var BANK_ACCOUNT = "01-0530-0574546-00";
+
+  function renderConfirmation(){
+    var ref = state.referenceCode || "—";
+    var method = state.submittedMethod || state.paymentMethod || "Skipped";
+    var amt = (state.kohaAmount!=null) ? state.kohaAmount : 0;
+    var paid = (state.__paid === true) || /stripe/i.test(method);
+    var isBank = /bank/i.test(method);
+
+    var head, sub, badge, badgeCls, extra = "";
+
+    if (paid){
+      badge = "✓"; badgeCls = "paid";
+      head = "Payment confirmed — thank you!";
+      sub = "Your koha of <strong>$"+amt+" NZD</strong> has been received and your listing is now under review.";
+    } else if (isBank){
+      badge = "🏦"; badgeCls = "pending";
+      head = "Almost there — please complete your koha";
+      sub = "Your listing is saved. To complete it, please transfer your koha using the details below — your listing goes live once payment is confirmed.";
+      extra =
+        '<div class="bankcard"><h4>Bank transfer details</h4>'+
+        bankRow("Account name", BANK_NAME)+
+        bankRow("Account number", BANK_ACCOUNT)+
+        bankRow("Amount", "$"+amt+" NZD")+
+        bankRow("Reference", ref)+
+        '</div>';
+    } else {
+      badge = "✓"; badgeCls = "pending";
+      head = "Your listing has been submitted";
+      sub = "Thank you — your listing is now under review. No koha this time, and that's completely fine.";
+    }
+
+    var nextSteps =
+      '<ul class="nextlist">'+
+        '<li>Our team reviews new listings daily</li>'+
+        '<li>You\'ll receive an email within 24 hours</li>'+
+        '<li>Your listing goes live once approved'+(isBank?" and payment is confirmed":"")+'</li>'+
+      '</ul>';
+
+    var html =
+      '<div class="conf">'+
+        '<div class="conf-badge '+badgeCls+'">'+badge+'</div>'+
+        '<h2>'+esc(head)+'</h2>'+
+        '<p class="sub">'+sub+'</p>'+
+        '<div class="refbox"><div><span class="rl">Your reference</span>'+
+          '<span class="rv" id="refValue">'+esc(ref)+'</span></div>'+
+          '<button type="button" class="copybtn" id="copyRef">Copy</button></div>'+
+        extra+
+        nextSteps+
+        '<p class="foot">Questions? Email us at <a href="mailto:'+TRUST_EMAIL+'">'+TRUST_EMAIL+'</a></p>'+
+        '<a class="homebtn" href="'+HOME_URL+'">Return to website</a>'+
+      '</div>';
+
+    document.getElementById("confirmBody").innerHTML = html;
+
+    var copyBtn = document.getElementById("copyRef");
+    if (copyBtn){
+      copyBtn.addEventListener("click", function(){
+        var txt = state.referenceCode || "";
+        var done = function(){ copyBtn.textContent = "Copied"; copyBtn.classList.add("copied");
+          setTimeout(function(){ copyBtn.textContent = "Copy"; copyBtn.classList.remove("copied"); }, 1800); };
+        if (navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(txt).then(done).catch(done);
+        } else { done(); }
+      });
+    }
+
+    // Submission is complete — clear saved state so a future visit starts fresh.
+    clearSavedState();
+  }
+  function bankRow(k,v){ return '<div class="bankrow"><span class="bk">'+esc(k)+'</span><span class="bv">'+esc(v)+'</span></div>'; }
+
+  function clearSavedState(){
+    try { sessionStorage.removeItem(STORE_KEY); sessionStorage.removeItem(STEP_KEY); } catch(e){}
+  }
+
+  // Render review on Step 5, confirmation on Step 6.
+  window.DBCT.onStep = function(n){
+    if (n === 5) renderReview();
+    if (n === 6) renderConfirmation();
+  };
+
+  // ---- Init ----
+  bindFields();
+  restoreFields();
+  loadLists();
+  syncOtherRegion();
+  renderTags();
+  updateDescCounter();
+  renderAmounts();
+  renderMethods();
+  showStep(current);
+
+  // Clear a field's error state as soon as the user starts correcting it.
+  document.querySelectorAll(".step .control").forEach(function(el){
+    var evt = (el.tagName === "SELECT") ? "change" : "input";
+    el.addEventListener(evt, function(){
+      var f = el.closest(".field");
+      if (f) { f.classList.remove("show-error"); el.classList.remove("invalid"); }
+    });
+  });
+
+
+  // Stripe return hook (wired in DBCT-011/013): if we come back from checkout
+  // with ?paid=1&session_id=..., the payment step will verify and auto-advance.
+  // Left as a seam here so the shell stays focused.
+})();
+</script>
+</body>
+</html>
