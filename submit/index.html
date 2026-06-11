@@ -548,7 +548,7 @@
     var next = document.getElementById("nextBtn");
     back.hidden = (current === 1 || current === TOTAL);
     if (current === TOTAL){ next.hidden = true; }
-    else { next.hidden = false; next.textContent = (current === 5) ? "Submit listing" : "Next"; }
+    else { next.hidden = false; next.textContent = (current === 5) ? (state.__paid === true ? "Save & finish" : "Submit listing") : "Next"; }
 
     var firstField = document.querySelector('.step[data-step="'+current+'"] [data-field]');
     if (firstField) { try { firstField.focus({preventScroll:true}); } catch(e){} }
@@ -993,9 +993,18 @@
   }
 
   function submitListing(){
-    // Card listings are already written on Stripe return (5b) → finish without re-inserting.
+    // Card listings are already written on Stripe return → apply any edits, then finish.
     if (state.__paid === true && state.__submitted === true){
-      showStep(6); return false;
+      var btnP = document.getElementById("nextBtn");
+      var orig = btnP.textContent;
+      btnP.disabled = true; btnP.textContent = "Saving…";
+      var upd = buildSubmitPayload();
+      upd.action = "update";
+      upd.reference = state.referenceCode;
+      postAction(upd)
+        .then(function(){ btnP.disabled = false; btnP.textContent = orig; showStep(6); })
+        .catch(function(){ btnP.disabled = false; btnP.textContent = orig; showStep(6); }); // still finish; edits are best-effort
+      return false;
     }
     var btn = document.getElementById("nextBtn");
     var errBox = document.getElementById("submitError");
@@ -1123,6 +1132,73 @@
   renderMethods();
   showStep(current);
 
+  // ───────────────── Stripe return handling (DBCT-011 / 5b) ─────────────────
+  // On returning from Stripe checkout with ?session_id=..., verify server-side,
+  // write the paid row, and land on Step 5 in "paid" mode (amount locked).
+  function handleStripeReturn(){
+    var params = new URLSearchParams(window.location.search);
+    var sid = params.get("session_id");
+    if (!sid) return false;
+
+    // Clean the URL so a refresh can't re-trigger this.
+    try { history.replaceState({}, document.title, window.location.pathname); } catch(e){}
+
+    // Already finalised this session in a prior load? Just resume at review.
+    if (state.__paid === true && state.__submitted === true){
+      showStep(5); return true;
+    }
+
+    showStripeProcessing(true);
+    var payload = buildSubmitPayload();
+    payload.action = "finalizeStripe";
+    payload.sessionId = sid;
+
+    postAction(payload)
+      .then(function(d){
+        showStripeProcessing(false);
+        if (d && d.ok){
+          state.__paid = true;
+          state.__submitted = true;
+          state.paymentMethod = "Stripe";
+          state.submittedMethod = "Stripe";
+          state.referenceCode = d.referenceCode;
+          state.__row = d.row;
+          if (d.amount != null) state.kohaAmount = d.amount;
+          saveState();
+          showStep(5); // review in paid mode (renderReview locks the koha section)
+        } else {
+          throw new Error((d && d.error) || "We couldn't confirm your payment.");
+        }
+      })
+      .catch(function(err){
+        showStripeProcessing(false);
+        showStep(4);
+        var note = document.getElementById("payNote");
+        note.className = "paynote show";
+        note.innerHTML = "<strong style='color:var(--err)'>Payment confirmation failed.</strong> " +
+          (err && err.message ? err.message : "") +
+          " If you were charged, please email " + TRUST_EMAIL + " with your details and we'll sort it.";
+      });
+    return true;
+  }
+
+  function showStripeProcessing(on){
+    var card = document.querySelector(".card");
+    var existing = document.getElementById("stripeProcessing");
+    if (on){
+      if (existing) return;
+      var div = document.createElement("div");
+      div.id = "stripeProcessing";
+      div.style.cssText = "padding:48px 28px;text-align:center;color:var(--muted);font-size:15px";
+      div.innerHTML = "<div style='font-family:\"Cormorant Garamond\",serif;color:var(--navy);font-size:22px;margin-bottom:8px'>Confirming your payment…</div>Just a moment while we verify with Stripe.";
+      card.style.display = "none";
+      card.parentNode.insertBefore(div, card);
+    } else {
+      if (existing) existing.remove();
+      card.style.display = "";
+    }
+  }
+
   // Clear a field's error state as soon as the user starts correcting it.
   document.querySelectorAll(".step .control").forEach(function(el){
     var evt = (el.tagName === "SELECT") ? "change" : "input";
@@ -1132,10 +1208,8 @@
     });
   });
 
-
-  // Stripe return hook (wired in DBCT-011/013): if we come back from checkout
-  // with ?paid=1&session_id=..., the payment step will verify and auto-advance.
-  // Left as a seam here so the shell stays focused.
+  // If we're returning from Stripe, that flow takes over; otherwise normal start.
+  handleStripeReturn();
 })();
 </script>
 </body>
