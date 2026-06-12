@@ -138,6 +138,12 @@
   .d-contact .row{display:flex;gap:10px;font-size:15px}
   .d-contact .row .lab{color:var(--muted);width:90px;flex:none}
   .d-actions{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+  .wa-chip{display:inline-flex;align-items:center;gap:5px;background:rgba(37,211,102,.14);
+    color:#1a8a4b;border-radius:99px;font-size:12px;font-weight:600;padding:3px 10px;text-decoration:none;vertical-align:middle;margin-left:6px}
+  .wa-chip:hover{background:rgba(37,211,102,.24)}
+  .wa-chip svg{display:block}
+  .lbtn.wa-btn{background:#25D366;color:#fff;border-color:#25D366}
+  .lbtn.wa-btn:hover{background:#1fae55;border-color:#1fae55}
 
   footer{background:var(--navy);color:#9AA6B2;font-size:13px;text-align:center;padding:24px 0;margin-top:30px}
   footer a{color:var(--ochre)}
@@ -422,32 +428,59 @@
     wireSort(function(){ renderSearch(raw, 1); });
   }
 
-  function renderDetail(ref){
+  // Normalise an NZ mobile to wa.me international form. Returns null if not confident.
+  function waNumber(raw){
+    var d = String(raw||"").replace(/[^\d+]/g,"");
+    if (d.indexOf("+64")===0) d = d.slice(3);
+    else if (d.indexOf("64")===0 && d.length>=10) d = d.slice(2);
+    else if (d.indexOf("0")===0) d = d.slice(1);
+    else return null;
+    d = d.replace(/\D/g,"");
+    if (d.length < 8 || d.length > 11) return null;
+    return "64" + d;
+  }
+
+  function renderDetail(ref, fromHash){
     var l = listings.filter(function(x){ return x.ref === ref; })[0];
     if (!l){ viewEl.innerHTML = '<div class="empty"><h2>Listing not found</h2><p><a onclick="location.hash=\'\'" style="color:var(--ochre-deep);cursor:pointer">Back to directory</a></p></div>'; return; }
     var tags = (l.tags||[]).map(function(t){ return '<span class="lc-tag">'+esc(t)+'</span>'; }).join("");
+
+    var wa = l.whatsapp ? waNumber(l.mobile) : null;
+    var waTag = wa
+      ? ' <a class="wa-chip" href="https://wa.me/'+wa+'" target="_blank" rel="noopener" title="Chat on WhatsApp"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.8 14.3c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.1.1.3 0 .5l-.4.5-.3.3c-.1.1-.3.3-.1.6.1.3.7 1.1 1.4 1.8.9.8 1.7 1 2 1.2.3.1.5.1.6-.1l.7-.9c.2-.2.4-.2.6-.1l1.9.9c.2.1.4.2.5.3.1.2.1.7-.1 1.4z"/></svg> WhatsApp</a>'
+      : (l.whatsapp ? ' <span class="lc-tag">WhatsApp</span>' : '');
+
     var rows = "";
-    if (l.mobile) rows += '<div class="row"><span class="lab">Mobile</span><span>'+esc(l.mobile)+(l.whatsapp?' &nbsp;<span class="lc-tag">WhatsApp</span>':'')+'</span></div>';
+    if (l.mobile) rows += '<div class="row"><span class="lab">Mobile</span><span>'+esc(l.mobile)+waTag+'</span></div>';
     if (l.landline) rows += '<div class="row"><span class="lab">Landline</span><span>'+esc(l.landline)+'</span></div>';
     if (l.email) rows += '<div class="row"><span class="lab">Email</span><span><a href="mailto:'+esc(l.email)+'" style="color:var(--ochre-deep)">'+esc(l.email)+'</a></span></div>';
     if (l.website) rows += '<div class="row"><span class="lab">Web / FB</span><span><a href="'+esc(l.website)+'" target="_blank" rel="noopener" style="color:var(--ochre-deep)">'+esc(l.website)+'</a></span></div>';
 
+    // Breadcrumb: back to search if we came from there, else the category.
+    var crumb = (fromHash && fromHash.indexOf("search") > -1)
+      ? '<a onclick="history.back()">Search results</a>'
+      : '<a onclick="location.hash=\'#/category/'+encodeURIComponent(l.category)+'\'">'+esc(l.category)+'</a>';
+
+    var waBtn = wa ? '<a class="lbtn wa-btn" href="https://wa.me/'+wa+'" target="_blank" rel="noopener">Message on WhatsApp</a>' : '';
+
     viewEl.innerHTML =
-      '<div class="breadcrumb"><a onclick="location.hash=\'\'">Directory</a> › <a onclick="location.hash=\'#/category/'+encodeURIComponent(l.category)+'\'">'+esc(l.category)+'</a> › '+esc(l.name)+'</div>'+
+      '<div class="breadcrumb"><a onclick="location.hash=\'\'">Directory</a> › '+crumb+' › '+esc(l.name)+'</div>'+
       '<div class="detail"><div class="detail-head">'+avatar(l,64)+
         '<div><h1>'+esc(l.name)+(l.featured?'<span class="badge">Featured</span>':'')+'</h1>'+
         '<div class="d-cat">'+esc(l.category)+' · '+esc(l.region)+'</div></div></div>'+
         (l.description?'<h3>About</h3><p>'+esc(l.description)+'</p>':"")+
-        (l.languages?'<h3>Languages</h3><p>'+esc(l.languages)+'</p>':"")+
+        (l.languages?'<h3>Languages spoken</h3><p>'+esc(l.languages)+'</p>':"")+
         (tags?'<h3>Services</h3><div class="lc-tags">'+tags+'</div>':"")+
-        '<h3>Contact</h3><div class="d-contact">'+(rows||'<p class="lc-meta">Contact details not provided.</p>')+'</div>'+
+        '<h3>Get in touch</h3><div class="d-contact">'+(rows||'<p class="lc-meta">Contact details not provided.</p>')+'</div>'+
         '<div class="d-actions">'+
           (l.website?'<a class="lbtn primary" href="'+esc(l.website)+'" target="_blank" rel="noopener">Visit website</a>':"")+
+          waBtn+
           (l.email?'<a class="lbtn" href="mailto:'+esc(l.email)+'">Send enquiry</a>':"")+
         '</div></div>';
   }
 
   // ---- Router ----
+  var prevHash = "";
   function route(){
     var h = location.hash || "";
     if (h.indexOf("#/category/") === 0){
@@ -460,8 +493,11 @@
       var mq = h.match(/q=([^&]*)/); var mpg = h.match(/page=(\d+)/);
       renderSearch(mq?decodeURIComponent(mq[1]):"", mpg?parseInt(mpg[1],10):1);
     }
-    else if (h.indexOf("#/listing/") === 0){ renderDetail(decodeURIComponent(h.slice(10))); }
+    else if (h.indexOf("#/listing/") === 0){ renderDetail(decodeURIComponent(h.slice(10)), prevHash); }
     else { renderHome(); }
+    // Remember where we were (for the detail page's "back to search/category" breadcrumb),
+    // but don't overwrite it with the listing page itself.
+    if (h.indexOf("#/listing/") !== 0) prevHash = h;
     window.scrollTo({top:0,behavior:"smooth"});
   }
   window.addEventListener("hashchange", route);
