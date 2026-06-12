@@ -392,18 +392,34 @@
     });
   }
 
-  function renderSearch(q){
-    var query = (q||"").trim().toLowerCase();
-    var items = !query ? [] : listings.filter(function(l){
-      return [l.name,l.category,l.region,l.description,l.languages,(l.tags||[]).join(" ")]
-        .join(" ").toLowerCase().indexOf(query) !== -1;
-    });
-    items.sort(function(a,b){ return (b.featured?1:0)-(a.featured?1:0); });
-    var html = '<div class="breadcrumb"><a onclick="location.hash=\'\'">Directory</a> › Search: '+esc(q)+'</div>'+
-      '<div class="view-head"><h2>Search results</h2><span class="count">'+plural(items.length)+' for “'+esc(q)+'”</span></div>';
-    html += items.length ? '<div class="cards">'+items.map(listingCard).join("")+'</div>'
-                         : '<div class="empty"><h2>No matches</h2><p>Try a different word, or browse by category from the directory home.</p></div>';
+  function searchMatch(l, terms){
+    var hay = [l.name,l.category,l.region,l.description,l.languages,(l.tags||[]).join(" ")].join(" ").toLowerCase();
+    return terms.every(function(t){ return hay.indexOf(t) !== -1; }); // all words must appear
+  }
+
+  function renderSearch(q, page){
+    page = page || 1;
+    var raw = (q||"").trim();
+    var terms = raw.toLowerCase().split(/\s+/).filter(Boolean);
+    var matched = !terms.length ? [] : applySort(listings.filter(function(l){ return searchMatch(l, terms); }));
+    var total = matched.length;
+    var start = (page-1)*PER_PAGE;
+    var pageItems = matched.slice(start, start+PER_PAGE);
+    var baseHash = "#/search?q="+encodeURIComponent(raw);
+
+    var html = '<div class="breadcrumb"><a onclick="location.hash=\'\'">Directory</a> › Search: '+esc(raw)+'</div>'+
+      '<div class="view-head"><h2>Search results</h2>'+
+      (total?'<div class="sortbar-wrap">'+sortBar()+'</div>':'')+'</div>';
+
+    if (!total){
+      viewEl.innerHTML = html + '<div class="empty"><h2>No matches for “'+esc(raw)+'”</h2><p>Try a different word, or browse by category from the directory home.</p></div>';
+      return;
+    }
+    html += '<span class="count" style="display:block;margin:-10px 0 16px">'+plural(total)+' for “'+esc(raw)+'”</span>';
+    html += '<div class="cards">'+pageItems.map(listingCard).join("")+'</div>';
+    html += pager(total, page, baseHash);
     viewEl.innerHTML = html;
+    wireSort(function(){ renderSearch(raw, 1); });
   }
 
   function renderDetail(ref){
@@ -440,7 +456,10 @@
       if (qm > -1){ var mp = rest.match(/page=(\d+)/); if (mp) pg = parseInt(mp[1],10); rest = rest.slice(0, qm); }
       renderCategory(decodeURIComponent(rest), pg);
     }
-    else if (h.indexOf("#/search") === 0){ var m=h.match(/q=([^&]*)/); renderSearch(m?decodeURIComponent(m[1]):""); }
+    else if (h.indexOf("#/search") === 0){
+      var mq = h.match(/q=([^&]*)/); var mpg = h.match(/page=(\d+)/);
+      renderSearch(mq?decodeURIComponent(mq[1]):"", mpg?parseInt(mpg[1],10):1);
+    }
     else if (h.indexOf("#/listing/") === 0){ renderDetail(decodeURIComponent(h.slice(10))); }
     else { renderHome(); }
     window.scrollTo({top:0,behavior:"smooth"});
