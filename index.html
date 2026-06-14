@@ -253,7 +253,7 @@ footer{background:#111c28;padding:48px 40px 24px;}
       <a href="https://www.dbctnz.org.nz/publications" class="nav-link">Publications</a>
       <a href="#media" class="nav-link">Media</a>
       <a href="#contact" class="nav-link">Contact</a>
-      <a href="https://www.dbctnz.org.nz/directory/" class="nav-link">Directory</a>
+      <a href="https://www.dbctnz.org.nz/directory" class="nav-link">Directory</a>
     </div>
     <div class="nav-cta">
       <a href="#donate" class="btn btn-outline" style="font-size:12px; padding:7px 14px;">Donate</a>
@@ -277,7 +277,7 @@ footer{background:#111c28;padding:48px 40px 24px;}
     <a href="https://www.dbctnz.org.nz/publications" class="mobile-nav-link">Publications</a>
     <a href="#media" class="mobile-nav-link">Media</a>
     <a href="#contact" class="mobile-nav-link">Contact</a>
-    <a href="https://www.dbctnz.org.nz/directory/" class="nav-link">Directory</a>
+    <a href="https://www.dbctnz.org.nz/directory" class="mobile-nav-link">Directory</a>
   </nav>
   <div class="mobile-nav-cta">
     <a href="#donate" class="btn btn-outline">Donate</a>
@@ -571,7 +571,7 @@ document.addEventListener('DOMContentLoaded', function() {
           '<div class="ev-desc">' + ev.description + ' ' + ev.note + '</div>' +
           '<div class="ev-badges"><span class="badge badge-free"><i class="ti ti-check" style="font-size:10px;"></i> ' + ev.cost + '</span>' +
           (ev.registration ? '<span class="badge badge-reg"><i class="ti ti-calendar" style="font-size:10px;"></i> Registration required</span>' : '') +
-          '<span class="badge badge-food"><i class="ti ti-tools-kitchen-2" style="font-size:10px;"></i> Food served</span>' + tbc + '</div>' +
+          (ev.food ? '<span class="badge badge-food"><i class="ti ti-tools-kitchen-2" style="font-size:10px;"></i> Food served</span>' : '') + tbc + '</div>' +
           regBtn +
         '</div>' +
       '</div>';
