@@ -1,19 +1,19 @@
 {
   "events": [
     {
-      "topic_tbc": true,
-      "city": "Wellington",
-      "name": "Learning Hub — Session 8",
-      "time": "6:00pm – 8:00pm",
+      "topic_tbc": false,
+      "city": "Wellington, Lower Hutt",
+      "name": "Free Flu Vaccinations",
+      "time": "10am - 4pm ",
       "cost": "Free",
-      "date": "2026-06-13",
-      "date_display": "Saturday 13 June 2026",
-      "note": "Food is served. Free entry.",
-      "location": "Johnsonville Community Centre",
-      "series": "Learning Hub",
+      "date": "2026-06-16",
+      "date_display": "16th June 2026",
+      "note": "Its walk in, first come first serve and we have only 60 counts. ",
+      "location": "1 Hewer Crescent, NaeNae. Lower Hutt 5011",
+      "series": "Flu Jab",
       "registration": false,
-      "id": "learning-hub-s8",
-      "description": "For Parents Early Learning & Early Intervention\n• Overview of Early Learning in Aotearoa New Zealand\n• Importance of Early Intervention\n• Inclusive Practices in Early Childhood Settings\n• Transition from ECE to Schools\n\nFor Youth:\nGrowing up in NZ as Indian and how to balance your two worlds for better mental wellbeing. \nPositive impacts of it into education. \nHow to leverage multi-cultural environment positively. \n"
+      "id": "FLU Vaccines ",
+      "description": "Flu season is here, and we're making it easy to stay protected. Join our free on-site flu vaccination clinic on 16th June, 10 am  -4pm. A qualified nurse/pharmacist will be on hand, and each jab takes just a few minutes — drop in any time, no booking needed. Getting vaccinated is the best way to protect yourself, your colleagues, and those around you this season. Please wear short sleeves for easy access, and let the vaccinator know of any allergies or if you've been feeling unwell. Questions? Contact Devbhoomi Charitable Trust"
     }
   ]
 }
