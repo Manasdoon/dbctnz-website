@@ -1,37 +1,3 @@
 {
-  "special_events": [
-    {
-      "active": true,
-      "header_color_to": "#2c3e55",
-      "link_url": "https://forms.gle/LR52NDg5wKZ8CuQ48",
-      "name": "2nd Screening of Krishnavtaram, Hridiyam 1. ",
-      "time": "3 pm ",
-      "date": "2026-06-14",
-      "link_label": "Book Now",
-      "date_display": "Sunday 14th June 2026",
-      "location": "Monterey Cinema 68 Queen Street, Upper Hutt Central, Upper Hutt 5018",
-      "subtitle": "After full house of 1st show Forum films, Hindu Foundation NZ and Devbhoomi Charitable trust NZ brings you 2nd show of the movie.",
-      "header_color_from": "#e27016",
-      "id": "Krishnavataram-2nd-Show",
-      "flyer_image": "/images/uploads/krishna-14.jpg",
-      "category": "Movie "
-    },
-    {
-      "active": true,
-      "header_color_to": "#2c3e55",
-      "link_url": "https://www.svwt.org.nz/events-1/sambhojana-utsav-2026",
-      "name": "Sambhojana Utsav",
-      "time": "10am - 4pm",
-      "tagline": "Sri Venkateswara Swamy Temple of Wellington brings you a joy of eating together for a noble cause. ",
-      "date": "2026-06-20",
-      "link_label": "RSVP",
-      "date_display": "20th June 2026",
-      "location": "Indian Cultural Centre 119/121 Nelson St",
-      "subtitle": "Sri Venkateswara Swamy Temple of Wellington",
-      "header_color_from": "#b71cc0",
-      "id": "Sambhojana_Utsav",
-      "flyer_image": "/images/uploads/sambhojana-utsav.jpg",
-      "category": "Food fair"
-    }
-  ]
+  "special_events": []
 }
