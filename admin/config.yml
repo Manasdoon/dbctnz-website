@@ -7,72 +7,79 @@ media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
-# ── HERO BANNER ──
+  # ── HERO BANNER ──
   - name: "hero_banner"
     label: "Hero Banner"
-    label_singular: "Banner Slide"
-    file: "hero.json"
-    description: "Rotating banner images at the top of the homepage. Drag to reorder — the top slide shows first. Untick 'Show on website?' to hide a slide without deleting it."
-    fields:
-      - name: "slides"
-        label: "Banner Slides"
-        widget: "list"
+    files:
+      - name: "hero_banner"
+        label: "Hero Banner"
+        label_singular: "Banner Slide"
+        file: "hero.json"
+        description: "Rotating banner images at the top of the homepage. Drag to reorder — the top slide shows first. Untick 'Show on website?' to hide a slide without deleting it."
         fields:
-          - { name: "image",  label: "Banner Image (landscape, approx 1600px wide)",     widget: "image" }
-          - { name: "alt",    label: "Alt Text (describe the image for accessibility)",  widget: "string" }
-          - { name: "active", label: "Show on website?",                                 widget: "boolean", default: true }
-          
+          - name: "slides"
+            label: "Banner Slides"
+            widget: "list"
+            fields:
+              - { name: "image",  label: "Banner Image (landscape, approx 1600px wide)",     widget: "image" }
+              - { name: "alt",    label: "Alt Text (describe the image for accessibility)",  widget: "string" }
+              - { name: "active", label: "Show on website?",                                 widget: "boolean", default: true }
+
   # ── EVENTS ──
   - name: "events"
     label: "Events"
-    label_singular: "Event"
-    file: "events.json"
-    description: "Manage upcoming events. Past events are hidden automatically on the website."
-    fields:
+    files:
       - name: "events"
         label: "Events List"
-        widget: "list"
+        file: "events.json"
+        description: "Manage upcoming events. Past events are hidden automatically on the website."
         fields:
-          - { name: "id",           label: "ID (no spaces, use hyphens)",  widget: "string" }
-          - { name: "series",       label: "Series (e.g. Learning Hub)",   widget: "string" }
-          - { name: "name",         label: "Event Name",                   widget: "string" }
-          - { name: "date",         label: "Date",                         widget: "datetime", format: "YYYY-MM-DD", date_format: "DD MMM YYYY", time_format: false }
-          - { name: "date_display", label: "Date Display (e.g. Saturday 17 May 2025)", widget: "string" }
-          - { name: "time",         label: "Time (e.g. 6:00pm – 8:00pm)", widget: "string" }
-          - { name: "location",     label: "Venue Name",                   widget: "string" }
-          - { name: "city",         label: "City",                         widget: "string" }
-          - { name: "description",  label: "Description",                  widget: "text" }
-          - { name: "note",         label: "Additional Note (e.g. Food is served)", widget: "string" }
-          - { name: "cost",         label: "Cost (e.g. Free or $15)",      widget: "string" }
-          - { name: "registration", label: "Registration Required?",       widget: "boolean", default: true }
-          - { name: "topic_tbc",    label: "Topic TBC?",                   widget: "boolean", default: false }
+          - name: "events"
+            label: "Events"
+            widget: "list"
+            fields:
+              - { name: "id",           label: "ID (no spaces, use hyphens)",  widget: "string" }
+              - { name: "series",       label: "Series (e.g. Learning Hub)",   widget: "string" }
+              - { name: "name",         label: "Event Name",                   widget: "string" }
+              - { name: "date",         label: "Date",                         widget: "datetime", format: "YYYY-MM-DD", date_format: "DD MMM YYYY", time_format: false }
+              - { name: "date_display", label: "Date Display (e.g. Saturday 17 May 2025)", widget: "string" }
+              - { name: "time",         label: "Time (e.g. 6:00pm – 8:00pm)", widget: "string" }
+              - { name: "location",     label: "Venue Name",                   widget: "string" }
+              - { name: "city",         label: "City",                         widget: "string" }
+              - { name: "description",  label: "Description",                  widget: "text" }
+              - { name: "note",         label: "Additional Note (e.g. Food is served)", widget: "string" }
+              - { name: "cost",         label: "Cost (e.g. Free or $15)",      widget: "string" }
+              - { name: "registration", label: "Registration Required?",       widget: "boolean", default: true }
+              - { name: "topic_tbc",    label: "Topic TBC?",                   widget: "boolean", default: false }
 
   # ── SPECIAL EVENTS ──
   - name: "special_events"
     label: "Special Events"
-    label_singular: "Special Event"
-    file: "special-events.json"
-    description: "Manage special community events shown on the Special Events page — with flyer images, ticket links, and custom styling."
-    fields:
+    files:
       - name: "special_events"
         label: "Special Events List"
-        widget: "list"
+        file: "special-events.json"
+        description: "Manage special community events shown on the Special Events page — with flyer images, ticket links, and custom styling."
         fields:
-          - { name: "id",                 label: "ID (no spaces, use hyphens, e.g. sapta-thandavam-2026)", widget: "string" }
-          - { name: "name",               label: "Event Name",                    widget: "string" }
-          - { name: "subtitle",           label: "Subtitle (e.g. organiser name)", widget: "string", required: false }
-          - { name: "category",           label: "Category Badge (e.g. Dance Production, Banking Event)", widget: "string" }
-          - { name: "tagline",            label: "Tagline (short italic description)", widget: "string", required: false }
-          - { name: "date",               label: "Date",                          widget: "datetime", format: "YYYY-MM-DD", date_format: "DD MMM YYYY", time_format: false }
-          - { name: "date_display",       label: "Date Display (e.g. Saturday 6th June 2026)", widget: "string" }
-          - { name: "time",               label: "Time / Show Times",             widget: "string" }
-          - { name: "location",           label: "Venue & Address",               widget: "string" }
-          - { name: "flyer_image",        label: "Flyer Image",                   widget: "image" }
-          - { name: "link_url",           label: "Link URL (tickets or website)", widget: "string", required: false }
-          - { name: "link_label",         label: "Link Button Label (e.g. Get Tickets, Visit Website)", widget: "string", required: false }
-          - { name: "header_color_from",  label: "Card Header Colour (from)",     widget: "color", default: "#1a2332", required: false }
-          - { name: "header_color_to",    label: "Card Header Colour (to)",       widget: "color", default: "#2c3e55", required: false }
-          - { name: "active",             label: "Show on website?",              widget: "boolean", default: true }
+          - name: "special_events"
+            label: "Special Events"
+            widget: "list"
+            fields:
+              - { name: "id",                 label: "ID (no spaces, use hyphens, e.g. sapta-thandavam-2026)", widget: "string" }
+              - { name: "name",               label: "Event Name",                    widget: "string" }
+              - { name: "subtitle",           label: "Subtitle (e.g. organiser name)", widget: "string", required: false }
+              - { name: "category",           label: "Category Badge (e.g. Dance Production, Banking Event)", widget: "string" }
+              - { name: "tagline",            label: "Tagline (short italic description)", widget: "string", required: false }
+              - { name: "date",               label: "Date",                          widget: "datetime", format: "YYYY-MM-DD", date_format: "DD MMM YYYY", time_format: false }
+              - { name: "date_display",       label: "Date Display (e.g. Saturday 6th June 2026)", widget: "string" }
+              - { name: "time",               label: "Time / Show Times",             widget: "string" }
+              - { name: "location",           label: "Venue & Address",               widget: "string" }
+              - { name: "flyer_image",        label: "Flyer Image",                   widget: "image" }
+              - { name: "link_url",           label: "Link URL (tickets or website)", widget: "string", required: false }
+              - { name: "link_label",         label: "Link Button Label (e.g. Get Tickets, Visit Website)", widget: "string", required: false }
+              - { name: "header_color_from",  label: "Card Header Colour (from)",     widget: "color", default: "#1a2332", required: false }
+              - { name: "header_color_to",    label: "Card Header Colour (to)",       widget: "color", default: "#2c3e55", required: false }
+              - { name: "active",             label: "Show on website?",              widget: "boolean", default: true }
 
   # ── PUBLICATIONS ──
   - name: "publications"
