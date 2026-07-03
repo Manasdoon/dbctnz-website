@@ -7,6 +7,21 @@ media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
+# ── HERO BANNER ──
+  - name: "hero_banner"
+    label: "Hero Banner"
+    label_singular: "Banner Slide"
+    file: "hero.json"
+    description: "Rotating banner images at the top of the homepage. Drag to reorder — the top slide shows first. Untick 'Show on website?' to hide a slide without deleting it."
+    fields:
+      - name: "slides"
+        label: "Banner Slides"
+        widget: "list"
+        fields:
+          - { name: "image",  label: "Banner Image (landscape, approx 1600px wide)",     widget: "image" }
+          - { name: "alt",    label: "Alt Text (describe the image for accessibility)",  widget: "string" }
+          - { name: "active", label: "Show on website?",                                 widget: "boolean", default: true }
+          
   # ── EVENTS ──
   - name: "events"
     label: "Events"
