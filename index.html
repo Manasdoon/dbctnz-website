@@ -214,7 +214,7 @@ footer{background:#111c28;padding:48px 40px 24px;}
   .wwd-grid{grid-template-columns:1fr 1fr;}
   .events-grid{grid-template-columns:1fr;}
   .footer-grid{grid-template-columns:1fr 1fr;}
-  .nav-links,.nav-cta{display:none;}
+  .nav-links{display:none;}
   .nav-hamburger{display:flex;}
   .mobile-menu-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:998;}
   .mobile-menu-overlay.open{display:block;}
@@ -226,6 +226,17 @@ footer{background:#111c28;padding:48px 40px 24px;}
   .container{padding:0 20px;}
   .section{padding:52px 0;}
 }
+
+/* nav-dropdowns */
+.nav-item{position:relative;display:flex;align-items:center;}
+.nav-drop-toggle{background:none;border:none;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:5px;}
+.nav-chev{font-size:9px;line-height:1;transition:transform 0.2s;}
+.nav-drop-toggle[aria-expanded="true"] .nav-chev{transform:rotate(180deg);}
+.nav-dropdown{position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 30px rgba(26,35,50,0.14);padding:6px;min-width:190px;display:none;flex-direction:column;z-index:120;}
+.nav-dropdown.open{display:flex;}
+.nav-drop-link{padding:9px 14px;font-size:13px;color:var(--muted);text-decoration:none;border-radius:6px;white-space:nowrap;transition:color 0.15s,background 0.15s;}
+.nav-drop-link:hover{color:var(--ochre);background:var(--snow);}
+@media(max-width:560px){.nav-cta{display:none;}} /* cta-tablet */
 </style>
 </head>
 <body>
@@ -245,16 +256,27 @@ footer{background:#111c28;padding:48px 40px 24px;}
       <div class="nav-logo-text">Devbhoomi <small>Charitable Trust NZ</small></div>
     </a>
     <div class="nav-links">
-      <a href="#about" class="nav-link">About</a>
+      <div class="nav-item">
+        <button type="button" class="nav-link nav-drop-toggle" aria-expanded="false" aria-haspopup="true">About<span class="nav-chev" aria-hidden="true">&#9662;</span></button>
+        <div class="nav-dropdown" role="menu">
+          <a href="#about" class="nav-drop-link" role="menuitem">Who We Are</a>
+          <a href="https://www.dbctnz.org.nz/our-story" class="nav-drop-link" role="menuitem">Our Story</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <button type="button" class="nav-link nav-drop-toggle" aria-expanded="false" aria-haspopup="true">Community<span class="nav-chev" aria-hidden="true">&#9662;</span></button>
+        <div class="nav-dropdown" role="menu">
+          <a href="#events" class="nav-drop-link" role="menuitem">Events</a>
+          <a href="https://www.dbctnz.org.nz/special-events" class="nav-drop-link" role="menuitem">Special Events</a>
+          <a href="https://www.dbctnz.org.nz/publications" class="nav-drop-link" role="menuitem">Publications</a>
+          <a href="#media" class="nav-drop-link" role="menuitem">Media</a>
+        </div>
+      </div>
       <a href="#initiatives" class="nav-link">Initiatives</a>
-      <a href="#events" class="nav-link">Events</a>
-      <a href="https://www.dbctnz.org.nz/our-story" class="nav-link">Our Story</a>
-      <a href="https://www.dbctnz.org.nz/special-events" class="nav-link">Special Events</a>
-      <a href="https://www.dbctnz.org.nz/publications" class="nav-link">Publications</a>
-      <a href="#media" class="nav-link">Media</a>
-      <a href="#contact" class="nav-link">Contact</a>
       <a href="https://www.dbctnz.org.nz/directory" class="nav-link">Directory</a>
+      <a href="#contact" class="nav-link">Contact</a>
     </div>
+
     <div class="nav-cta">
       <a href="#donate" class="btn btn-outline" style="font-size:12px; padding:7px 14px;">Donate</a>
       <a href="https://www.dbctnz.org.nz/membership" class="btn btn-ochre" style="font-size:12px; padding:7px 16px;">Join the Trust</a>
@@ -270,15 +292,16 @@ footer{background:#111c28;padding:48px 40px 24px;}
 <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
   <nav class="mobile-nav-links">
     <a href="#about" class="mobile-nav-link">About</a>
+    <a href="https://www.dbctnz.org.nz/our-story" class="mobile-nav-link">Our Story</a>
     <a href="#initiatives" class="mobile-nav-link">Initiatives</a>
     <a href="#events" class="mobile-nav-link">Events</a>
-    <a href="https://www.dbctnz.org.nz/our-story" class="mobile-nav-link">Our Story</a>
     <a href="https://www.dbctnz.org.nz/special-events" class="mobile-nav-link">Special Events</a>
     <a href="https://www.dbctnz.org.nz/publications" class="mobile-nav-link">Publications</a>
     <a href="#media" class="mobile-nav-link">Media</a>
-    <a href="#contact" class="mobile-nav-link">Contact</a>
     <a href="https://www.dbctnz.org.nz/directory" class="mobile-nav-link">Directory</a>
+    <a href="#contact" class="mobile-nav-link">Contact</a>
   </nav>
+
   <div class="mobile-nav-cta">
     <a href="#donate" class="btn btn-outline">Donate</a>
     <a href="https://www.dbctnz.org.nz/membership" class="btn btn-ochre">Join the Trust</a>
@@ -683,6 +706,26 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
 
 });
+</script>
+
+<script>
+(function(){
+  function closeAll(){
+    document.querySelectorAll('.nav-dropdown.open').forEach(function(m){ m.classList.remove('open'); });
+    document.querySelectorAll('.nav-drop-toggle[aria-expanded="true"]').forEach(function(t){ t.setAttribute('aria-expanded','false'); });
+  }
+  document.querySelectorAll('.nav-drop-toggle').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      var isOpen = menu.classList.contains('open');
+      closeAll();
+      if(!isOpen){ menu.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+    });
+  });
+  document.addEventListener('click', closeAll);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ closeAll(); } });
+})();
 </script>
 </body>
 </html>
