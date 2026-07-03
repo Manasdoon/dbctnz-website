@@ -2,6 +2,11 @@
   "slides": [
     {
       "active": true,
+      "image": "/images/uploads/photo-2025-11-09-13-20-14-1-.jpg",
+      "alt": "Community leaders of the trust."
+    },
+    {
+      "active": true,
       "image": "/images/uploads/cholliyar.jpg",
       "alt": "Choliya dance from Kumaon reigon."
     },
@@ -14,11 +19,6 @@
       "active": true,
       "image": "/images/uploads/image0-2-.jpeg",
       "alt": "Jhumeelo folk dance by our women"
-    },
-    {
-      "active": true,
-      "image": "/images/uploads/photo-2025-11-09-13-20-14-1-.jpg",
-      "alt": "Community leaders of the trust."
     }
   ]
 }
