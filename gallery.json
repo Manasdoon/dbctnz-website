@@ -1,1 +1,22 @@
-{}
+{
+  "tall": {
+    "image": "/images/uploads/kedar-nath-1.jpg",
+    "alt": "Kedar Nath"
+  },
+  "photo2": {
+    "image": "/images/uploads/harsil.jpg",
+    "alt": "Harshil Valley"
+  },
+  "photo3": {
+    "image": "/images/uploads/image0-2-.jpeg",
+    "alt": "Dieali Performance"
+  },
+  "wide": {
+    "image": "/images/uploads/cholliyar.jpg",
+    "alt": "Choliya"
+  },
+  "band": {
+    "image": "/images/uploads/khirsu-1.jpg",
+    "alt": "Khirsu Calley with Chaukhamb"
+  }
+}
