@@ -25,6 +25,21 @@ collections:
               - { name: "alt",    label: "Alt Text (describe the image for accessibility)",  widget: "string" }
               - { name: "active", label: "Show on website?",                                 widget: "boolean", default: true }
 
+  # ── GALLERY ──
+  - name: "gallery"
+    label: "Gallery"
+    files:
+      - name: "gallery"
+        label: "Gallery Mosaic"
+        file: "gallery.json"
+        description: "Community gallery mosaic. Each slot has a fixed shape on the page — swap the photo in a slot without breaking the layout. 'Feature Band' works best with a wide/landscape photo, but crops safely from any shape."
+        fields:
+          - { name: "tall",   label: "Tall Photo (left column)",          widget: "object", fields: [{name: "image", label: "Image", widget: "image"}, {name: "alt", label: "Alt Text", widget: "string"}] }
+          - { name: "photo2", label: "Top Middle Photo",                  widget: "object", fields: [{name: "image", label: "Image", widget: "image"}, {name: "alt", label: "Alt Text", widget: "string"}] }
+          - { name: "photo3", label: "Top Right Photo",                   widget: "object", fields: [{name: "image", label: "Image", widget: "image"}, {name: "alt", label: "Alt Text", widget: "string"}] }
+          - { name: "wide",   label: "Wide Photo (middle row)",           widget: "object", fields: [{name: "image", label: "Image", widget: "image"}, {name: "alt", label: "Alt Text", widget: "string"}] }
+          - { name: "band",   label: "Feature Band (bottom, full-width)", widget: "object", fields: [{name: "image", label: "Image", widget: "image"}, {name: "alt", label: "Alt Text", widget: "string"}] }
+
   # ── EVENTS ──
   - name: "events"
     label: "Events"
@@ -99,15 +114,3 @@ collections:
       - { name: "excerpt",  label: "Excerpt (2-3 sentences)",           widget: "text" }
       - { name: "tags",     label: "Tags (comma separated)",            widget: "string" }
       - { name: "body",     label: "Full Article Content",              widget: "markdown" }
-
-      # ── GALLERY ──
-  - name: "gallery"
-    label: "Gallery"
-    file: "gallery.json"
-    description: "Community gallery mosaic. Each slot has a fixed shape on the page — swap the photo in a slot without breaking the layout. 'Feature Band' works best with a wide/landscape photo, but crops safely from any shape."
-    fields:
-      - { name: "tall",   label: "Tall Photo (left column)",     widget: "object", fields: [{name: "image", label: "Image", widget: "image"}, {name: "alt", label: "Alt Text", widget: "string"}] }
-      - { name: "photo2", label: "Top Middle Photo",              widget: "object", fields: [{name: "image", label: "Image", widget: "image"}, {name: "alt", label: "Alt Text", widget: "string"}] }
-      - { name: "photo3", label: "Top Right Photo",                widget: "object", fields: [{name: "image", label: "Image", widget: "image"}, {name: "alt", label: "Alt Text", widget: "string"}] }
-      - { name: "wide",   label: "Wide Photo (middle row)",       widget: "object", fields: [{name: "image", label: "Image", widget: "image"}, {name: "alt", label: "Alt Text", widget: "string"}] }
-      - { name: "band",   label: "Feature Band (bottom, full-width)", widget: "object", fields: [{name: "image", label: "Image", widget: "image"}, {name: "alt", label: "Alt Text", widget: "string"}] }
