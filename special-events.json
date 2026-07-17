@@ -33,6 +33,22 @@
       "id": "SKILLS  WORKSHOP ",
       "flyer_image": "/images/uploads/moe.jpg",
       "category": "Workshop"
+    },
+    {
+      "active": true,
+      "header_color_to": "#2c3e55",
+      "link_url": "https://forms.gle/5j8GrYuSZjJ9SY9RA",
+      "name": "DBCTNZ - Harela Celebration",
+      "time": "5:00 pm - 8:00 pm",
+      "tagline": "Lets celebrate Harela, an folk festival from Uttarakhand, dedicated to mother nature. This is a Pot-luck event so come along with some delicious food from the state. for any questions please text/call : 022-172-7167 or 021-045-8783. ",
+      "date": "2026-07-26",
+      "link_label": "Register here",
+      "date_display": "Sunday the 26th July",
+      "location": "Belmont memorial hall, 709 Western Hutt Road, Belmont, Lower Hutt 5010",
+      "header_color_from": "#1a2332",
+      "id": "Harela",
+      "flyer_image": "/images/uploads/photo-2026-07-17-16-47-44-1-.jpg",
+      "category": "Cultural event"
     }
   ]
 }
