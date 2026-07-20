@@ -9,6 +9,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
+  #publicConsentField:focus-within {
+  outline: 2px solid var(--ochre, #c8863a);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
   :root{
     --navy:#1F2D3D; --navy-soft:#2A3B4D;
     --ochre:#C0832C; --ochre-deep:#A66E22;
@@ -328,6 +333,19 @@
               <input type="checkbox" id="f_whatsapp" data-field="whatsapp">
               <span>This mobile is also on WhatsApp <span class="opt">— we'll show a WhatsApp option on your listing</span></span>
             </label>
+          </div>
+
+          <div class="notice" id="publicNotice">
+            <span class="notice-ico" aria-hidden="true">👁️</span>
+            <span><strong>This information will be public.</strong> Your business name, category, mobile, landline, email and website will appear on the directory if approved.</span>
+          </div>
+
+          <div class="field" id="publicConsentField">
+            <label class="check">
+              <input type="checkbox" id="f_publicConsent" data-field="publicConsent">
+              <span>I understand this information will be shown publicly <span class="opt">— business name, category, mobile, landline, email and website</span></span>
+            </label>
+            <div class="error">Please confirm you understand this information will be public.</div>
           </div>
         </section>
 
@@ -663,8 +681,13 @@
       markError(fieldOf("f_businessEmail"), !emOk); ok = ok && emOk;
     } else { markError(fieldOf("f_businessEmail"), false); }
 
+    // Public info consent
+    var consentOk = !!state.publicConsent;
+    markError(fieldOf("f_publicConsent"), !consentOk); ok = ok && consentOk;
+
     if (!ok){
       var firstBad = document.querySelector(".step[data-step='1'] .field.show-error .control");
+      if (!firstBad) firstBad = document.querySelector(".step[data-step='1'] .field.show-error input[type='checkbox']");
       if (firstBad) firstBad.focus();
     } else {
       // Stamp the resolved region for the handler/review to use.
