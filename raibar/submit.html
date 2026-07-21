@@ -238,8 +238,21 @@
       </div>
     </div>
 
-    <!-- STEP 4: Koha -->
+    <!-- STEP 4: Review -->
     <div class="step-panel" id="step-4" style="display:none;">
+      <h1>Review your details</h1>
+      <p class="subtitle">Check everything looks right before submitting for review.</p>
+
+      <div id="reviewContent"></div>
+
+      <div class="btn-row">
+        <button onclick="goToStep(3)">Back</button>
+        <button class="btn-primary" id="reviewConfirmBtn" onclick="submitProfileNow()">Confirm & continue</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Koha -->
+    <div class="step-panel" id="step-5" style="display:none;">
       <h1>Koha & payment</h1>
       <p class="subtitle">Your koha supports the Trust and keeps this matchmaking service free for the community.</p>
 
@@ -281,15 +294,15 @@
       <p class="error-text" id="kohaError">Please choose an amount and payment method, or tick "I'll skip this time".</p>
 
       <div class="btn-row">
-        <button onclick="goToStep(3)">Back</button>
-        <button class="btn-primary" id="kohaContinueBtn" onclick="handleKohaContinue()">Continue</button>
+        <button class="btn-primary" id="kohaContinueBtn" onclick="handleKohaContinue()" style="flex:1;">Continue</button>
       </div>
     </div>
 
-    <!-- STEP 5: Done -->
-    <div class="step-panel center" id="step-5" style="display:none;">
+    <!-- STEP 6: Done -->
+    <div class="step-panel center" id="step-6" style="display:none;">
       <h1>Thank you!</h1>
       <p class="subtitle" id="doneMessage">Your profile has been submitted and is waiting for review. We'll be in touch once it's approved.</p>
+      <a href="index.html" class="btn-primary" style="display:inline-block; text-decoration:none; padding:12px 28px; border-radius:6px; margin-top:12px;">&larr; Back to browse profiles</a>
     </div>
   </div>
 
@@ -304,7 +317,7 @@
       }).then(function (r) { return r.json(); });
     }
 
-    const STEP_LABELS = ['Profile', 'Background', 'Contact', 'Koha', 'Done'];
+    const STEP_LABELS = ['Profile', 'Background', 'Contact', 'Review', 'Koha', 'Done'];
     let currentStep = 1;
     let kohaAmount = null;
     let kohaMethod = null;
@@ -325,7 +338,7 @@
     let currentProfileId = null;
 
     function showStep(n) {
-      for (let i = 1; i <= 5; i++) {
+      for (let i = 1; i <= 6; i++) {
         document.getElementById('step-' + i).style.display = (i === n) ? 'block' : 'none';
       }
       currentStep = n;
@@ -334,7 +347,7 @@
 
     function goToStep(n) {
       if (n === 2 && !validateStep1()) return;
-      if (n === 4) { validateStep3(); return; } // submitProfileNow() advances to step 4 itself on success
+      if (n === 4 && !validateStep3()) return;
 
       showStep(n);
     }
@@ -405,8 +418,8 @@
         return false;
       }
 
-      submitProfileNow();
-      return false; // showStep(4) happens inside submitProfileNow() once it succeeds
+      renderReview();
+      return true;
     }
 
     function collectFormData() {
@@ -438,25 +451,48 @@
       };
     }
 
+    function renderReview() {
+      const d = collectFormData();
+      const rows = [
+        ['Name', [d.firstName, d.middleName, d.lastName].filter(function (n) { return n; }).join(' ')],
+        ['Age', d.age], ['Gender', d.gender],
+        ['Looking for', d.lookingFor], ['Height', d.heightCm + ' cm'],
+        ['Location', d.regionOrCity + ', ' + d.country],
+        ['Education', d.education], ['Profession', d.profession],
+        ['Religion', d.religion || '-'], ['Marital status', d.maritalStatus || '-'],
+        ['Email', d.email], ['WhatsApp', d.whatsapp]
+      ];
+      document.getElementById('reviewContent').innerHTML = rows.map(function (r) {
+        return '<div class="review-row"><span class="label">' + r[0] + '</span><span class="value">' + escapeHtml(String(r[1])) + '</span></div>';
+      }).join('');
+    }
+
     function submitProfileNow() {
+      if (currentProfileId) {
+        // Already submitted once this session - never submit twice, just
+        // move on to Koha with the existing profile.
+        showStep(5);
+        return;
+      }
+
       const data = collectFormData();
-      const continueBtn = document.querySelector('#step-3 .btn-primary');
+      const continueBtn = document.getElementById('reviewConfirmBtn');
       continueBtn.disabled = true;
       continueBtn.textContent = 'Submitting...';
 
       callApi('submitProfile', [data]).then(function (result) {
         continueBtn.disabled = false;
-        continueBtn.textContent = 'Continue';
+        continueBtn.textContent = 'Confirm & continue';
 
         if (result.success) {
           currentProfileId = result.profileId;
-          showStep(4);
+          showStep(5);
         } else {
           alert(result.error || 'Something went wrong submitting your profile.');
         }
       }).catch(function (err) {
         continueBtn.disabled = false;
-        continueBtn.textContent = 'Continue';
+        continueBtn.textContent = 'Confirm & continue';
         alert('Something went wrong. Please try again.');
         console.error(err);
       });
@@ -556,7 +592,7 @@
         msg = 'Your profile has been submitted. Please complete your bank transfer of $' + kohaAmountValue + ' using the details shown. We\'ll be in touch once your profile is approved.';
       }
       document.getElementById('doneMessage').textContent = msg;
-      showStep(5);
+      showStep(6);
     }
 
     function escapeHtml(str) {
@@ -578,7 +614,7 @@
         // form flashes on screen for several seconds while these two
         // sequential checks complete in the background.
         document.getElementById('doneMessage').textContent = 'Confirming your payment, just a moment...';
-        showStep(5);
+        showStep(6);
 
         callApi('verifyCheckoutSession', [params.get('session_id')]).then(function (result) {
           if (result.ok && result.paid) {
@@ -587,17 +623,17 @@
             });
           } else {
             alert('Payment could not be confirmed. Please try again or choose another option.');
-            showStep(4);
+            showStep(5);
           }
         }).catch(function (err) {
           alert('Could not confirm payment. Please try again.');
-          showStep(4);
+          showStep(5);
           console.error(err);
         });
 
       } else if (params.get('cancelled') === '1') {
         currentProfileId = profileIdFromUrl;
-        showStep(4);
+        showStep(5);
       }
     }
 
