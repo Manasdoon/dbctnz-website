@@ -286,21 +286,8 @@
       </div>
     </div>
 
-    <!-- STEP 5: Review -->
-    <div class="step-panel" id="step-5" style="display:none;">
-      <h1>Review your profile</h1>
-      <p class="subtitle">Check everything looks right before submitting for review.</p>
-
-      <div id="reviewContent"></div>
-
-      <div class="btn-row">
-        <button onclick="goToStep(4)">Back</button>
-        <button class="btn-primary" onclick="handleFinalSubmit()" id="submitBtn">Submit for review</button>
-      </div>
-    </div>
-
-    <!-- STEP 6: Done -->
-    <div class="step-panel center" id="step-6" style="display:none;">
+    <!-- STEP 5: Done -->
+    <div class="step-panel center" id="step-5" style="display:none;">
       <h1>Thank you!</h1>
       <p class="subtitle" id="doneMessage">Your profile has been submitted and is waiting for review. We'll be in touch once it's approved.</p>
     </div>
@@ -317,7 +304,7 @@
       }).then(function (r) { return r.json(); });
     }
 
-    const STEP_LABELS = ['Profile', 'Background', 'Contact', 'Koha', 'Review', 'Done'];
+    const STEP_LABELS = ['Profile', 'Background', 'Contact', 'Koha', 'Done'];
     let currentStep = 1;
     let kohaAmount = null;
     let kohaMethod = null;
@@ -335,17 +322,17 @@
       document.getElementById('progressFill').style.width = (currentStep / STEP_LABELS.length * 100) + '%';
     }
 
+    let currentProfileId = null;
+
     function goToStep(n) {
       if (n === 2 && !validateStep1()) return;
-      if (n === 4 && !validateStep3()) return;
-      if (n === 5) { renderReview(); }
+      if (n === 4 && !validateStep3()) return; // triggers submitProfile before advancing - see below
 
-      for (let i = 1; i <= 6; i++) {
+      for (let i = 1; i <= 5; i++) {
         document.getElementById('step-' + i).style.display = (i === n) ? 'block' : 'none';
       }
       currentStep = n;
       renderStepTracker();
-      saveProgress();
     }
 
     document.getElementById('heightCm').addEventListener('input', function () {
@@ -396,6 +383,11 @@
       return true;
     }
 
+    // Step 3's "Continue" button now submits the profile immediately
+    // (rather than at the very end) - this is deliberate. Only a short
+    // profile_id then needs to survive the trip to Stripe and back,
+    // carried directly in the redirect URL - far more reliable than
+    // depending on sessionStorage surviving a cross-domain round trip.
     function validateStep3() {
       const consentError = document.getElementById('consentError');
       if (!document.getElementById('consent').checked) {
@@ -408,7 +400,62 @@
         alert('Please fill in email and WhatsApp number.');
         return false;
       }
-      return true;
+
+      submitProfileNow();
+      return false; // goToStep(4) happens inside submitProfileNow() once it succeeds
+    }
+
+    function collectFormData() {
+      const country = document.getElementById('country').value;
+      const regionOrCity = (country === 'New Zealand')
+        ? document.getElementById('region').value
+        : document.getElementById('city').value;
+
+      return {
+        firstName: document.getElementById('firstName').value,
+        middleName: document.getElementById('middleName').value,
+        lastName: document.getElementById('lastName').value,
+        age: document.getElementById('age').value,
+        gender: document.getElementById('gender').value,
+        lookingFor: document.getElementById('lookingFor').value,
+        heightCm: document.getElementById('heightCm').value,
+        country: country,
+        regionOrCity: regionOrCity,
+        bio: document.getElementById('bio').value,
+        education: document.getElementById('education').value,
+        profession: document.getElementById('profession').value,
+        religion: document.getElementById('religion').value,
+        maritalStatus: document.getElementById('maritalStatus').value,
+        email: document.getElementById('email').value,
+        whatsapp: document.getElementById('whatsapp').value,
+        consentGiven: document.getElementById('consent').checked,
+        kohaStatus: 'Skipped', // placeholder - updated via updateKohaStatus() once Koha step resolves
+        kohaAmount: ''
+      };
+    }
+
+    function submitProfileNow() {
+      const data = collectFormData();
+      const continueBtn = document.querySelector('#step-3 .btn-primary');
+      continueBtn.disabled = true;
+      continueBtn.textContent = 'Submitting...';
+
+      callApi('submitProfile', [data]).then(function (result) {
+        continueBtn.disabled = false;
+        continueBtn.textContent = 'Continue';
+
+        if (result.success) {
+          currentProfileId = result.profileId;
+          goToStep(4);
+        } else {
+          alert(result.error || 'Something went wrong submitting your profile.');
+        }
+      }).catch(function (err) {
+        continueBtn.disabled = false;
+        continueBtn.textContent = 'Continue';
+        alert('Something went wrong. Please try again.');
+        console.error(err);
+      });
     }
 
     function selectKohaAmount(amount, btn) {
@@ -451,8 +498,7 @@
 
       if (skipped) {
         errorEl.style.display = 'none';
-        saveProgress();
-        goToStep(5);
+        finishWithKoha('Skipped', '');
         return;
       }
 
@@ -464,18 +510,16 @@
       errorEl.style.display = 'none';
 
       if (kohaMethod === 'bank') {
-        saveProgress();
-        goToStep(5);
+        finishWithKoha('Bank Transfer', amount);
         return;
       }
 
-      // Card payment - redirect to Stripe. Save everything first so it
-      // survives the round trip.
-      saveProgress();
+      // Card payment - redirect to Stripe, passing currentProfileId so it
+      // comes back embedded in the return URL (no browser storage needed).
       document.getElementById('kohaContinueBtn').disabled = true;
       document.getElementById('kohaContinueBtn').textContent = 'Redirecting to payment...';
 
-      callApi('createCheckoutSession', [amount, document.getElementById('email').value, '']).then(function (result) {
+      callApi('createCheckoutSession', [amount, document.getElementById('email').value, currentProfileId]).then(function (result) {
         if (result && result.checkoutUrl) {
           window.location.href = result.checkoutUrl;
         } else {
@@ -491,60 +535,24 @@
       });
     }
 
-    function collectFormData() {
-      const country = document.getElementById('country').value;
-      const regionOrCity = (country === 'New Zealand')
-        ? document.getElementById('region').value
-        : document.getElementById('city').value;
-
-      let kohaStatus = 'Skipped';
-      let amount = '';
-      if (!document.getElementById('kohaSkip').checked) {
-        const chosen = getKohaAmountValue();
-        if (chosen) {
-          amount = chosen;
-          kohaStatus = (kohaMethod === 'bank') ? 'Bank Transfer' : 'Paid';
-        }
-      }
-
-      return {
-        firstName: document.getElementById('firstName').value,
-        middleName: document.getElementById('middleName').value,
-        lastName: document.getElementById('lastName').value,
-        age: document.getElementById('age').value,
-        gender: document.getElementById('gender').value,
-        lookingFor: document.getElementById('lookingFor').value,
-        heightCm: document.getElementById('heightCm').value,
-        country: country,
-        regionOrCity: regionOrCity,
-        bio: document.getElementById('bio').value,
-        education: document.getElementById('education').value,
-        profession: document.getElementById('profession').value,
-        religion: document.getElementById('religion').value,
-        maritalStatus: document.getElementById('maritalStatus').value,
-        email: document.getElementById('email').value,
-        whatsapp: document.getElementById('whatsapp').value,
-        consentGiven: document.getElementById('consent').checked,
-        kohaStatus: kohaStatus,
-        kohaAmount: amount
-      };
+    function finishWithKoha(kohaStatus, kohaAmountValue) {
+      callApi('updateKohaStatus', [currentProfileId, kohaStatus, kohaAmountValue]).then(function () {
+        showDone(kohaStatus, kohaAmountValue);
+      }).catch(function (err) {
+        console.error(err);
+        showDone(kohaStatus, kohaAmountValue); // profile is already submitted either way
+      });
     }
 
-    function renderReview() {
-      const d = collectFormData();
-      const rows = [
-        ['Name', [d.firstName, d.middleName, d.lastName].filter(function (n) { return n; }).join(' ')],
-        ['Age', d.age], ['Gender', d.gender],
-        ['Looking for', d.lookingFor], ['Height', d.heightCm + ' cm'],
-        ['Location', d.regionOrCity + ', ' + d.country],
-        ['Education', d.education], ['Profession', d.profession],
-        ['Religion', d.religion || '-'], ['Marital status', d.maritalStatus || '-'],
-        ['Email', d.email], ['WhatsApp', d.whatsapp],
-        ['Koha', d.kohaStatus + (d.kohaAmount ? (' ($' + d.kohaAmount + ')') : '')]
-      ];
-      document.getElementById('reviewContent').innerHTML = rows.map(function (r) {
-        return '<div class="review-row"><span class="label">' + r[0] + '</span><span class="value">' + escapeHtml(String(r[1])) + '</span></div>';
-      }).join('');
+    function showDone(kohaStatus, kohaAmountValue) {
+      let msg = 'Your profile has been submitted and is waiting for review. We\'ll be in touch once it\'s approved.';
+      if (kohaStatus === 'Paid') {
+        msg = 'Your profile has been submitted, and thank you for your koha of $' + kohaAmountValue + '. We\'ll be in touch once it\'s approved.';
+      } else if (kohaStatus === 'Bank Transfer') {
+        msg = 'Your profile has been submitted. Please complete your bank transfer of $' + kohaAmountValue + ' using the details shown. We\'ll be in touch once your profile is approved.';
+      }
+      document.getElementById('doneMessage').textContent = msg;
+      goToStep(5);
     }
 
     function escapeHtml(str) {
@@ -553,79 +561,19 @@
       return div.innerHTML;
     }
 
-    function handleFinalSubmit() {
-      const data = collectFormData();
-      document.getElementById('submitBtn').disabled = true;
-      document.getElementById('submitBtn').textContent = 'Submitting...';
-
-      callApi('submitProfile', [data]).then(function (result) {
-        clearProgress();
-        if (result.success) {
-          document.getElementById('doneMessage').textContent =
-            'Your profile has been submitted and is waiting for review. We\'ll be in touch once it\'s approved.';
-        } else {
-          document.getElementById('doneMessage').textContent =
-            'Something went wrong: ' + (result.error || 'please try again.');
-        }
-        goToStep(6);
-      }).catch(function (err) {
-        alert('Something went wrong submitting your profile. Please try again.');
-        document.getElementById('submitBtn').disabled = false;
-        document.getElementById('submitBtn').textContent = 'Submit for review';
-        console.error(err);
-      });
-    }
-
-    function saveProgress() {
-      const state = { currentStep: currentStep, kohaAmount: kohaAmount, kohaMethod: kohaMethod, fields: {} };
-      ['firstName','middleName','lastName','age','gender','lookingFor','heightCm','heightFt','heightIn',
-       'country','region','city','bio','education','profession','religion',
-       'maritalStatus','email','whatsapp','kohaCustomAmount'].forEach(function (id) {
-        const el = document.getElementById(id);
-        if (el) state.fields[id] = el.value;
-      });
-      state.consent = document.getElementById('consent').checked;
-      state.kohaSkip = document.getElementById('kohaSkip').checked;
-      sessionStorage.setItem('raibarSubmitProgress', JSON.stringify(state));
-    }
-
-    function restoreProgress() {
-      const raw = sessionStorage.getItem('raibarSubmitProgress');
-      if (!raw) return false;
-      try {
-        const state = JSON.parse(raw);
-        Object.keys(state.fields).forEach(function (id) {
-          const el = document.getElementById(id);
-          if (el) el.value = state.fields[id];
-        });
-        document.getElementById('consent').checked = !!state.consent;
-        document.getElementById('kohaSkip').checked = !!state.kohaSkip;
-        kohaAmount = state.kohaAmount;
-        kohaMethod = state.kohaMethod;
-        document.getElementById('country').dispatchEvent(new Event('change'));
-        return true;
-      } catch (e) {
-        return false;
-      }
-    }
-
-    function clearProgress() {
-      sessionStorage.removeItem('raibarSubmitProgress');
-    }
-
     function init() {
       renderStepTracker();
 
       const params = new URLSearchParams(window.location.search);
+      const profileIdFromUrl = params.get('profile_id');
 
       if (params.get('paid') === '1' && params.get('session_id')) {
-        restoreProgress();
+        currentProfileId = profileIdFromUrl;
         callApi('verifyCheckoutSession', [params.get('session_id')]).then(function (result) {
           if (result.ok && result.paid) {
-            kohaMethod = 'card';
-            kohaAmount = result.amount;
-            document.getElementById('kohaSkip').checked = false;
-            goToStep(5);
+            callApi('updateKohaStatus', [currentProfileId, 'Paid', result.amount]).then(function () {
+              showDone('Paid', result.amount);
+            });
           } else {
             alert('Payment could not be confirmed. Please try again or choose another option.');
             goToStep(4);
@@ -637,7 +585,7 @@
         });
 
       } else if (params.get('cancelled') === '1') {
-        restoreProgress();
+        currentProfileId = profileIdFromUrl;
         goToStep(4);
       }
     }
