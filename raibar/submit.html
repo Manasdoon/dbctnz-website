@@ -324,15 +324,19 @@
 
     let currentProfileId = null;
 
-    function goToStep(n) {
-      if (n === 2 && !validateStep1()) return;
-      if (n === 4 && !validateStep3()) return; // triggers submitProfile before advancing - see below
-
+    function showStep(n) {
       for (let i = 1; i <= 5; i++) {
         document.getElementById('step-' + i).style.display = (i === n) ? 'block' : 'none';
       }
       currentStep = n;
       renderStepTracker();
+    }
+
+    function goToStep(n) {
+      if (n === 2 && !validateStep1()) return;
+      if (n === 4) { validateStep3(); return; } // submitProfileNow() advances to step 4 itself on success
+
+      showStep(n);
     }
 
     document.getElementById('heightCm').addEventListener('input', function () {
@@ -402,7 +406,7 @@
       }
 
       submitProfileNow();
-      return false; // goToStep(4) happens inside submitProfileNow() once it succeeds
+      return false; // showStep(4) happens inside submitProfileNow() once it succeeds
     }
 
     function collectFormData() {
@@ -446,7 +450,7 @@
 
         if (result.success) {
           currentProfileId = result.profileId;
-          goToStep(4);
+          showStep(4);
         } else {
           alert(result.error || 'Something went wrong submitting your profile.');
         }
@@ -552,7 +556,7 @@
         msg = 'Your profile has been submitted. Please complete your bank transfer of $' + kohaAmountValue + ' using the details shown. We\'ll be in touch once your profile is approved.';
       }
       document.getElementById('doneMessage').textContent = msg;
-      goToStep(5);
+      showStep(5);
     }
 
     function escapeHtml(str) {
@@ -576,17 +580,17 @@
             });
           } else {
             alert('Payment could not be confirmed. Please try again or choose another option.');
-            goToStep(4);
+            showStep(4);
           }
         }).catch(function (err) {
           alert('Could not confirm payment. Please try again.');
-          goToStep(4);
+          showStep(4);
           console.error(err);
         });
 
       } else if (params.get('cancelled') === '1') {
         currentProfileId = profileIdFromUrl;
-        goToStep(4);
+        showStep(4);
       }
     }
 
