@@ -573,6 +573,13 @@
 
       if (params.get('paid') === '1' && params.get('session_id')) {
         currentProfileId = profileIdFromUrl;
+
+        // Show a loading state immediately - otherwise the blank Step 1
+        // form flashes on screen for several seconds while these two
+        // sequential checks complete in the background.
+        document.getElementById('doneMessage').textContent = 'Confirming your payment, just a moment...';
+        showStep(5);
+
         callApi('verifyCheckoutSession', [params.get('session_id')]).then(function (result) {
           if (result.ok && result.paid) {
             callApi('updateKohaStatus', [currentProfileId, 'Paid', result.amount]).then(function () {
