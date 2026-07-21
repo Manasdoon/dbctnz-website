@@ -1,0 +1,86 @@
+<!--
+  RAIBAR - Matrimonial Portal - Renew Profile (Netlify version)
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Renew your profile - Raibar</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #F2EEE4;
+      margin: 0;
+      padding: 24px 16px;
+      color: #2B2B2B;
+    }
+    .card {
+      max-width: 480px;
+      margin: 40px auto;
+      background: #FFFFFF;
+      border: 1px solid #E6DDCB;
+      border-radius: 10px;
+      padding: 28px;
+      text-align: center;
+    }
+    h1 { font-size: 20px; margin: 0 0 12px; }
+    p { font-size: 14px; line-height: 1.6; color: #6B6B6B; }
+    button {
+      margin-top: 20px;
+      padding: 12px 28px;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      border: 1px solid #1F2D3D;
+      background: #1F2D3D;
+      color: #FBF7EF;
+    }
+    #message { font-size: 14px; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div id="initial">
+      <h1>Renew your Raibar profile</h1>
+      <p>Your profile is due to expire soon. Click below to stay listed for another 4 months.</p>
+      <button id="renewBtn">Renew my profile</button>
+    </div>
+    <div id="message" style="display:none;"></div>
+  </div>
+
+  <script>
+    const APPS_SCRIPT_API_URL = 'https://script.google.com/macros/s/AKfycbwWTtikq9BSSEB2RKFJ54A8qrl-uD_0lYGZNwvcoMjoaiDgoXEx4LC8EFv_tEb97_0/exec';
+
+    function callApi(fn, args) {
+      return fetch(APPS_SCRIPT_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ fn: fn, args: args || [] })
+      }).then(function (r) { return r.json(); });
+    }
+
+    const token = new URLSearchParams(window.location.search).get('token');
+
+    document.getElementById('renewBtn').addEventListener('click', function () {
+      this.disabled = true;
+      this.textContent = 'Renewing...';
+
+      callApi('handleRenewProfile', [token]).then(function (result) {
+        document.getElementById('initial').style.display = 'none';
+        const msgEl = document.getElementById('message');
+        msgEl.style.display = 'block';
+        msgEl.textContent = result.success
+          ? 'All set - your profile has been renewed and will stay listed for another 4 months.'
+          : (result.error || 'Something went wrong.');
+      }).catch(function (err) {
+        document.getElementById('initial').style.display = 'none';
+        const msgEl = document.getElementById('message');
+        msgEl.style.display = 'block';
+        msgEl.textContent = 'Something went wrong. Please try again later.';
+        console.error(err);
+      });
+    });
+  </script>
+</body>
+</html>

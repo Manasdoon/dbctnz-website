@@ -1,0 +1,648 @@
+<!--
+  RAIBAR - Matrimonial Portal - Profile Submission Wizard (Netlify version)
+  Plain static HTML. Uses fetch() to the Apps Script API instead of
+  google.script.run. Reads URL params directly via window.location.search
+  (no iframe sandbox to work around anymore).
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create your profile - Raibar</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #F2EEE4;
+      margin: 0;
+      padding: 24px 16px;
+      color: #2B2B2B;
+    }
+    .wizard {
+      max-width: 480px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border: 1px solid #E6DDCB;
+      border-radius: 10px;
+      padding: 28px;
+    }
+    .steps { display: flex; justify-content: space-between; margin-bottom: 20px; }
+    .step-dot {
+      display: flex; flex-direction: column; align-items: center;
+      font-size: 11px; color: #6B6B6B; flex: 1;
+    }
+    .step-dot .circle {
+      width: 26px; height: 26px; border-radius: 50%; background: #E6DDCB;
+      color: #6B6B6B; display: flex; align-items: center; justify-content: center;
+      font-weight: bold; margin-bottom: 4px; font-size: 12px;
+    }
+    .step-dot.active .circle { background: #1F2D3D; color: #FBF7EF; }
+    .step-dot.done .circle { background: #C0832C; color: #FFFFFF; }
+    .progress-bar { height: 4px; background: #E6DDCB; border-radius: 2px; margin-bottom: 24px; overflow: hidden; }
+    .progress-fill { height: 100%; background: #C0832C; transition: width 0.2s; }
+
+    h1 { font-size: 18px; margin: 0 0 4px; }
+    .subtitle { font-size: 13px; color: #6B6B6B; margin: 0 0 20px; }
+
+    label { font-size: 13px; color: #6B6B6B; display: block; margin: 14px 0 6px; }
+    input, select, textarea {
+      width: 100%; padding: 10px; border: 1px solid #E6DDCB; border-radius: 6px;
+      font-size: 14px; box-sizing: border-box; font-family: inherit;
+    }
+    textarea { resize: vertical; }
+    .row { display: flex; gap: 12px; }
+    .row > div { flex: 1; }
+
+    .error-text { color: #8A4B4B; font-size: 12px; margin-top: 6px; display: none; }
+
+    .btn-row { display: flex; gap: 10px; margin-top: 24px; }
+    button {
+      flex: 1; padding: 12px; border-radius: 6px; font-size: 14px; cursor: pointer;
+      border: 1px solid #E6DDCB; background: #FFFFFF; color: #2B2B2B;
+    }
+    .btn-primary { background: #1F2D3D; color: #FBF7EF; border-color: #1F2D3D; }
+
+    .koha-amounts { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+    .koha-amounts button { flex: 1; min-width: 70px; padding: 14px 8px; font-weight: bold; }
+    .koha-amounts button.selected { background: #1F2D3D; color: #FBF7EF; border-color: #1F2D3D; }
+
+    .checkbox-row { display: flex; align-items: flex-start; gap: 8px; margin-top: 14px; }
+    .checkbox-row input { width: auto; margin-top: 3px; }
+    .checkbox-row label { font-size: 12px; margin: 0; line-height: 1.5; }
+
+    .pay-options { display: flex; gap: 10px; margin-top: 14px; }
+    .pay-option { flex: 1; border: 1px solid #E6DDCB; border-radius: 8px; padding: 14px; cursor: pointer; text-align: left; }
+    .pay-option.selected { border-color: #1F2D3D; background: #F4EEE0; }
+    .pay-option .title { font-weight: bold; font-size: 13px; }
+    .pay-option .desc { font-size: 11px; color: #6B6B6B; margin-top: 2px; }
+
+    .bank-details {
+      background: #F4EEE0; border: 1px solid #E6DDCB; border-left: 4px solid #C0832C;
+      border-radius: 8px; padding: 14px 18px; font-size: 13px; margin-top: 14px; display: none;
+    }
+
+    .review-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #F0EBDD; font-size: 13px; }
+    .review-row .label { color: #6B6B6B; }
+    .review-row .value { font-weight: bold; text-align: right; max-width: 60%; }
+
+    .center { text-align: center; }
+    .hint { font-size: 12px; color: #6B6B6B; margin-top: 6px; }
+  </style>
+</head>
+<body>
+  <div class="wizard">
+    <div class="steps" id="stepTracker"></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:16.6%;"></div></div>
+
+    <!-- STEP 1: Profile details -->
+    <div class="step-panel" id="step-1">
+      <h1>Create your profile</h1>
+      <p class="subtitle">Your contact details stay private until you choose to share them.</p>
+
+      <label>First name *</label>
+      <input type="text" id="firstName" name="firstName" autocomplete="given-name" placeholder="e.g. Riya">
+
+      <label>Middle name (optional)</label>
+      <input type="text" id="middleName" name="middleName" autocomplete="additional-name" placeholder="e.g. Kumari">
+
+      <label>Last name *</label>
+      <input type="text" id="lastName" name="lastName" autocomplete="family-name" placeholder="e.g. Sharma">
+
+      <div class="row">
+        <div>
+          <label>Age *</label>
+          <input type="number" id="age" placeholder="28" min="1">
+          <p class="error-text" id="ageError">Profile owner must be 18 or older.</p>
+        </div>
+        <div>
+          <label>Gender *</label>
+          <select id="gender">
+            <option value="">Select</option>
+            <option>Female</option>
+            <option>Male</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <label>Looking for *</label>
+      <select id="lookingFor">
+        <option value="">Select</option>
+        <option>Female</option>
+        <option>Male</option>
+        <option>Other</option>
+      </select>
+
+      <label>Height *</label>
+      <div class="row">
+        <div><input type="number" id="heightCm" placeholder="cm"></div>
+        <div style="flex:0 0 auto; align-self:center; font-size:13px; color:#6B6B6B;">or</div>
+        <div class="row" style="flex:2;">
+          <input type="number" id="heightFt" placeholder="ft">
+          <input type="number" id="heightIn" placeholder="in">
+        </div>
+      </div>
+      <p class="hint" id="heightSummary"></p>
+
+      <label>Country *</label>
+      <select id="country">
+        <option value="">Select</option>
+        <option value="New Zealand">New Zealand</option>
+        <option value="Australia">Australia</option>
+        <option value="India">India</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <div id="regionWrap" style="display:none;">
+        <label>Region *</label>
+        <select id="region">
+          <option>Northland</option><option>Auckland</option><option>Waikato</option>
+          <option>Bay of Plenty</option><option>Gisborne</option><option>Hawke's Bay</option>
+          <option>Taranaki</option><option>Manawatu-Whanganui</option><option>Wellington</option>
+          <option>Tasman</option><option>Nelson</option><option>Marlborough</option>
+          <option>West Coast</option><option>Canterbury</option><option>Otago</option><option>Southland</option>
+        </select>
+      </div>
+      <div id="cityWrap" style="display:none;">
+        <label>City *</label>
+        <input type="text" id="city" name="city" autocomplete="address-level2" placeholder="Enter your city">
+      </div>
+
+      <label>Short bio *</label>
+      <textarea id="bio" rows="3" placeholder="Tell us a bit about yourself..."></textarea>
+
+      <div class="btn-row">
+        <button class="btn-primary" style="flex:1;" onclick="goToStep(2)">Continue</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Background -->
+    <div class="step-panel" id="step-2" style="display:none;">
+      <h1>A bit more about you</h1>
+      <p class="subtitle">Education and profession help others get a fuller picture.</p>
+
+      <label>Education *</label>
+      <textarea id="education" name="education" autocomplete="on" rows="2" placeholder="e.g. Bachelor's in Commerce, Delhi University; Master's in NZ"></textarea>
+
+      <label>Profession *</label>
+      <input type="text" id="profession" name="profession" autocomplete="organization-title" placeholder="e.g. Software Engineer">
+
+      <label>Religion (optional)</label>
+      <input type="text" id="religion" name="religion" autocomplete="off" list="religionOptions" placeholder="e.g. Hindu">
+      <datalist id="religionOptions">
+        <option value="Hindu">
+        <option value="Sikh">
+        <option value="Muslim">
+        <option value="Christian">
+        <option value="Jain">
+        <option value="Buddhist">
+        <option value="No religion">
+      </datalist>
+
+      <label>Marital status (optional)</label>
+      <select id="maritalStatus">
+        <option value="">Select</option>
+        <option>Never married</option>
+        <option>Separated</option>
+        <option>Divorced</option>
+        <option>Widowed</option>
+      </select>
+
+      <div class="btn-row">
+        <button onclick="goToStep(1)">Back</button>
+        <button class="btn-primary" onclick="goToStep(3)">Continue</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Contact -->
+    <div class="step-panel" id="step-3" style="display:none;">
+      <h1>Contact details</h1>
+      <p class="subtitle">Never shown publicly - only used for notifications and after a mutual match.</p>
+
+      <label>Email *</label>
+      <input type="email" id="email" name="email" autocomplete="email" placeholder="name@email.com">
+
+      <label>WhatsApp number *</label>
+      <input type="tel" id="whatsapp" name="whatsapp" autocomplete="tel" placeholder="+64 21 234 5678">
+      <p class="hint">Notifications about interest and responses will be sent to the email/WhatsApp entered above.</p>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="consent">
+        <label for="consent">I confirm the person in this profile is 18 years or older, and I have their consent to submit this profile on their behalf.</label>
+      </div>
+      <p class="error-text" id="consentError">Please confirm the consent checkbox before continuing.</p>
+
+      <div class="btn-row">
+        <button onclick="goToStep(2)">Back</button>
+        <button class="btn-primary" onclick="goToStep(4)">Continue</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Koha -->
+    <div class="step-panel" id="step-4" style="display:none;">
+      <h1>Koha & payment</h1>
+      <p class="subtitle">Your koha supports the Trust and keeps this matchmaking service free for the community.</p>
+
+      <label>Choose an amount</label>
+      <p class="hint">Your koha helps keep this service free for the community - but it's entirely optional.</p>
+      <div class="koha-amounts">
+        <button type="button" onclick="selectKohaAmount(20, this)">$20</button>
+        <button type="button" onclick="selectKohaAmount(50, this)">$50</button>
+        <button type="button" onclick="selectKohaAmount(100, this)">$100</button>
+        <button type="button" onclick="selectKohaCustom(this)">Other</button>
+      </div>
+      <input type="number" id="kohaCustomAmount" placeholder="Enter amount" style="display:none;margin-top:8px;">
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="kohaSkip" onchange="onKohaSkipChange()">
+        <label for="kohaSkip">I'll skip this time</label>
+      </div>
+
+      <div id="paymentMethodSection">
+        <label>How would you like to pay?</label>
+        <div class="pay-options">
+          <div class="pay-option" id="payCardOption" onclick="selectPayMethod('card')">
+            <div class="title">Pay by card</div>
+            <div class="desc">Secure checkout via Stripe</div>
+          </div>
+          <div class="pay-option" id="payBankOption" onclick="selectPayMethod('bank')">
+            <div class="title">Bank transfer</div>
+            <div class="desc">We'll show the account details</div>
+          </div>
+        </div>
+        <div class="bank-details" id="bankDetails">
+          Please transfer to:<br>
+          Devbhoomi Charitable Trust NZ<br>
+          Account: 12-3456-7890123-00<br>
+          Reference: Raibar Koha
+        </div>
+      </div>
+
+      <p class="error-text" id="kohaError">Please choose an amount and payment method, or tick "I'll skip this time".</p>
+
+      <div class="btn-row">
+        <button onclick="goToStep(3)">Back</button>
+        <button class="btn-primary" id="kohaContinueBtn" onclick="handleKohaContinue()">Continue</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Review -->
+    <div class="step-panel" id="step-5" style="display:none;">
+      <h1>Review your profile</h1>
+      <p class="subtitle">Check everything looks right before submitting for review.</p>
+
+      <div id="reviewContent"></div>
+
+      <div class="btn-row">
+        <button onclick="goToStep(4)">Back</button>
+        <button class="btn-primary" onclick="handleFinalSubmit()" id="submitBtn">Submit for review</button>
+      </div>
+    </div>
+
+    <!-- STEP 6: Done -->
+    <div class="step-panel center" id="step-6" style="display:none;">
+      <h1>Thank you!</h1>
+      <p class="subtitle" id="doneMessage">Your profile has been submitted and is waiting for review. We'll be in touch once it's approved.</p>
+    </div>
+  </div>
+
+  <script>
+    const APPS_SCRIPT_API_URL = 'https://script.google.com/macros/s/AKfycbwWTtikq9BSSEB2RKFJ54A8qrl-uD_0lYGZNwvcoMjoaiDgoXEx4LC8EFv_tEb97_0/exec';
+
+    function callApi(fn, args) {
+      return fetch(APPS_SCRIPT_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ fn: fn, args: args || [] })
+      }).then(function (r) { return r.json(); });
+    }
+
+    const STEP_LABELS = ['Profile', 'Background', 'Contact', 'Koha', 'Review', 'Done'];
+    let currentStep = 1;
+    let kohaAmount = null;
+    let kohaMethod = null;
+
+    function renderStepTracker() {
+      const tracker = document.getElementById('stepTracker');
+      tracker.innerHTML = '';
+      STEP_LABELS.forEach(function (label, idx) {
+        const num = idx + 1;
+        const dot = document.createElement('div');
+        dot.className = 'step-dot' + (num === currentStep ? ' active' : (num < currentStep ? ' done' : ''));
+        dot.innerHTML = '<div class="circle">' + num + '</div><div>' + label + '</div>';
+        tracker.appendChild(dot);
+      });
+      document.getElementById('progressFill').style.width = (currentStep / STEP_LABELS.length * 100) + '%';
+    }
+
+    function goToStep(n) {
+      if (n === 2 && !validateStep1()) return;
+      if (n === 4 && !validateStep3()) return;
+      if (n === 5) { renderReview(); }
+
+      for (let i = 1; i <= 6; i++) {
+        document.getElementById('step-' + i).style.display = (i === n) ? 'block' : 'none';
+      }
+      currentStep = n;
+      renderStepTracker();
+      saveProgress();
+    }
+
+    document.getElementById('heightCm').addEventListener('input', function () {
+      const cm = parseFloat(this.value);
+      if (!cm || cm <= 0) { document.getElementById('heightSummary').textContent = ''; return; }
+      const totalInches = cm / 2.54;
+      const ft = Math.floor(totalInches / 12);
+      const inch = Math.round(totalInches % 12);
+      document.getElementById('heightFt').value = ft;
+      document.getElementById('heightIn').value = inch;
+      document.getElementById('heightSummary').textContent = Math.round(cm) + ' cm (' + ft + "'" + inch + '")';
+    });
+    function updateFromFtIn() {
+      const ft = parseFloat(document.getElementById('heightFt').value) || 0;
+      const inch = parseFloat(document.getElementById('heightIn').value) || 0;
+      if (ft <= 0 && inch <= 0) return;
+      const cm = Math.round((ft * 12 + inch) * 2.54);
+      document.getElementById('heightCm').value = cm;
+      document.getElementById('heightSummary').textContent = cm + ' cm (' + ft + "'" + inch + '")';
+    }
+    document.getElementById('heightFt').addEventListener('input', updateFromFtIn);
+    document.getElementById('heightIn').addEventListener('input', updateFromFtIn);
+
+    const cityPlaceholders = { 'Australia': 'e.g. Melbourne', 'India': 'e.g. Dehradun', 'Other': 'Enter your city' };
+    document.getElementById('country').addEventListener('change', function () {
+      const val = this.value;
+      document.getElementById('regionWrap').style.display = (val === 'New Zealand') ? 'block' : 'none';
+      document.getElementById('cityWrap').style.display = (val === 'New Zealand' || val === '') ? 'none' : 'block';
+      document.getElementById('city').placeholder = cityPlaceholders[val] || 'Enter your city';
+    });
+
+    function validateStep1() {
+      const age = parseInt(document.getElementById('age').value, 10);
+      const ageError = document.getElementById('ageError');
+      if (!age || age < 18) {
+        ageError.style.display = 'block';
+        return false;
+      }
+      ageError.style.display = 'none';
+
+      const required = ['firstName', 'lastName', 'gender', 'lookingFor', 'heightCm', 'country', 'bio'];
+      for (const id of required) {
+        if (!document.getElementById(id).value) {
+          alert('Please fill in all required fields.');
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function validateStep3() {
+      const consentError = document.getElementById('consentError');
+      if (!document.getElementById('consent').checked) {
+        consentError.style.display = 'block';
+        return false;
+      }
+      consentError.style.display = 'none';
+
+      if (!document.getElementById('email').value || !document.getElementById('whatsapp').value) {
+        alert('Please fill in email and WhatsApp number.');
+        return false;
+      }
+      return true;
+    }
+
+    function selectKohaAmount(amount, btn) {
+      kohaAmount = amount;
+      document.getElementById('kohaCustomAmount').style.display = 'none';
+      document.querySelectorAll('.koha-amounts button').forEach(function (b) { b.classList.remove('selected'); });
+      btn.classList.add('selected');
+      document.getElementById('kohaSkip').checked = false;
+      onKohaSkipChange();
+    }
+    function selectKohaCustom(btn) {
+      kohaAmount = null;
+      document.querySelectorAll('.koha-amounts button').forEach(function (b) { b.classList.remove('selected'); });
+      btn.classList.add('selected');
+      document.getElementById('kohaCustomAmount').style.display = 'block';
+      document.getElementById('kohaSkip').checked = false;
+      onKohaSkipChange();
+    }
+    function onKohaSkipChange() {
+      const skipped = document.getElementById('kohaSkip').checked;
+      document.getElementById('paymentMethodSection').style.display = skipped ? 'none' : 'block';
+    }
+    function selectPayMethod(method) {
+      kohaMethod = method;
+      document.getElementById('payCardOption').classList.toggle('selected', method === 'card');
+      document.getElementById('payBankOption').classList.toggle('selected', method === 'bank');
+      document.getElementById('bankDetails').style.display = (method === 'bank') ? 'block' : 'none';
+    }
+
+    function getKohaAmountValue() {
+      if (document.getElementById('kohaCustomAmount').style.display !== 'none') {
+        return parseFloat(document.getElementById('kohaCustomAmount').value) || null;
+      }
+      return kohaAmount;
+    }
+
+    function handleKohaContinue() {
+      const skipped = document.getElementById('kohaSkip').checked;
+      const errorEl = document.getElementById('kohaError');
+
+      if (skipped) {
+        errorEl.style.display = 'none';
+        saveProgress();
+        goToStep(5);
+        return;
+      }
+
+      const amount = getKohaAmountValue();
+      if (!amount || amount <= 0 || !kohaMethod) {
+        errorEl.style.display = 'block';
+        return;
+      }
+      errorEl.style.display = 'none';
+
+      if (kohaMethod === 'bank') {
+        saveProgress();
+        goToStep(5);
+        return;
+      }
+
+      // Card payment - redirect to Stripe. Save everything first so it
+      // survives the round trip.
+      saveProgress();
+      document.getElementById('kohaContinueBtn').disabled = true;
+      document.getElementById('kohaContinueBtn').textContent = 'Redirecting to payment...';
+
+      callApi('createCheckoutSession', [amount, document.getElementById('email').value, '']).then(function (result) {
+        if (result && result.checkoutUrl) {
+          window.location.href = result.checkoutUrl;
+        } else {
+          alert('Could not start payment. Please try again.');
+          document.getElementById('kohaContinueBtn').disabled = false;
+          document.getElementById('kohaContinueBtn').textContent = 'Continue';
+        }
+      }).catch(function (err) {
+        alert('Could not start payment. Please try again.');
+        document.getElementById('kohaContinueBtn').disabled = false;
+        document.getElementById('kohaContinueBtn').textContent = 'Continue';
+        console.error(err);
+      });
+    }
+
+    function collectFormData() {
+      const country = document.getElementById('country').value;
+      const regionOrCity = (country === 'New Zealand')
+        ? document.getElementById('region').value
+        : document.getElementById('city').value;
+
+      let kohaStatus = 'Skipped';
+      let amount = '';
+      if (!document.getElementById('kohaSkip').checked) {
+        const chosen = getKohaAmountValue();
+        if (chosen) {
+          amount = chosen;
+          kohaStatus = (kohaMethod === 'bank') ? 'Bank Transfer' : 'Paid';
+        }
+      }
+
+      return {
+        firstName: document.getElementById('firstName').value,
+        middleName: document.getElementById('middleName').value,
+        lastName: document.getElementById('lastName').value,
+        age: document.getElementById('age').value,
+        gender: document.getElementById('gender').value,
+        lookingFor: document.getElementById('lookingFor').value,
+        heightCm: document.getElementById('heightCm').value,
+        country: country,
+        regionOrCity: regionOrCity,
+        bio: document.getElementById('bio').value,
+        education: document.getElementById('education').value,
+        profession: document.getElementById('profession').value,
+        religion: document.getElementById('religion').value,
+        maritalStatus: document.getElementById('maritalStatus').value,
+        email: document.getElementById('email').value,
+        whatsapp: document.getElementById('whatsapp').value,
+        consentGiven: document.getElementById('consent').checked,
+        kohaStatus: kohaStatus,
+        kohaAmount: amount
+      };
+    }
+
+    function renderReview() {
+      const d = collectFormData();
+      const rows = [
+        ['Name', [d.firstName, d.middleName, d.lastName].filter(function (n) { return n; }).join(' ')],
+        ['Age', d.age], ['Gender', d.gender],
+        ['Looking for', d.lookingFor], ['Height', d.heightCm + ' cm'],
+        ['Location', d.regionOrCity + ', ' + d.country],
+        ['Education', d.education], ['Profession', d.profession],
+        ['Religion', d.religion || '-'], ['Marital status', d.maritalStatus || '-'],
+        ['Email', d.email], ['WhatsApp', d.whatsapp],
+        ['Koha', d.kohaStatus + (d.kohaAmount ? (' ($' + d.kohaAmount + ')') : '')]
+      ];
+      document.getElementById('reviewContent').innerHTML = rows.map(function (r) {
+        return '<div class="review-row"><span class="label">' + r[0] + '</span><span class="value">' + escapeHtml(String(r[1])) + '</span></div>';
+      }).join('');
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str == null ? '' : str;
+      return div.innerHTML;
+    }
+
+    function handleFinalSubmit() {
+      const data = collectFormData();
+      document.getElementById('submitBtn').disabled = true;
+      document.getElementById('submitBtn').textContent = 'Submitting...';
+
+      callApi('submitProfile', [data]).then(function (result) {
+        clearProgress();
+        if (result.success) {
+          document.getElementById('doneMessage').textContent =
+            'Your profile has been submitted and is waiting for review. We\'ll be in touch once it\'s approved.';
+        } else {
+          document.getElementById('doneMessage').textContent =
+            'Something went wrong: ' + (result.error || 'please try again.');
+        }
+        goToStep(6);
+      }).catch(function (err) {
+        alert('Something went wrong submitting your profile. Please try again.');
+        document.getElementById('submitBtn').disabled = false;
+        document.getElementById('submitBtn').textContent = 'Submit for review';
+        console.error(err);
+      });
+    }
+
+    function saveProgress() {
+      const state = { currentStep: currentStep, kohaAmount: kohaAmount, kohaMethod: kohaMethod, fields: {} };
+      ['firstName','middleName','lastName','age','gender','lookingFor','heightCm','heightFt','heightIn',
+       'country','region','city','bio','education','profession','religion',
+       'maritalStatus','email','whatsapp','kohaCustomAmount'].forEach(function (id) {
+        const el = document.getElementById(id);
+        if (el) state.fields[id] = el.value;
+      });
+      state.consent = document.getElementById('consent').checked;
+      state.kohaSkip = document.getElementById('kohaSkip').checked;
+      sessionStorage.setItem('raibarSubmitProgress', JSON.stringify(state));
+    }
+
+    function restoreProgress() {
+      const raw = sessionStorage.getItem('raibarSubmitProgress');
+      if (!raw) return false;
+      try {
+        const state = JSON.parse(raw);
+        Object.keys(state.fields).forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el) el.value = state.fields[id];
+        });
+        document.getElementById('consent').checked = !!state.consent;
+        document.getElementById('kohaSkip').checked = !!state.kohaSkip;
+        kohaAmount = state.kohaAmount;
+        kohaMethod = state.kohaMethod;
+        document.getElementById('country').dispatchEvent(new Event('change'));
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function clearProgress() {
+      sessionStorage.removeItem('raibarSubmitProgress');
+    }
+
+    function init() {
+      renderStepTracker();
+
+      const params = new URLSearchParams(window.location.search);
+
+      if (params.get('paid') === '1' && params.get('session_id')) {
+        restoreProgress();
+        callApi('verifyCheckoutSession', [params.get('session_id')]).then(function (result) {
+          if (result.ok && result.paid) {
+            kohaMethod = 'card';
+            kohaAmount = result.amount;
+            document.getElementById('kohaSkip').checked = false;
+            goToStep(5);
+          } else {
+            alert('Payment could not be confirmed. Please try again or choose another option.');
+            goToStep(4);
+          }
+        }).catch(function (err) {
+          alert('Could not confirm payment. Please try again.');
+          goToStep(4);
+          console.error(err);
+        });
+
+      } else if (params.get('cancelled') === '1') {
+        restoreProgress();
+        goToStep(4);
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

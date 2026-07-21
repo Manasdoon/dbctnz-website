@@ -1,0 +1,96 @@
+<!--
+  RAIBAR - Matrimonial Portal - Reveal Contact (Netlify version)
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connect - Raibar</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #F2EEE4;
+      margin: 0;
+      padding: 24px 16px;
+      color: #2B2B2B;
+    }
+    .card {
+      max-width: 480px;
+      margin: 40px auto;
+      background: #FFFFFF;
+      border: 1px solid #E6DDCB;
+      border-radius: 10px;
+      padding: 28px;
+      text-align: center;
+    }
+    h1 { font-size: 20px; margin: 0 0 12px; }
+    p { font-size: 14px; line-height: 1.6; color: #6B6B6B; }
+    .contact-box {
+      background: #F4EEE0;
+      border: 1px solid #E6DDCB;
+      border-left: 4px solid #C0832C;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    #loading { font-size: 14px; color: #6B6B6B; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div id="loading">Loading...</div>
+    <div id="content" style="display:none;"></div>
+  </div>
+
+  <script>
+    const APPS_SCRIPT_API_URL = 'https://script.google.com/macros/s/AKfycbwWTtikq9BSSEB2RKFJ54A8qrl-uD_0lYGZNwvcoMjoaiDgoXEx4LC8EFv_tEb97_0/exec';
+
+    function callApi(fn, args) {
+      return fetch(APPS_SCRIPT_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ fn: fn, args: args || [] })
+      }).then(function (r) { return r.json(); });
+    }
+
+    const token = new URLSearchParams(window.location.search).get('token');
+
+    callApi('handleRevealRequest', [token]).then(function (result) {
+      document.getElementById('loading').style.display = 'none';
+      const content = document.getElementById('content');
+      content.style.display = 'block';
+
+      if (!result.success) {
+        content.innerHTML = '<h1>Link not available</h1><p>' + escapeHtml(result.error || 'This link is invalid or has expired.') + '</p>';
+        return;
+      }
+
+      if (result.revealChoice === 'None') {
+        content.innerHTML =
+          '<h1>' + escapeHtml(result.ownerName) + ' has accepted!</h1>' +
+          '<p>They have chosen to reach out to you directly rather than share their contact here. Keep an eye on your email/WhatsApp.</p>';
+        return;
+      }
+
+      const label = result.revealChoice === 'WhatsApp' ? 'WhatsApp number' : 'Email address';
+      content.innerHTML =
+        '<h1>' + escapeHtml(result.ownerName) + ' has accepted!</h1>' +
+        '<p>They have chosen to share their ' + label.toLowerCase() + ' with you:</p>' +
+        '<div class="contact-box">' + escapeHtml(result.value) + '</div>' +
+        '<p style="margin-top:18px;">We recommend starting with a friendly introduction.</p>';
+    }).catch(function (err) {
+      document.getElementById('loading').textContent = 'Something went wrong loading this page.';
+      console.error(err);
+    });
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str == null ? '' : str;
+      return div.innerHTML;
+    }
+  </script>
+</body>
+</html>
