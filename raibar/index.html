@@ -23,7 +23,39 @@
     }
     .container { max-width: 720px; margin: 0 auto; }
     h1 { font-size: 20px; margin: 0 0 4px; }
-    .create-link { font-size: 13px; color: #1F2D3D; font-weight: bold; display: inline-block; margin-bottom: 16px; }
+    .create-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 0.2px;
+      color: #FBF7EF;
+      background: #1F2D3D;
+      padding: 11px 22px;
+      border-radius: 24px;
+      text-decoration: none;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(31,45,61,0.25);
+      transition: background 0.15s, box-shadow 0.15s, transform 0.15s;
+    }
+    .create-link:hover {
+      background: #2C3E50;
+      box-shadow: 0 4px 10px rgba(31,45,61,0.3);
+      transform: translateY(-1px);
+    }
+    .create-link .plus-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #C0832C;
+      color: #FBF7EF;
+      font-size: 12px;
+      line-height: 1;
+    }
 
     .filters { display: flex; gap: 8px; margin-bottom: 20px; }
     .filters button {
@@ -80,7 +112,7 @@
 
     <div id="listingView">
       <h1>Raibar - Browse profiles</h1>
-      <a class="create-link" href="submit.html">+ Create your profile</a>
+      <a class="create-link" href="submit.html"><span class="plus-icon">+</span> Create your profile</a>
 
       <div class="filters">
         <button class="filter-btn active" data-filter="All">All</button>
