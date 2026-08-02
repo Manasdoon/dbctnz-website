@@ -81,6 +81,18 @@
     .badge-other { background: #E6DDCB; color: #6B6B6B; }
 
     #status { text-align: center; color: #6B6B6B; font-size: 13px; padding: 20px 0; }
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #E6DDCB;
+      border-top-color: #C0832C;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     #detailView { display: none; }
     .back-link {
@@ -137,7 +149,7 @@
         <button class="filter-btn" data-filter="Male">Grooms</button>
       </div>
 
-      <div id="status">Loading profiles...</div>
+      <div id="status"><span class="spinner"></span>Loading profiles...</div>
       <div id="grid"></div>
     </div>
 
@@ -201,7 +213,7 @@
 
     function loadProfiles(filter) {
       document.getElementById('status').style.display = 'block';
-      document.getElementById('status').textContent = 'Loading profiles...';
+      document.getElementById('status').innerHTML = '<span class="spinner"></span>Loading profiles...';
       document.getElementById('grid').innerHTML = '';
 
       callApi('getApprovedListing', [filter]).then(function (result) {
