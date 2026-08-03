@@ -212,7 +212,7 @@
       return gender;
     }
 
-    function loadProfiles(filter) {
+    function loadProfiles(filter, isRetry) {
       document.getElementById('status').style.display = 'block';
       document.getElementById('status').innerHTML = '<span class="spinner"></span>Loading profiles...';
       document.getElementById('grid').innerHTML = '';
@@ -220,8 +220,21 @@
       callApi('getApprovedListing', [filter]).then(function (result) {
         renderProfiles(result);
       }).catch(function (err) {
-        document.getElementById('status').textContent = 'Something went wrong loading profiles. Please try again later.';
         console.error(err);
+
+        if (!isRetry) {
+          // First attempt failed - likely a cold-start delay. Wait a
+          // moment and automatically try once more before bothering the
+          // visitor with an error.
+          document.getElementById('status').innerHTML = '<span class="spinner"></span>Still loading, one moment...';
+          setTimeout(function () { loadProfiles(filter, true); }, 1500);
+          return;
+        }
+
+        // Second attempt also failed - show an error with a manual retry.
+        document.getElementById('status').innerHTML =
+          'Something went wrong loading profiles. ' +
+          '<a href="#" onclick="loadProfiles(\'' + filter + '\'); return false;" style="color:#1F2D3D; font-weight:bold;">Try again</a>';
       });
     }
 
@@ -231,7 +244,9 @@
       grid.innerHTML = '';
 
       if (!result || !result.success) {
-        statusEl.textContent = 'Could not load profiles right now.';
+        const detail = (result && result.error) ? (' (' + result.error + ')') : '';
+        statusEl.textContent = 'Could not load profiles right now.' + detail;
+        console.error('getApprovedListing returned failure:', result);
         return;
       }
       if (result.profiles.length === 0) {
