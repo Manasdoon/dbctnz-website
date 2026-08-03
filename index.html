@@ -247,52 +247,46 @@ footer{background:#111c28;padding:48px 40px 24px;}
 <body>
 
 <!-- ── RIBBON ── -->
-<!-- ── RIBBON (rotating between multiple announcements) ── -->
+<!-- ── RIBBON (continuously scrolling, both announcements) ── -->
 <div class="ribbon" id="ribbon">
   <i class="ti ti-speakerphone"></i>
-  <span id="ribbon-text" class="ribbon-text"></span>
+  <div class="ribbon-marquee-wrap">
+    <div class="ribbon-marquee-track" id="ribbon-track">
+      <span class="ribbon-marquee-item">Our community directory is now live&middot; <a href="https://dbctnz.org.nz/directory/">Submit your business here &rarr;</a></span>
+      <span class="ribbon-marquee-item">Raibar matrimonial portal is now live&middot; <a href="https://dbctnz.org.nz/raibar/index.html">Browse profiles &rarr;</a></span>
+      <!-- duplicated for a seamless loop - do not remove -->
+      <span class="ribbon-marquee-item">Our community directory is now live&middot; <a href="https://dbctnz.org.nz/directory/">Submit your business here &rarr;</a></span>
+      <span class="ribbon-marquee-item">Raibar matrimonial portal is now live&middot; <a href="https://dbctnz.org.nz/raibar/index.html">Browse profiles &rarr;</a></span>
+    </div>
+  </div>
   <button class="ribbon-close" onclick="document.getElementById('ribbon').style.display='none'" aria-label="Close">&times;</button>
 </div>
 
 <style>
-  .ribbon-text {
-    display: inline-block;
-    transition: opacity 0.4s ease;
+  .ribbon-marquee-wrap {
+    overflow: hidden;
+    flex: 1;
+    white-space: nowrap;
   }
-  .ribbon-text.fading {
-    opacity: 0;
+  .ribbon-marquee-track {
+    display: inline-flex;
+    animation: ribbon-scroll 24s linear infinite;
+  }
+  .ribbon-marquee-item {
+    display: inline-block;
+    padding-right: 64px; /* gap between repeating messages */
+  }
+  .ribbon-marquee-wrap:hover .ribbon-marquee-track {
+    animation-play-state: paused; /* lets people actually read it on hover */
+  }
+  @keyframes ribbon-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); } /* exactly half, since content is duplicated once */
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ribbon-marquee-track { animation: none; }
   }
 </style>
-
-<script>
-  // Add new announcements here as needed - each becomes one rotating message.
-  const ribbonMessages = [
-    'Our community directory is now live&middot; <a href="https://dbctnz.org.nz/directory/">Submit your business here &rarr;</a>',
-    'Raibar matrimonial portal is now live&middot; <a href="https://dbctnz.org.nz/raibar/index.html">Browse profiles &rarr;</a>'
-  ];
-
-  let ribbonIndex = 0;
-  const ribbonTextEl = document.getElementById('ribbon-text');
-  const RIBBON_INTERVAL_MS = 6000; // how long each message shows before switching
-
-  function showRibbonMessage(index) {
-    ribbonTextEl.innerHTML = ribbonMessages[index];
-  }
-
-  function rotateRibbon() {
-    ribbonTextEl.classList.add('fading');
-    setTimeout(function () {
-      ribbonIndex = (ribbonIndex + 1) % ribbonMessages.length;
-      showRibbonMessage(ribbonIndex);
-      ribbonTextEl.classList.remove('fading');
-    }, 400); // matches the CSS transition duration above
-  }
-
-  showRibbonMessage(ribbonIndex);
-  if (ribbonMessages.length > 1) {
-    setInterval(rotateRibbon, RIBBON_INTERVAL_MS);
-  }
-</script>
 
 <!-- ── NAV ── -->
 <nav>
