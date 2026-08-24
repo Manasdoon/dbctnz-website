@@ -171,70 +171,9 @@ footer{background:#111c28;padding:48px 40px 24px;}
 @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
-<body>
+<body data-page="mission">
 
-<!-- ── NAV ── -->
-<nav>
-<div class="nav-inner">
-<a href="https://www.dbctnz.org.nz" class="nav-logo">
-<img src="images/uploads/main-logo.png" alt="Devbhoomi Charitable Trust NZ">
-<div class="nav-logo-text">Devbhoomi <small>Charitable Trust NZ</small></div>
-</a>
-<div class="nav-links">
-<div class="nav-item">
-<button type="button" class="nav-drop-toggle active" aria-expanded="false" aria-haspopup="true">About<span class="nav-chev" aria-hidden="true">&#9662;</span></button>
-<div class="nav-dropdown" role="menu">
-<a href="/about" class="nav-drop-link" role="menuitem">Who We Are</a>
-<a href="https://www.dbctnz.org.nz/our-story" class="nav-drop-link" role="menuitem">Our Story</a>
-<a href="/mission" class="nav-drop-link" role="menuitem">Our Mission</a>
-</div>
-</div>
-<div class="nav-item">
-<button type="button" class="nav-drop-toggle" aria-expanded="false" aria-haspopup="true">Community<span class="nav-chev" aria-hidden="true">&#9662;</span></button>
-<div class="nav-dropdown" role="menu">
-<a href="https://www.dbctnz.org.nz/#events" class="nav-drop-link" role="menuitem">Events</a>
-<a href="https://www.dbctnz.org.nz/special-events" class="nav-drop-link" role="menuitem">Special Events</a>
-<a href="https://www.dbctnz.org.nz/publications" class="nav-drop-link" role="menuitem">Publications</a>
-<a href="https://www.dbctnz.org.nz/#media" class="nav-drop-link" role="menuitem">Media</a>
-</div>
-</div>
-<a href="https://www.dbctnz.org.nz/#initiatives" class="nav-link">Initiatives</a>
-<a href="/contact" class="nav-link">Contact</a>
-</div>
-<div class="nav-cta">
-<a href="https://dbctnz.org.nz/raibar/index.html" class="btn btn-outline-ochre" style="font-size:12px; padding:7px 14px;">Raibar</a>
-<a href="https://www.dbctnz.org.nz/directory" class="btn btn-outline-ochre" style="font-size:12px; padding:7px 14px;">Directory</a>
-<a href="https://www.dbctnz.org.nz/membership" class="btn btn-ochre" style="font-size:12px; padding:7px 16px;">Join the Trust/Donate</a>
-</div>
-<button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-<span></span><span></span><span></span>
-</button>
-</div>
-</nav>
-
-<!-- ── MOBILE DRAWER ── -->
-<div class="mobile-menu-overlay" id="menu-overlay" onclick="closeMenu()"></div>
-<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-<nav class="mobile-nav-links">
-<a href="/about" class="mobile-nav-link">About</a>
-<a href="https://www.dbctnz.org.nz/our-story" class="mobile-nav-link">Our Story</a>
-<a href="/mission" class="mobile-nav-link" style="color:var(--navy);font-weight:600;">Our Mission</a>
-<a href="https://www.dbctnz.org.nz/#initiatives" class="mobile-nav-link">Initiatives</a>
-<a href="https://www.dbctnz.org.nz/#events" class="mobile-nav-link">Events</a>
-<a href="https://www.dbctnz.org.nz/special-events" class="mobile-nav-link">Special Events</a>
-<a href="https://www.dbctnz.org.nz/publications" class="mobile-nav-link">Publications</a>
-<a href="https://www.dbctnz.org.nz/#media" class="mobile-nav-link">Media</a>
-<a href="https://dbctnz.org.nz/raibar/index.html" class="mobile-nav-link">Raibar</a>
-<a href="https://www.dbctnz.org.nz/directory" class="mobile-nav-link">Directory</a>
-<a href="/contact" class="mobile-nav-link">Contact</a>
-</nav>
-<div class="mobile-nav-cta">
-<a href="https://dbctnz.org.nz/raibar/index.html" class="btn btn-ochre">Raibar</a>
-<a href="https://www.dbctnz.org.nz/directory" class="btn btn-ochre">Directory</a>
-<a href="https://www.dbctnz.org.nz/membership" class="btn btn-ochre">Join the Trust/Donate</a>
-</div>
-</div>
-
+<div id="site-nav"></div>
 <!-- ── PAGE HERO ── -->
 <section class="page-hero">
 <div class="page-hero-inner">
@@ -320,90 +259,9 @@ footer{background:#111c28;padding:48px 40px 24px;}
 </div>
 </section>
 
-<!-- ── FOOTER ── -->
-<footer>
-<div class="footer-grid">
-<div class="footer-brand">
-<img src="images/uploads/main-logo.png" alt="Devbhoomi Charitable Trust NZ">
-<p>Connecting New Zealand's Indian diaspora with the land and people of Dev Bhoomi — through welfare, culture, and community.</p>
-<div class="footer-charity"><i class="ti ti-certificate" style="color:var(--ochre-lt);"></i> <a href="https://www.register.charities.govt.nz/Charity/CC61651" target="_blank">Registered Charity CC61651</a></div>
-<p style="margin-top:14px;">130 Kirton Drive, Riverstone Terraces, Upper Hutt 5018, New Zealand</p>
-</div>
-<div class="footer-col">
-<h4>About</h4>
-<a href="/about" class="footer-link">Our Organisation</a>
-<a href="https://www.dbctnz.org.nz/our-story" class="footer-link">Our Story</a>
-<a href="/mission" class="footer-link">Our Mission</a>
-<a href="https://www.register.charities.govt.nz/Charity/CC61651" target="_blank" class="footer-link">Charity Register ↗</a>
-</div>
-<div class="footer-col">
-<h4>Get Involved</h4>
-<a href="https://www.dbctnz.org.nz/membership" class="footer-link">Join the Trust</a>
-<a href="https://www.dbctnz.org.nz/#donate" class="footer-link">Donate</a>
-<a href="https://www.dbctnz.org.nz/#events" class="footer-link">Events</a>
-<a href="https://www.dbctnz.org.nz/#initiatives" class="footer-link">Initiatives</a>
-</div>
-<div class="footer-col">
-<h4>Connect</h4>
-<a href="https://www.facebook.com/DevbhoomiAssociationNZ" target="_blank" class="footer-link">Facebook ↗</a>
-<a href="https://www.instagram.com/dbctnz/" target="_blank" class="footer-link">Instagram ↗</a>
-<a href="mailto:info@dbctnz.org.nz" class="footer-link">info@dbctnz.org.nz</a>
-<a href="/contact" class="footer-link">Contact Us</a>
-</div>
-</div>
-<div class="footer-bottom">
-<div class="footer-legal">© 2026 Devbhoomi Charitable Trust NZ. All rights reserved.</div>
-<div class="footer-legal-links">
-<a href="#" class="footer-link">Privacy Policy</a>
-<a href="#" class="footer-link">Terms of Use</a>
-</div>
-</div>
-</footer>
+<div id="site-footer"></div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-
-  // ── HAMBURGER MENU ──
-  var hamburger = document.getElementById('hamburger');
-  var mobileMenu = document.getElementById('mobile-menu');
-  var menuOverlay = document.getElementById('menu-overlay');
-  function openMenu() {
-    hamburger.classList.add('open');
-    mobileMenu.classList.add('open');
-    menuOverlay.classList.add('open');
-    hamburger.setAttribute('aria-expanded','true');
-    mobileMenu.setAttribute('aria-hidden','false');
-  }
-  window.closeMenu = function closeMenu() {
-    hamburger.classList.remove('open');
-    mobileMenu.classList.remove('open');
-    menuOverlay.classList.remove('open');
-    hamburger.setAttribute('aria-expanded','false');
-    mobileMenu.setAttribute('aria-hidden','true');
-  };
-  hamburger.addEventListener('click', function() {
-    if (mobileMenu.classList.contains('open')) { closeMenu(); } else { openMenu(); }
-  });
-  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMenu(); });
-
-  // ── NAV DROPDOWNS ──
-  function closeAllDropdowns(){
-    document.querySelectorAll('.nav-dropdown.open').forEach(function(m){ m.classList.remove('open'); });
-    document.querySelectorAll('.nav-drop-toggle[aria-expanded="true"]').forEach(function(t){ t.setAttribute('aria-expanded','false'); });
-  }
-  document.querySelectorAll('.nav-drop-toggle').forEach(function(btn){
-    btn.addEventListener('click', function(e){
-      e.stopPropagation();
-      var menu = btn.nextElementSibling;
-      var isOpen = menu.classList.contains('open');
-      closeAllDropdowns();
-      if(!isOpen){ menu.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
-    });
-  });
-  document.addEventListener('click', closeAllDropdowns);
-
-});
-</script>
+<script src="/partials/include.js"></script>
 
 </body>
 </html>

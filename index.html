@@ -234,6 +234,7 @@ footer{background:#111c28;padding:48px 40px 24px;}
 .nav-drop-toggle{background:none;border:none;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:5px;}
 .nav-chev{font-size:9px;line-height:1;transition:transform 0.2s;}
 .nav-drop-toggle[aria-expanded="true"] .nav-chev{transform:rotate(180deg);}
+.nav-drop-toggle.active{color:var(--navy);font-weight:500;}
 .nav-dropdown{position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 30px rgba(26,35,50,0.14);padding:6px;min-width:190px;display:none;flex-direction:column;z-index:120;}
 .nav-dropdown.open{display:flex;}
 .nav-drop-link{padding:9px 14px;font-size:13px;color:var(--muted);text-decoration:none;border-radius:6px;white-space:nowrap;transition:color 0.15s,background 0.15s;}
@@ -244,7 +245,7 @@ footer{background:#111c28;padding:48px 40px 24px;}
 .btn-outline-ochre:hover{background:var(--ochre);color:#fff;}
 </style>
 </head>
-<body>
+<body data-page="home">
 
 <!-- ── RIBBON ── -->
 <!-- ── RIBBON (continuously scrolling, both announcements) ── -->
@@ -288,70 +289,7 @@ footer{background:#111c28;padding:48px 40px 24px;}
   }
 </style>
 
-<!-- ── NAV ── -->
-<nav>
-  <div class="nav-inner">
-    <a href="https://www.dbctnz.org.nz" class="nav-logo">
-      <img src="images/uploads/main-logo.png" alt="Devbhoomi Charitable Trust NZ">
-      <div class="nav-logo-text">Devbhoomi <small>Charitable Trust NZ</small></div>
-    </a>
-    <div class="nav-links">
-      <div class="nav-item">
-        <button type="button" class="nav-link nav-drop-toggle" aria-expanded="false" aria-haspopup="true">About<span class="nav-chev" aria-hidden="true">&#9662;</span></button>
-        <div class="nav-dropdown" role="menu">
-          <a href="https://www.dbctnz.org.nz/about" class="nav-drop-link" role="menuitem">Who We Are</a>
-          <a href="https://www.dbctnz.org.nz/our-story" class="nav-drop-link" role="menuitem">Our Story</a>
-          <a href="https://www.dbctnz.org.nz/mission" class="nav-drop-link" role="menuitem">Our Mission</a>
-        </div>
-      </div>
-      <div class="nav-item">
-        <button type="button" class="nav-link nav-drop-toggle" aria-expanded="false" aria-haspopup="true">Community<span class="nav-chev" aria-hidden="true">&#9662;</span></button>
-        <div class="nav-dropdown" role="menu">
-          <a href="#events" class="nav-drop-link" role="menuitem">Events</a>
-          <a href="https://www.dbctnz.org.nz/special-events" class="nav-drop-link" role="menuitem">Special Events</a>
-          <a href="https://www.dbctnz.org.nz/publications" class="nav-drop-link" role="menuitem">Publications</a>
-          <a href="#media" class="nav-drop-link" role="menuitem">Media</a>
-        </div>
-      </div>
-      <a href="#initiatives" class="nav-link">Initiatives</a>
-      <a href="https://www.dbctnz.org.nz/contact" class="nav-link">Contact</a>
-    </div>
-
-    <div class="nav-cta">
-        <a href="https://dbctnz.org.nz/raibar/index.html" class="btn btn-outline-ochre" style="font-size:12px; padding:7px 14px;">Raibar</a>
-        <a href="https://www.dbctnz.org.nz/directory" class="btn btn-outline-ochre" style="font-size:12px; padding:7px 14px;">Directory</a>
-        <a href="https://www.dbctnz.org.nz/membership" class="btn btn-ochre" style="font-size:12px; padding:7px 16px;">Join the Trust/Donate</a>
-    </div>
-    <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-
-<!-- ── MOBILE DRAWER ── -->
-<div class="mobile-menu-overlay" id="menu-overlay" onclick="closeMenu()"></div>
-<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
- <nav class="mobile-nav-links">
-  <a href="https://www.dbctnz.org.nz/about" class="mobile-nav-link">About</a>
-  <a href="https://www.dbctnz.org.nz/our-story" class="mobile-nav-link">Our Story</a>
-  <a href="https://www.dbctnz.org.nz/mission" class="mobile-nav-link">Our Mission</a>
-  <a href="#initiatives" class="mobile-nav-link">Initiatives</a>
-  <a href="#events" class="mobile-nav-link">Events</a>
-  <a href="https://www.dbctnz.org.nz/special-events" class="mobile-nav-link">Special Events</a>
-  <a href="https://www.dbctnz.org.nz/publications" class="mobile-nav-link">Publications</a>
-  <a href="#media" class="mobile-nav-link">Media</a>
-  <a href="https://dbctnz.org.nz/raibar/index.html" class="mobile-nav-link">Raibar</a>
-  <a href="https://www.dbctnz.org.nz/directory" class="mobile-nav-link">Directory</a>
-  <a href="https://www.dbctnz.org.nz/contact" class="mobile-nav-link">Contact</a>
-</nav>
-
-<div class="mobile-nav-cta">
-  <a href="https://dbctnz.org.nz/raibar/index.html" class="btn btn-ochre">Raibar</a>
-  <a href="https://www.dbctnz.org.nz/directory" class="btn btn-ochre">Directory</a>
-  <a href="https://www.dbctnz.org.nz/membership" class="btn btn-ochre">Join the Trust/Donate</a>
-</div>
-</div>
-
+<div id="site-nav"></div>
 <!-- ── HERO ── -->
  <section class="hero" id="home">
   <div class="carousel-track" id="carousel-track"></div>
@@ -539,52 +477,7 @@ footer{background:#111c28;padding:48px 40px 24px;}
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
-<footer id="contact">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <img src="data:image/png;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAH4AfgDACIAAREBAhEB/9sAQwAIBgYHBgUIBwcHCQkICgwUDQwLCwwZEhMPFB0aHx4dGhwcICQuJyAiLCMcHCg3KSwwMTQ0NB8nOT04MjwuMzQy/9sAQwEJCQkMCwwYDQ0YMiEcITIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIy/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMAAAERAhEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAorgfHnxMs/COLO1SO81Q4Jh3YWIdcuR3PYDnucDGTwT8Rh4iuhpmrWR0zVWQSxRsCFnXGcru56c45yOQTzgCx31FFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUVDc3MFpA89zNHDEgyzyMFUD3J4oAmrzz4k/EOPwrZtp+nyK+sTrkdxbqf4iPU9h+J4wCvjP4oaToGmyR6XeW9/qbgrEkLiRIz/eYjjj0zk+wyR87Xd3cX93LdXUzzTysWeRzksT1JNIpImtoLvW9XigVnnvLyYKGcklnY4ySeTyck19Q674RtNZ0OCxDNBdWSqbK7Th4HUfKQeuOBkf1ANeXfBLwt9pv5vEdzHmK2zFbZHBkI+Zh9AcfVj3Fe60A2c/4W1q41SyltdSiEGr2LCG9hHTdjIdf9lhyD9fSt+sLXtCl1FftmmXbWOsRIVhulAwwznZICCGQnsQcHke7/C+rza1oEF3dRCG8BaK5iHRJUYq478ZBI5PBFMk26KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiuZ8ZeMbHwdpP2q6/e3EmVt7ZThpGH8lHGT246k4oAueIfFGk+F7H7Vql0IgeEjXl5D6KvU/XoO5p+g+I9L8S2H2zS7oTRg7XUjDRt6MDyDXn3gnw3d+L9Si8b+KJUnL5NlaBfkjUEgEg9gQSBzzySTUvjfRb/wjqb+NfDGUyf8AiZWmMpIueXI9M9ccjORjk0Dsep0VxnhT4k6D4pEU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zBfphcZ7k56mvpivIPgj4Y+z2Nx4juEIkuMwWwI6Rgjcw+pAH/AT616/TBhRRRQIKKKKACiiigArm4fAXhWFiw0O0kdmLs8y+axJOSSWJJzXSUUAMRFRQiKFVRgADGAKfRRQAUUUUAcxrEDaDqL+I7OJnjZQupwRjmSMdJQO7J39VyOoFdFBNFcwRzwuskUih0dTkMp5BB9MVLWFbWcmgXSw2kTyaXPJxEgybR2PYdTGSckD7p5+6TtAN2iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigCjqUN7cWTw2F0trO5AE7R79gzyQCcE46Z4B5welN0rSrXR7QW1qhALF5JGOXlc8l2Pdiep/pitCigClqOo22k2T3d3JsiUhRtUszMTgKqgZJJOABzXJ6jouu+NkEepTS6LojcmyhYG5nH/AE0YZCj/AGRn35Ax2jRJIyM6KxRtyEgEqcYyPQ4J/M1LQBgaf4Q0TR9PktdM063gZ4zH5uzc5yMcseT+dZPgP4f2fg2zMjlbjVJVxNcYOFH91M8gep6k8nsB2tFAXCoLq7gsbSW6upUigiUu8jHAUDqTU9cr4i8N3HinVILPUJNnh6FRJJDG5D3UuThWI5CKADwQST7AgA8r8Ra/r3xW1g6P4etpV0mJgSW+VW54eU9AOCQvJ46E9O18K/CDRdFC3Gq41S8GDiRf3KH2X+L/AIFn6Cu707SrHR7NbTTrWK2t16RxLgZ9T6n3PNXqB37DERUUIihVUYAAxgCn0UUCCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAIbgTtAwt3jSU42tIhZR+AIJ/MV41ZfGbWLvX7fS/7NsVM10tv5nznGWC5xnnrnGf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YEjJwwwevTNdH8PPh7L4Qku7/ULtLrUrpdjNHkqi5ycEgEknBJIHQV39FAXPK9Q8B+MdO8QX2oeGtdgNvdli0F7l9oY5KgMrKQD0PBxx65v/AA6+HV14Tv7vVNTu4Jr64Qx7LcERopYMeSBkkgcAADHfPHotFAXPN/iP4C1Xxjqem3Onz2cSWqMri4dlJywPGFPpXo9LRQBn6zaSahomoWUJUSXFtJEhckKCykAnA6c+9cF4d+Fxg8D33h7XntpJJ7kzwzWxLGI7FUMCwBzwcjoQcV6bRQB5l8O/h9rPgy71Oe5ubCY3EISDy3c/MCSCwKjA6ZwTXNSfCjxw+vNrjatpLagZfO81ndsN2IBjI44xxxgY6CvcqKB3ZyHg7S/GOn3N03ijV7W/iZFEKw9VYE5J+Reox6119FFAgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/9k=" alt="Devbhoomi Charitable Trust NZ">
-      <p>Connecting New Zealand's Indian diaspora with the land and people of Dev Bhoomi — through welfare, culture, and community.</p>
-      <div class="footer-charity">
-        <i class="ti ti-certificate" style="color:var(--ochre-lt);font-size:14px;" aria-hidden="true"></i>
-        <a href="https://www.register.charities.govt.nz/Charity/CC61651" target="_blank">Registered Charity CC61651</a>
-      </div>
-      <p style="margin-top:14px;">130 Kirton Drive, Riverstone Terraces, Upper Hutt 5018, New Zealand</p>
-    </div>
-    <div class="footer-col">
-      <h4>About</h4>
-      <a class="footer-link" href="https://www.dbctnz.org.nz/about">Our Organisation</a>
-      <a class="footer-link" href="https://www.dbctnz.org.nz/our-story">Our Story</a>
-      <a class="footer-link" href="https://www.dbctnz.org.nz/mission">Our Mission</a>
-      <a class="footer-link" href="https://www.dbctnz.org.nz/about">Trustees &amp; Office Bearers</a>
-      <a class="footer-link" href="https://www.register.charities.govt.nz/Charity/CC61651" target="_blank">Charity Register ↗</a>
-    </div>
-    <div class="footer-col">
-      <h4>Get Involved</h4>
-      <a class="footer-link" href="https://www.dbctnz.org.nz/membership">Join the Trust</a>
-      <a class="footer-link" href="#donate">Donate</a>
-      <a class="footer-link" href="#events">Events</a>
-      <a class="footer-link" href="#initiatives">Initiatives</a>
-    </div>
-    <div class="footer-col">
-      <h4>Connect</h4>
-      <a class="footer-link" href="https://www.facebook.com/DevbhoomiAssociationNZ" target="_blank">Facebook ↗</a>
-      <a class="footer-link" href="https://www.instagram.com/dbctnz/" target="_blank">Instagram ↗</a>
-      <a class="footer-link" href="mailto:info@dbctnz.org.nz">info@dbctnz.org.nz</a>
-      <a class="footer-link" href="https://www.dbctnz.org.nz/contact">Contact Us</a>
-      <a class="footer-link" href="https://www.dbctnz.org.nz/publications">Publications</a>
-      <a class="footer-link" href="#media">Press Releases</a>
-      <a class="footer-link" href="#media">Articles &amp; Op-eds</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-legal">© 2025 Devbhoomi Charitable Trust NZ. All rights reserved.</div>
-    <div class="footer-legal-links">
-      <a class="footer-link" href="#" style="font-size:11px;">Privacy Policy</a>
-      <a class="footer-link" href="#" style="font-size:11px;">Terms of Use</a>
-    </div>
-  </div>
-</footer>
+<div id="site-footer"></div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -700,47 +593,6 @@ document.addEventListener('DOMContentLoaded', function() {
       renderEvents();
     });
 
-  // ── HAMBURGER MENU ──
-  var hamburger = document.getElementById('hamburger');
-  var mobileMenu = document.getElementById('mobile-menu');
-  var menuOverlay = document.getElementById('menu-overlay');
-  function openMenu() {
-    hamburger.classList.add('open');
-    mobileMenu.classList.add('open');
-    menuOverlay.classList.add('open');
-    hamburger.setAttribute('aria-expanded','true');
-    mobileMenu.setAttribute('aria-hidden','false');
-  }
-  function closeMenu() {
-    hamburger.classList.remove('open');
-    mobileMenu.classList.remove('open');
-    menuOverlay.classList.remove('open');
-    hamburger.setAttribute('aria-expanded','false');
-    mobileMenu.setAttribute('aria-hidden','true');
-  }
-  hamburger.addEventListener('click', function() {
-    if (mobileMenu.classList.contains('open')) { closeMenu(); } else { openMenu(); }
-  });
-  menuOverlay.addEventListener('click', closeMenu);
-
-  mobileMenu.addEventListener('click', function(e) {
-    var link = e.target.closest('A');
-    if (!link) return;
-    var href = link.getAttribute('href');
-    if (href && href.startsWith('#')) {
-      e.preventDefault();
-      closeMenu();
-      setTimeout(function() {
-        var target = document.querySelector(href);
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      }, 300);
-    } else {
-      closeMenu();
-    }
-  });
-
-  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMenu(); });
-
   // ── SCROLL REVEAL ──
   var io = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) { if(e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
@@ -750,25 +602,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<script>
-(function(){
-  function closeAll(){
-    document.querySelectorAll('.nav-dropdown.open').forEach(function(m){ m.classList.remove('open'); });
-    document.querySelectorAll('.nav-drop-toggle[aria-expanded="true"]').forEach(function(t){ t.setAttribute('aria-expanded','false'); });
-  }
-  document.querySelectorAll('.nav-drop-toggle').forEach(function(btn){
-    btn.addEventListener('click', function(e){
-      e.stopPropagation();
-      var menu = btn.nextElementSibling;
-      var isOpen = menu.classList.contains('open');
-      closeAll();
-      if(!isOpen){ menu.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
-    });
-  });
-  document.addEventListener('click', closeAll);
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ closeAll(); } });
-})();
-</script>
+<script src="/partials/include.js"></script>
 
 <script>
 (function(){

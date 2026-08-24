@@ -1,0 +1,112 @@
+<!-- ══════════════════════════════════════════════════════════════
+     SHARED NAV + FOOTER — edit ONCE here, every page updates.
+     Included by partials/include.js into <div id="site-nav">
+     and <div id="site-footer"> on each page.
+     ══════════════════════════════════════════════════════════════ -->
+
+<template id="tpl-site-nav">
+<nav>
+<div class="nav-inner">
+<a href="https://www.dbctnz.org.nz" class="nav-logo">
+<img src="/images/uploads/main-logo.png" alt="Devbhoomi Charitable Trust NZ">
+<div class="nav-logo-text">Devbhoomi <small>Charitable Trust NZ</small></div>
+</a>
+<div class="nav-links">
+<div class="nav-item">
+<button type="button" class="nav-drop-toggle" data-nav-group="about" aria-expanded="false" aria-haspopup="true">About<span class="nav-chev" aria-hidden="true">&#9662;</span></button>
+<div class="nav-dropdown" role="menu">
+<a href="/about" class="nav-drop-link" data-nav-key="about" role="menuitem">Who We Are</a>
+<a href="/our-story" class="nav-drop-link" data-nav-key="our-story" role="menuitem">Our Story</a>
+<a href="/mission" class="nav-drop-link" data-nav-key="mission" role="menuitem">Our Mission</a>
+</div>
+</div>
+<div class="nav-item">
+<button type="button" class="nav-drop-toggle" data-nav-group="community" aria-expanded="false" aria-haspopup="true">Community<span class="nav-chev" aria-hidden="true">&#9662;</span></button>
+<div class="nav-dropdown" role="menu">
+<a href="/#events" class="nav-drop-link" role="menuitem">Events</a>
+<a href="/special-events" class="nav-drop-link" data-nav-key="special-events" role="menuitem">Special Events</a>
+<a href="/publications" class="nav-drop-link" data-nav-key="publications" role="menuitem">Publications</a>
+<a href="/#media" class="nav-drop-link" role="menuitem">Media</a>
+</div>
+</div>
+<a href="/#initiatives" class="nav-link">Initiatives</a>
+<a href="/contact" class="nav-link" data-nav-key="contact">Contact</a>
+</div>
+<div class="nav-cta">
+<a href="https://dbctnz.org.nz/raibar/index.html" class="btn btn-outline-ochre" style="font-size:12px; padding:7px 14px;">Raibar</a>
+<a href="/directory" class="btn btn-outline-ochre" style="font-size:12px; padding:7px 14px;">Directory</a>
+<a href="/membership" class="btn btn-ochre" style="font-size:12px; padding:7px 16px;">Join the Trust/Donate</a>
+</div>
+<button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+<span></span><span></span><span></span>
+</button>
+</div>
+</nav>
+
+<div class="mobile-menu-overlay" id="menu-overlay"></div>
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+<nav class="mobile-nav-links">
+<a href="/about" class="mobile-nav-link" data-nav-key="about">About</a>
+<a href="/our-story" class="mobile-nav-link" data-nav-key="our-story">Our Story</a>
+<a href="/mission" class="mobile-nav-link" data-nav-key="mission">Our Mission</a>
+<a href="/#initiatives" class="mobile-nav-link">Initiatives</a>
+<a href="/#events" class="mobile-nav-link">Events</a>
+<a href="/special-events" class="mobile-nav-link" data-nav-key="special-events">Special Events</a>
+<a href="/publications" class="mobile-nav-link" data-nav-key="publications">Publications</a>
+<a href="/#media" class="mobile-nav-link">Media</a>
+<a href="https://dbctnz.org.nz/raibar/index.html" class="mobile-nav-link">Raibar</a>
+<a href="/directory" class="mobile-nav-link">Directory</a>
+<a href="/contact" class="mobile-nav-link" data-nav-key="contact">Contact</a>
+</nav>
+<div class="mobile-nav-cta">
+<a href="https://dbctnz.org.nz/raibar/index.html" class="btn btn-ochre">Raibar</a>
+<a href="/directory" class="btn btn-ochre">Directory</a>
+<a href="/membership" class="btn btn-ochre">Join the Trust/Donate</a>
+</div>
+</div>
+</template>
+
+<template id="tpl-site-footer">
+<footer>
+<div class="footer-grid">
+<div class="footer-brand">
+<img src="/images/uploads/main-logo.png" alt="Devbhoomi Charitable Trust NZ">
+<p>Connecting New Zealand's Indian diaspora with the land and people of Dev Bhoomi — through welfare, culture, and community.</p>
+<div class="footer-charity">
+<i class="ti ti-certificate" style="color:var(--ochre-lt);font-size:14px;" aria-hidden="true"></i>
+<a href="https://www.register.charities.govt.nz/Charity/CC61651" target="_blank">Registered Charity CC61651</a>
+</div>
+<p style="margin-top:14px;">130 Kirton Drive, Riverstone Terraces, Upper Hutt 5018, New Zealand</p>
+</div>
+<div class="footer-col">
+<h4>About</h4>
+<a href="/about" class="footer-link">Our Organisation</a>
+<a href="/our-story" class="footer-link">Our Story</a>
+<a href="/mission" class="footer-link">Our Mission</a>
+<a href="/about" class="footer-link">Trustees &amp; Office Bearers</a>
+<a href="https://www.register.charities.govt.nz/Charity/CC61651" target="_blank" class="footer-link">Charity Register ↗</a>
+</div>
+<div class="footer-col">
+<h4>Get Involved</h4>
+<a href="/membership" class="footer-link">Join the Trust</a>
+<a href="/#donate" class="footer-link">Donate</a>
+<a href="/#events" class="footer-link">Events</a>
+<a href="/#initiatives" class="footer-link">Initiatives</a>
+</div>
+<div class="footer-col">
+<h4>Connect</h4>
+<a href="https://www.facebook.com/DevbhoomiAssociationNZ" target="_blank" class="footer-link">Facebook ↗</a>
+<a href="https://www.instagram.com/dbctnz/" target="_blank" class="footer-link">Instagram ↗</a>
+<a href="mailto:info@dbctnz.org.nz" class="footer-link">info@dbctnz.org.nz</a>
+<a href="/contact" class="footer-link">Contact Us</a>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="footer-legal">© 2026 Devbhoomi Charitable Trust NZ. All rights reserved.</div>
+<div class="footer-legal-links">
+<a href="#" class="footer-link">Privacy Policy</a>
+<a href="#" class="footer-link">Terms of Use</a>
+</div>
+</div>
+</footer>
+</template>
