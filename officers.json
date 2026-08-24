@@ -1,0 +1,22 @@
+{
+  "officers": [
+    {
+      "name": "Girish Sajwan",
+      "position": "Trustee",
+      "photo": "",
+      "bio": ""
+    },
+    {
+      "name": "Manas Rawat",
+      "position": "Trustee",
+      "photo": "",
+      "bio": "Example bio — replace with the real one. Longer bios like this automatically get a Read more / Show less toggle so the card grid stays tidy."
+    },
+    {
+      "name": "Mayaram Joshi",
+      "position": "Trustee",
+      "photo": "",
+      "bio": ""
+    }
+  ]
+}
