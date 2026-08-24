@@ -96,6 +96,24 @@ collections:
               - { name: "header_color_to",    label: "Card Header Colour (to)",       widget: "color", default: "#2c3e55", required: false }
               - { name: "active",             label: "Show on website?",              widget: "boolean", default: true }
 
+  # ── TRUSTEES & OFFICE BEARERS ──
+  - name: "officers"
+    label: "Trustees & Office Bearers"
+    files:
+      - name: "officers"
+        label: "Officers List"
+        file: "officers.json"
+        description: "Manage the Trustees & Office Bearers shown on the About page. Add a photo, position, and a short bio for each person — longer bios automatically get a 'Read more' toggle on the website."
+        fields:
+          - name: "officers"
+            label: "Officers"
+            widget: "list"
+            fields:
+              - { name: "name",     label: "Full Name",                                  widget: "string" }
+              - { name: "position", label: "Position (e.g. Trustee, Chairperson)",        widget: "string" }
+              - { name: "photo",    label: "Photo",                                       widget: "image", required: false }
+              - { name: "bio",      label: "Short Bio",                                   widget: "text", required: false }
+
   # ── PUBLICATIONS ──
   - name: "publications"
     label: "Publications"
