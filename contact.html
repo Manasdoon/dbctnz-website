@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us — Devbhoomi Charitable Trust NZ</title>
+<meta name="description" content="Get in touch with Devbhoomi Charitable Trust NZ. Registered charity CC61651, based at 130 Kirton Drive, Riverstone Terraces, Upper Hutt 5018.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.44.0/tabler-icons.min.css">
+<style>
+:root {
+--navy: #1a2332;
+--navy-mid:#2c3e55;
+--navy-lt: #3a6186;
+--glacial: #89a4c7;
+--ochre: #c8863a;
+--ochre-lt:#e8a95a;
+--cream: #faf8f3;
+--snow: #f4f6f9;
+--forest: #4a6741;
+--text: #2a3545;
+--muted: #6b7280;
+--border: #e2e4e9;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);line-height:1.6;}
+
+/* ── NAV (shared with site) ── */
+nav{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 1px 12px rgba(26,35,50,0.06);}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;height:72px;display:flex;align-items:center;gap:0;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;margin-right:auto;}
+.nav-logo img{width:56px;height:56px;object-fit:contain;}
+.nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--navy);line-height:1.2;font-weight:400;}
+.nav-logo-text small{display:block;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:400;}
+.nav-links{display:flex;align-items:center;gap:2px;}
+.nav-link{padding:7px 13px;font-size:13px;color:var(--muted);border-radius:6px;text-decoration:none;transition:color 0.15s,background 0.15s;}
+.nav-link:hover{color:var(--navy);background:var(--snow);}
+.nav-link.active{color:var(--navy);font-weight:500;}
+.nav-cta{margin-left:16px;display:flex;gap:8px;}
+.btn{display:inline-flex;align-items:center;gap:6px;border-radius:30px;padding:8px 18px;font-size:13px;font-weight:500;text-decoration:none;transition:all 0.2s;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
+.btn-primary{background:var(--navy);color:#fff;}
+.btn-primary:hover{background:var(--navy-mid);box-shadow:0 3px 12px rgba(26,35,50,0.2);}
+.btn-ochre{background:var(--ochre);color:#fff;}
+.btn-ochre:hover{background:var(--ochre-lt);box-shadow:0 3px 12px rgba(200,134,58,0.3);}
+.btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--navy);}
+.btn-outline:hover{background:var(--navy);color:#fff;}
+.btn-outline-ochre{background:transparent;color:#9a6a1f;border:1.5px solid var(--ochre);}
+.btn-outline-ochre:hover{background:var(--ochre);color:#fff;}
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;width:40px;height:40px;background:none;border:none;cursor:pointer;padding:4px;border-radius:8px;gap:5px;margin-left:12px;transition:background 0.15s;}
+.nav-hamburger:hover{background:var(--snow);}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:transform 0.3s ease,opacity 0.3s ease;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{position:fixed;top:0;right:0;bottom:0;width:280px;background:#fff;z-index:999;box-shadow:-4px 0 24px rgba(26,35,50,0.15);transform:translateX(100%);transition:transform 0.3s ease;display:flex;flex-direction:column;padding-top:80px;}
+.mobile-menu.open{transform:translateX(0);}
+.mobile-menu-overlay{display:none;position:fixed;inset:0;background:rgba(26,35,50,0.4);z-index:998;opacity:0;transition:opacity 0.3s;}
+.mobile-menu-overlay.open{opacity:1;display:block;}
+.mobile-nav-links{display:flex;flex-direction:column;padding:8px 0;}
+.mobile-nav-link{padding:14px 28px;font-size:14px;color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);transition:color 0.15s,background 0.15s;}
+.mobile-nav-link:hover{color:var(--navy);background:var(--snow);}
+.mobile-nav-cta{display:flex;flex-direction:column;gap:10px;padding:24px 28px;margin-top:auto;border-top:1px solid var(--border);}
+.mobile-nav-cta .btn{justify-content:center;}
+.nav-item{position:relative;display:flex;align-items:center;}
+.nav-drop-toggle{background:none;border:none;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--muted);padding:7px 13px;border-radius:6px;}
+.nav-drop-toggle:hover{color:var(--navy);background:var(--snow);}
+.nav-chev{font-size:9px;line-height:1;transition:transform 0.2s;}
+.nav-drop-toggle[aria-expanded="true"] .nav-chev{transform:rotate(180deg);}
+.nav-dropdown{position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 30px rgba(26,35,50,0.14);padding:6px;min-width:190px;display:none;flex-direction:column;z-index:120;}
+.nav-dropdown.open{display:flex;}
+.nav-drop-link{padding:9px 14px;font-size:13px;color:var(--muted);text-decoration:none;border-radius:6px;white-space:nowrap;transition:color 0.15s,background 0.15s;}
+.nav-drop-link:hover{color:var(--ochre);background:var(--snow);}
+
+/* ── PAGE HERO ── */
+.page-hero{background:var(--navy);padding:64px 40px 56px;text-align:center;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 25% 50%,rgba(58,97,134,0.3) 0%,transparent 60%),radial-gradient(ellipse at 75% 50%,rgba(200,134,58,0.15) 0%,transparent 60%);pointer-events:none;}
+.page-hero-inner{position:relative;z-index:1;max-width:640px;margin:0 auto;}
+.page-eyebrow{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ochre-lt);margin-bottom:14px;}
+.page-h1{font-family:'Cormorant Garamond',serif;font-size:42px;color:#fff;font-weight:300;line-height:1.15;margin-bottom:12px;}
+.page-sub{font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7;}
+
+/* ── CONTACT SECTION ── */
+.contact-wrap{max-width:1160px;margin:0 auto;padding:64px 40px;}
+.contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:56px;align-items:start;}
+
+.info-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:32px;margin-bottom:20px;}
+.info-eyebrow{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ochre);margin-bottom:16px;}
+.info-row{display:flex;align-items:flex-start;gap:14px;margin-bottom:18px;}
+.info-row:last-child{margin-bottom:0;}
+.info-icon{width:38px;height:38px;border-radius:10px;background:var(--snow);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.info-icon .ti{font-size:17px;color:var(--navy-lt);}
+.info-label{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.info-value{font-size:14px;color:var(--text);line-height:1.5;}
+.info-value a{color:var(--navy);text-decoration:none;font-weight:500;}
+.info-value a:hover{color:var(--ochre);text-decoration:underline;}
+
+.social-row{display:flex;gap:10px;margin-top:4px;}
+.social-btn{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:var(--snow);color:var(--navy);text-decoration:none;transition:all 0.2s;font-size:18px;}
+.social-btn:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(26,35,50,0.15);}
+.social-btn.fb:hover{background:#1877F2;color:#fff;}
+.social-btn.ig:hover{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;}
+
+.charity-badge{display:inline-flex;align-items:center;gap:8px;background:var(--snow);border:1px solid var(--border);border-radius:30px;padding:8px 16px;font-size:12px;color:var(--navy);text-decoration:none;margin-top:6px;}
+.charity-badge:hover{background:#fff;box-shadow:0 3px 12px rgba(26,35,50,0.08);}
+.charity-badge .ti{color:var(--ochre);}
+
+.map-embed{border-radius:14px;overflow:hidden;border:1px solid var(--border);margin-top:20px;}
+.map-embed iframe{display:block;width:100%;height:260px;border:0;}
+
+/* ── FORM ── */
+.form-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:36px;}
+.form-title{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--navy);font-weight:400;margin-bottom:6px;}
+.form-sub{font-size:13px;color:var(--muted);margin-bottom:28px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.form-group{margin-bottom:16px;display:flex;flex-direction:column;gap:6px;}
+.form-group label{font-size:12px;font-weight:500;color:var(--navy);}
+.form-group input,
+.form-group select,
+.form-group textarea{
+  font-family:'DM Sans',sans-serif;
+  font-size:14px;
+  padding:11px 14px;
+  border:1.5px solid var(--border);
+  border-radius:8px;
+  background:var(--cream);
+  color:var(--text);
+  transition:border-color 0.15s,background 0.15s;
+  width:100%;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+  outline:none;
+  border-color:var(--navy-lt);
+  background:#fff;
+}
+.form-group textarea{resize:vertical;min-height:120px;}
+.form-submit{width:100%;justify-content:center;padding:13px;font-size:14px;margin-top:6px;}
+.form-note{font-size:11px;color:var(--muted);margin-top:14px;text-align:center;line-height:1.6;}
+.form-success,.form-error{display:none;padding:16px 18px;border-radius:10px;font-size:13px;margin-bottom:20px;align-items:center;gap:10px;}
+.form-success{background:#eaf2e8;color:var(--forest);}
+.form-error{background:#fdecec;color:#b3261e;}
+.form-success.show,.form-error.show{display:flex;}
+
+@media(max-width:900px){
+.nav-links{display:none;}
+.nav-hamburger{display:flex;}
+.contact-grid{grid-template-columns:1fr;}
+.form-row{grid-template-columns:1fr;}
+.page-h1{font-size:32px;}
+.contact-wrap{padding:48px 20px;}
+}
+
+/* ── FOOTER (shared with site) ── */
+footer{background:#111c28;padding:48px 40px 24px;}
+.footer-grid{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px;}
+.footer-brand img{width:44px;opacity:0.8;filter:brightness(0) invert(1);margin-bottom:12px;}
+.footer-brand p{font-size:12px;color:rgba(255,255,255,0.4);line-height:1.7;margin-bottom:14px;}
+.footer-charity{display:flex;align-items:center;gap:6px;font-size:11px;}
+.footer-charity a{color:var(--ochre-lt);text-decoration:none;}
+.footer-charity a:hover{text-decoration:underline;}
+.footer-col h4{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--glacial);margin-bottom:14px;}
+.footer-link{display:block;font-size:12px;color:rgba(255,255,255,0.45);text-decoration:none;margin-bottom:7px;transition:color 0.15s;}
+.footer-link:hover{color:rgba(255,255,255,0.8);}
+.footer-bottom{max-width:1160px;margin:0 auto;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.footer-legal{font-size:11px;color:rgba(255,255,255,0.25);}
+.footer-legal-links{display:flex;gap:16px;}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+<div class="nav-inner">
+<a href="https://www.dbctnz.org.nz" class="nav-logo">
+<img src="images/uploads/main-logo.png" alt="Devbhoomi Charitable Trust NZ">
+<div class="nav-logo-text">Devbhoomi <small>Charitable Trust NZ</small></div>
+</a>
+<div class="nav-links">
+<div class="nav-item">
+<button type="button" class="nav-drop-toggle" aria-expanded="false" aria-haspopup="true">About<span class="nav-chev" aria-hidden="true">&#9662;</span></button>
+<div class="nav-dropdown" role="menu">
+<a href="https://www.dbctnz.org.nz/#about" class="nav-drop-link" role="menuitem">Who We Are</a>
+<a href="https://www.dbctnz.org.nz/our-story" class="nav-drop-link" role="menuitem">Our Story</a>
+</div>
+</div>
+<div class="nav-item">
+<button type="button" class="nav-drop-toggle" aria-expanded="false" aria-haspopup="true">Community<span class="nav-chev" aria-hidden="true">&#9662;</span></button>
+<div class="nav-dropdown" role="menu">
+<a href="https://www.dbctnz.org.nz/#events" class="nav-drop-link" role="menuitem">Events</a>
+<a href="https://www.dbctnz.org.nz/special-events" class="nav-drop-link" role="menuitem">Special Events</a>
+<a href="https://www.dbctnz.org.nz/publications" class="nav-drop-link" role="menuitem">Publications</a>
+<a href="https://www.dbctnz.org.nz/#media" class="nav-drop-link" role="menuitem">Media</a>
+</div>
+</div>
+<a href="https://www.dbctnz.org.nz/#initiatives" class="nav-link">Initiatives</a>
+<a href="/contact" class="nav-link active">Contact</a>
+</div>
+<div class="nav-cta">
+<a href="https://dbctnz.org.nz/raibar/index.html" class="btn btn-outline-ochre" style="font-size:12px; padding:7px 14px;">Raibar</a>
+<a href="https://www.dbctnz.org.nz/directory" class="btn btn-outline-ochre" style="font-size:12px; padding:7px 14px;">Directory</a>
+<a href="https://www.dbctnz.org.nz/membership" class="btn btn-ochre" style="font-size:12px; padding:7px 16px;">Join the Trust/Donate</a>
+</div>
+<button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+<span></span><span></span><span></span>
+</button>
+</div>
+</nav>
+
+<!-- ── MOBILE DRAWER ── -->
+<div class="mobile-menu-overlay" id="menu-overlay" onclick="closeMenu()"></div>
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+<nav class="mobile-nav-links">
+<a href="https://www.dbctnz.org.nz/#about" class="mobile-nav-link">About</a>
+<a href="https://www.dbctnz.org.nz/our-story" class="mobile-nav-link">Our Story</a>
+<a href="https://www.dbctnz.org.nz/#initiatives" class="mobile-nav-link">Initiatives</a>
+<a href="https://www.dbctnz.org.nz/#events" class="mobile-nav-link">Events</a>
+<a href="https://www.dbctnz.org.nz/special-events" class="mobile-nav-link">Special Events</a>
+<a href="https://www.dbctnz.org.nz/publications" class="mobile-nav-link">Publications</a>
+<a href="https://www.dbctnz.org.nz/#media" class="mobile-nav-link">Media</a>
+<a href="https://dbctnz.org.nz/raibar/index.html" class="mobile-nav-link">Raibar</a>
+<a href="https://www.dbctnz.org.nz/directory" class="mobile-nav-link">Directory</a>
+<a href="/contact" class="mobile-nav-link" style="color:var(--navy);font-weight:600;">Contact</a>
+</nav>
+<div class="mobile-nav-cta">
+<a href="https://dbctnz.org.nz/raibar/index.html" class="btn btn-ochre">Raibar</a>
+<a href="https://www.dbctnz.org.nz/directory" class="btn btn-ochre">Directory</a>
+<a href="https://www.dbctnz.org.nz/membership" class="btn btn-ochre">Join the Trust/Donate</a>
+</div>
+</div>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+<div class="page-hero-inner">
+<div class="page-eyebrow">Devbhoomi Charitable Trust NZ · CC61651</div>
+<h1 class="page-h1">Get in Touch</h1>
+<p class="page-sub">Questions about membership, events, or how to get involved? We'd love to hear from you.</p>
+</div>
+</section>
+
+<!-- ── CONTACT CONTENT ── -->
+<div class="contact-wrap">
+<div class="contact-grid">
+
+  <!-- LEFT: INFO -->
+  <div>
+    <div class="info-card">
+      <div class="info-eyebrow">Contact Details</div>
+
+      <div class="info-row">
+        <div class="info-icon"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
+        <div>
+          <div class="info-label">Physical Address</div>
+          <div class="info-value">130 Kirton Drive<br>Riverstone Terraces<br>Upper Hutt 5018<br>New Zealand</div>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon"><i class="ti ti-mail" aria-hidden="true"></i></div>
+        <div>
+          <div class="info-label">Email</div>
+          <div class="info-value"><a href="mailto:info@dbctnz.org.nz">info@dbctnz.org.nz</a></div>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon"><i class="ti ti-share" aria-hidden="true"></i></div>
+        <div>
+          <div class="info-label">Follow Us</div>
+          <div class="social-row">
+            <a href="https://www.facebook.com/DevbhoomiAssociationNZ" target="_blank" rel="noopener" class="social-btn fb" aria-label="Facebook"><i class="ti ti-brand-facebook"></i></a>
+            <a href="https://www.instagram.com/dbctnz/" target="_blank" rel="noopener" class="social-btn ig" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon"><i class="ti ti-certificate" aria-hidden="true"></i></div>
+        <div>
+          <div class="info-label">Registered Charity</div>
+          <a href="https://www.register.charities.govt.nz/Charity/CC61651" target="_blank" rel="noopener" class="charity-badge">
+            <i class="ti ti-external-link" style="font-size:13px;"></i> CC61651 — View on Charities Register
+          </a>
+        </div>
+      </div>
+
+      <div class="map-embed">
+        <iframe
+          src="https://www.google.com/maps?q=130+Kirton+Drive,+Riverstone+Terraces,+Upper+Hutt+5018,+New+Zealand&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Devbhoomi Charitable Trust NZ location map">
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: FORM -->
+  <div class="form-card">
+    <div class="form-title">Send us an enquiry</div>
+    <p class="form-sub">Fill in the form below and we'll get back to you as soon as we can.</p>
+
+    <div class="form-success" id="form-success"><i class="ti ti-circle-check" aria-hidden="true"></i> Thanks — your message has been sent. We'll be in touch soon.</div>
+    <div class="form-error" id="form-error"><i class="ti ti-alert-circle" aria-hidden="true"></i> Something went wrong. Please try again or email us directly at info@dbctnz.org.nz.</div>
+
+    <form id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="contact">
+      <p style="display:none;">
+        <label>Don't fill this out if you're human: <input name="bot-field"></label>
+      </p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cf-name">Full Name *</label>
+          <input type="text" id="cf-name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="cf-email">Email *</label>
+          <input type="email" id="cf-email" name="email" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cf-phone">Phone (optional)</label>
+          <input type="tel" id="cf-phone" name="phone">
+        </div>
+        <div class="form-group">
+          <label for="cf-subject">Subject</label>
+          <select id="cf-subject" name="subject">
+            <option>General Enquiry</option>
+            <option>Membership</option>
+            <option>Donations</option>
+            <option>Media / Press</option>
+            <option>Volunteering</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="cf-message">Message *</label>
+        <textarea id="cf-message" name="message" required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-ochre form-submit"><i class="ti ti-send" aria-hidden="true"></i> Send Message</button>
+      <p class="form-note">We aim to respond within 2–3 business days.</p>
+    </form>
+  </div>
+
+</div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+<div class="footer-grid">
+<div class="footer-brand">
+<img src="images/uploads/main-logo.png" alt="Devbhoomi Charitable Trust NZ">
+<p>Connecting New Zealand's Indian diaspora with the land and people of Dev Bhoomi — through welfare, culture, and community.</p>
+<div class="footer-charity"><i class="ti ti-certificate" style="color:var(--ochre-lt);"></i> <a href="https://www.register.charities.govt.nz/Charity/CC61651" target="_blank">Registered Charity CC61651</a></div>
+<p style="margin-top:14px;">130 Kirton Drive, Riverstone Terraces, Upper Hutt 5018, New Zealand</p>
+</div>
+<div class="footer-col">
+<h4>About</h4>
+<a href="https://www.dbctnz.org.nz/#about" class="footer-link">Our Organisation</a>
+<a href="https://www.dbctnz.org.nz/our-story" class="footer-link">Our Story</a>
+<a href="https://www.register.charities.govt.nz/Charity/CC61651" target="_blank" class="footer-link">Charity Register ↗</a>
+</div>
+<div class="footer-col">
+<h4>Get Involved</h4>
+<a href="https://www.dbctnz.org.nz/membership" class="footer-link">Join the Trust</a>
+<a href="https://www.dbctnz.org.nz/#donate" class="footer-link">Donate</a>
+<a href="https://www.dbctnz.org.nz/#events" class="footer-link">Events</a>
+<a href="https://www.dbctnz.org.nz/#initiatives" class="footer-link">Initiatives</a>
+</div>
+<div class="footer-col">
+<h4>Connect</h4>
+<a href="https://www.facebook.com/DevbhoomiAssociationNZ" target="_blank" class="footer-link">Facebook ↗</a>
+<a href="https://www.instagram.com/dbctnz/" target="_blank" class="footer-link">Instagram ↗</a>
+<a href="mailto:info@dbctnz.org.nz" class="footer-link">info@dbctnz.org.nz</a>
+<a href="/contact" class="footer-link">Contact Us</a>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="footer-legal">© 2026 Devbhoomi Charitable Trust NZ. All rights reserved.</div>
+<div class="footer-legal-links">
+<a href="#" class="footer-link">Privacy Policy</a>
+<a href="#" class="footer-link">Terms of Use</a>
+</div>
+</div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  // ── HAMBURGER MENU ──
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobile-menu');
+  var menuOverlay = document.getElementById('menu-overlay');
+  function openMenu() {
+    hamburger.classList.add('open');
+    mobileMenu.classList.add('open');
+    menuOverlay.classList.add('open');
+    hamburger.setAttribute('aria-expanded','true');
+    mobileMenu.setAttribute('aria-hidden','false');
+  }
+  window.closeMenu = function closeMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    menuOverlay.classList.remove('open');
+    hamburger.setAttribute('aria-expanded','false');
+    mobileMenu.setAttribute('aria-hidden','true');
+  };
+  hamburger.addEventListener('click', function() {
+    if (mobileMenu.classList.contains('open')) { closeMenu(); } else { openMenu(); }
+  });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMenu(); });
+
+  // ── NAV DROPDOWNS ──
+  function closeAllDropdowns(){
+    document.querySelectorAll('.nav-dropdown.open').forEach(function(m){ m.classList.remove('open'); });
+    document.querySelectorAll('.nav-drop-toggle[aria-expanded="true"]').forEach(function(t){ t.setAttribute('aria-expanded','false'); });
+  }
+  document.querySelectorAll('.nav-drop-toggle').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      var isOpen = menu.classList.contains('open');
+      closeAllDropdowns();
+      if(!isOpen){ menu.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+    });
+  });
+  document.addEventListener('click', closeAllDropdowns);
+
+  // ── NETLIFY FORM AJAX SUBMIT (stay on page, show success message) ──
+  var form = document.getElementById('contact-form');
+  var successEl = document.getElementById('form-success');
+  var errorEl = document.getElementById('form-error');
+
+  function encode(data) {
+    return Object.keys(data).map(function(key) {
+      return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+    }).join('&');
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    errorEl.classList.remove('show');
+
+    var formData = {
+      'form-name': form.getAttribute('name'),
+      'name': document.getElementById('cf-name').value,
+      'email': document.getElementById('cf-email').value,
+      'phone': document.getElementById('cf-phone').value,
+      'subject': document.getElementById('cf-subject').value,
+      'message': document.getElementById('cf-message').value,
+      'bot-field': form.querySelector('[name="bot-field"]').value
+    };
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encode(formData)
+    })
+    .then(function() {
+      form.style.display = 'none';
+      successEl.classList.add('show');
+    })
+    .catch(function() {
+      errorEl.classList.add('show');
+    });
+  });
+
+});
+</script>
+
+</body>
+</html>
