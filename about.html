@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — Devbhoomi Charitable Trust NZ</title>
+<meta name="description" content="Learn about Devbhoomi Charitable Trust NZ — a registered charity (CC61651) serving the Indian diaspora in Aotearoa for over a decade. Meet our trustees and office bearers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.44.0/tabler-icons.min.css">
+<style>
+:root {
+--navy: #1a2332;
+--navy-mid:#2c3e55;
+--navy-lt: #3a6186;
+--glacial: #89a4c7;
+--ochre: #c8863a;
+--ochre-lt:#e8a95a;
+--cream: #faf8f3;
+--snow: #f4f6f9;
+--forest: #4a6741;
+--text: #2a3545;
+--muted: #6b7280;
+--border: #e2e4e9;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);line-height:1.6;}
+
+/* ── NAV (shared with site) ── */
+nav{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 1px 12px rgba(26,35,50,0.06);}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;height:72px;display:flex;align-items:center;gap:0;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;margin-right:auto;}
+.nav-logo img{width:56px;height:56px;object-fit:contain;}
+.nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--navy);line-height:1.2;font-weight:400;}
+.nav-logo-text small{display:block;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:400;}
+.nav-links{display:flex;align-items:center;gap:2px;}
+.nav-link{padding:7px 13px;font-size:13px;color:var(--muted);border-radius:6px;text-decoration:none;transition:color 0.15s,background 0.15s;}
+.nav-link:hover{color:var(--navy);background:var(--snow);}
+.nav-link.active{color:var(--navy);font-weight:500;}
+.nav-cta{margin-left:16px;display:flex;gap:8px;}
+.btn{display:inline-flex;align-items:center;gap:6px;border-radius:30px;padding:8px 18px;font-size:13px;font-weight:500;text-decoration:none;transition:all 0.2s;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
+.btn-primary{background:var(--navy);color:#fff;}
+.btn-primary:hover{background:var(--navy-mid);box-shadow:0 3px 12px rgba(26,35,50,0.2);}
+.btn-ochre{background:var(--ochre);color:#fff;}
+.btn-ochre:hover{background:var(--ochre-lt);box-shadow:0 3px 12px rgba(200,134,58,0.3);}
+.btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--navy);}
+.btn-outline:hover{background:var(--navy);color:#fff;}
+.btn-outline-ochre{background:transparent;color:#9a6a1f;border:1.5px solid var(--ochre);}
+.btn-outline-ochre:hover{background:var(--ochre);color:#fff;}
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;width:40px;height:40px;background:none;border:none;cursor:pointer;padding:4px;border-radius:8px;gap:5px;margin-left:12px;transition:background 0.15s;}
+.nav-hamburger:hover{background:var(--snow);}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:transform 0.3s ease,opacity 0.3s ease;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{position:fixed;top:0;right:0;bottom:0;width:280px;background:#fff;z-index:999;box-shadow:-4px 0 24px rgba(26,35,50,0.15);transform:translateX(100%);transition:transform 0.3s ease;display:flex;flex-direction:column;padding-top:80px;}
+.mobile-menu.open{transform:translateX(0);}
+.mobile-menu-overlay{display:none;position:fixed;inset:0;background:rgba(26,35,50,0.4);z-index:998;opacity:0;transition:opacity 0.3s;}
+.mobile-menu-overlay.open{opacity:1;display:block;}
+.mobile-nav-links{display:flex;flex-direction:column;padding:8px 0;}
+.mobile-nav-link{padding:14px 28px;font-size:14px;color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);transition:color 0.15s,background 0.15s;}
+.mobile-nav-link:hover{color:var(--navy);background:var(--snow);}
+.mobile-nav-cta{display:flex;flex-direction:column;gap:10px;padding:24px 28px;margin-top:auto;border-top:1px solid var(--border);}
+.mobile-nav-cta .btn{justify-content:center;}
+.nav-item{position:relative;display:flex;align-items:center;}
+.nav-drop-toggle{background:none;border:none;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--muted);padding:7px 13px;border-radius:6px;}
+.nav-drop-toggle:hover{color:var(--navy);background:var(--snow);}
+.nav-drop-toggle.active{color:var(--navy);font-weight:500;}
+.nav-chev{font-size:9px;line-height:1;transition:transform 0.2s;}
+.nav-drop-toggle[aria-expanded="true"] .nav-chev{transform:rotate(180deg);}
+.nav-dropdown{position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 30px rgba(26,35,50,0.14);padding:6px;min-width:190px;display:none;flex-direction:column;z-index:120;}
+.nav-dropdown.open{display:flex;}
+.nav-drop-link{padding:9px 14px;font-size:13px;color:var(--muted);text-decoration:none;border-radius:6px;white-space:nowrap;transition:color 0.15s,background 0.15s;}
+.nav-drop-link:hover{color:var(--ochre);background:var(--snow);}
+
+/* ── PAGE HERO ── */
+.page-hero{background:var(--navy);padding:64px 40px 56px;text-align:center;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 25% 50%,rgba(58,97,134,0.3) 0%,transparent 60%),radial-gradient(ellipse at 75% 50%,rgba(200,134,58,0.15) 0%,transparent 60%);pointer-events:none;}
+.page-hero-inner{position:relative;z-index:1;max-width:680px;margin:0 auto;}
+.page-eyebrow{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ochre-lt);margin-bottom:14px;}
+.page-h1{font-family:'Cormorant Garamond',serif;font-size:42px;color:#fff;font-weight:300;line-height:1.15;margin-bottom:12px;}
+.page-sub{font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7;}
+
+/* ── SECTIONS ── */
+.section{padding:64px 0;}
+.section.bg-snow{background:var(--snow);}
+.container{max-width:1160px;margin:0 auto;padding:0 40px;}
+.section-eyebrow{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ochre);margin-bottom:10px;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:34px;color:var(--navy);font-weight:400;line-height:1.15;margin-bottom:10px;}
+.section-sub{font-size:14px;color:var(--muted);max-width:560px;line-height:1.7;}
+.section-header{margin-bottom:40px;}
+.section-header.centered{text-align:center;}
+.section-header.centered .section-sub{margin:0 auto;}
+
+/* ── WHO WE ARE ── */
+.about-body{font-size:14px;color:var(--text);line-height:1.85;margin-bottom:20px;max-width:760px;}
+.milestone-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
+.ms-badge{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:30px;padding:5px 12px;font-size:11px;color:var(--navy);}
+.ms-badge .ti{font-size:12px;color:var(--ochre);}
+
+/* ── PURPOSE LIST ── */
+.purpose-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:24px;}
+.purpose-item{display:flex;align-items:flex-start;gap:12px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+.purpose-item .ti{font-size:16px;color:var(--ochre);margin-top:2px;flex-shrink:0;}
+.purpose-item span{font-size:13px;color:var(--text);line-height:1.5;}
+
+/* ── OFFICERS ── */
+.officers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.officer-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:28px 22px;text-align:center;transition:box-shadow 0.2s,transform 0.2s;}
+.officer-card:hover{box-shadow:0 8px 26px rgba(26,35,50,0.1);transform:translateY(-3px);}
+.officer-photo{width:84px;height:84px;border-radius:50%;background:var(--snow);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;overflow:hidden;}
+.officer-photo img{width:100%;height:100%;object-fit:cover;}
+.officer-photo .ti{font-size:34px;color:var(--glacial);}
+.officer-name{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--navy);margin-bottom:4px;}
+.officer-position{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ochre);margin-bottom:10px;}
+.officer-bio{font-size:12px;color:var(--muted);line-height:1.6;text-align:left;}
+.officer-bio.clamped{
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.officer-bio-toggle{
+  display:inline-block;
+  margin-top:6px;
+  font-size:11px;
+  font-weight:600;
+  color:var(--ochre);
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:0;
+  font-family:'DM Sans',sans-serif;
+}
+.officer-bio-toggle:hover{color:var(--navy);text-decoration:underline;}
+.officers-note{text-align:center;font-size:12px;color:var(--muted);margin-top:24px;}
+
+/* ── CTA STRIP ── */
+.cta-strip{background:var(--navy);padding:56px 40px;text-align:center;}
+.cta-strip h3{font-family:'Cormorant Garamond',serif;font-size:28px;color:#fff;font-weight:300;margin-bottom:20px;}
+.cta-strip-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+
+@media(max-width:900px){
+.nav-links{display:none;}
+.nav-hamburger{display:flex;}
+.purpose-grid{grid-template-columns:1fr;}
+.officers-grid{grid-template-columns:1fr;}
+.page-h1{font-size:32px;}
+}
+
+/* ── FOOTER (shared with site) ── */
+footer{background:#111c28;padding:48px 40px 24px;}
+.footer-grid{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px;}
+.footer-brand img{width:44px;opacity:0.8;filter:brightness(0) invert(1);margin-bottom:12px;}
+.footer-brand p{font-size:12px;color:rgba(255,255,255,0.4);line-height:1.7;margin-bottom:14px;}
+.footer-charity{display:flex;align-items:center;gap:6px;font-size:11px;}
+.footer-charity a{color:var(--ochre-lt);text-decoration:none;}
+.footer-charity a:hover{text-decoration:underline;}
+.footer-col h4{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--glacial);margin-bottom:14px;}
+.footer-link{display:block;font-size:12px;color:rgba(255,255,255,0.45);text-decoration:none;margin-bottom:7px;transition:color 0.15s;}
+.footer-link:hover{color:rgba(255,255,255,0.8);}
+.footer-bottom{max-width:1160px;margin:0 auto;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.footer-legal{font-size:11px;color:rgba(255,255,255,0.25);}
+.footer-legal-links{display:flex;gap:16px;}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+<div class="nav-inner">
+<a href="https://www.dbctnz.org.nz" class="nav-logo">
+<img src="images/uploads/main-logo.png" alt="Devbhoomi Charitable Trust NZ">
+<div class="nav-logo-text">Devbhoomi <small>Charitable Trust NZ</small></div>
+</a>
+<div class="nav-links">
+<div class="nav-item">
+<button type="button" class="nav-drop-toggle active" aria-expanded="false" aria-haspopup="true">About<span class="nav-chev" aria-hidden="true">&#9662;</span></button>
+<div class="nav-dropdown" role="menu">
+<a href="/about" class="nav-drop-link" role="menuitem">Who We Are</a>
+<a href="https://www.dbctnz.org.nz/our-story" class="nav-drop-link" role="menuitem">Our Story</a>
+<a href="/mission" class="nav-drop-link" role="menuitem">Our Mission</a>
+</div>
+</div>
+<div class="nav-item">
+<button type="button" class="nav-drop-toggle" aria-expanded="false" aria-haspopup="true">Community<span class="nav-chev" aria-hidden="true">&#9662;</span></button>
+<div class="nav-dropdown" role="menu">
+<a href="https://www.dbctnz.org.nz/#events" class="nav-drop-link" role="menuitem">Events</a>
+<a href="https://www.dbctnz.org.nz/special-events" class="nav-drop-link" role="menuitem">Special Events</a>
+<a href="https://www.dbctnz.org.nz/publications" class="nav-drop-link" role="menuitem">Publications</a>
+<a href="https://www.dbctnz.org.nz/#media" class="nav-drop-link" role="menuitem">Media</a>
+</div>
+</div>
+<a href="https://www.dbctnz.org.nz/#initiatives" class="nav-link">Initiatives</a>
+<a href="/contact" class="nav-link">Contact</a>
+</div>
+<div class="nav-cta">
+<a href="https://dbctnz.org.nz/raibar/index.html" class="btn btn-outline-ochre" style="font-size:12px; padding:7px 14px;">Raibar</a>
+<a href="https://www.dbctnz.org.nz/directory" class="btn btn-outline-ochre" style="font-size:12px; padding:7px 14px;">Directory</a>
+<a href="https://www.dbctnz.org.nz/membership" class="btn btn-ochre" style="font-size:12px; padding:7px 16px;">Join the Trust/Donate</a>
+</div>
+<button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+<span></span><span></span><span></span>
+</button>
+</div>
+</nav>
+
+<!-- ── MOBILE DRAWER ── -->
+<div class="mobile-menu-overlay" id="menu-overlay" onclick="closeMenu()"></div>
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+<nav class="mobile-nav-links">
+<a href="/about" class="mobile-nav-link" style="color:var(--navy);font-weight:600;">About</a>
+<a href="https://www.dbctnz.org.nz/our-story" class="mobile-nav-link">Our Story</a>
+<a href="/mission" class="mobile-nav-link">Our Mission</a>
+<a href="https://www.dbctnz.org.nz/#initiatives" class="mobile-nav-link">Initiatives</a>
+<a href="https://www.dbctnz.org.nz/#events" class="mobile-nav-link">Events</a>
+<a href="https://www.dbctnz.org.nz/special-events" class="mobile-nav-link">Special Events</a>
+<a href="https://www.dbctnz.org.nz/publications" class="mobile-nav-link">Publications</a>
+<a href="https://www.dbctnz.org.nz/#media" class="mobile-nav-link">Media</a>
+<a href="https://dbctnz.org.nz/raibar/index.html" class="mobile-nav-link">Raibar</a>
+<a href="https://www.dbctnz.org.nz/directory" class="mobile-nav-link">Directory</a>
+<a href="/contact" class="mobile-nav-link">Contact</a>
+</nav>
+<div class="mobile-nav-cta">
+<a href="https://dbctnz.org.nz/raibar/index.html" class="btn btn-ochre">Raibar</a>
+<a href="https://www.dbctnz.org.nz/directory" class="btn btn-ochre">Directory</a>
+<a href="https://www.dbctnz.org.nz/membership" class="btn btn-ochre">Join the Trust/Donate</a>
+</div>
+</div>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+<div class="page-hero-inner">
+<div class="page-eyebrow">Devbhoomi Charitable Trust NZ · CC61651</div>
+<h1 class="page-h1">About Us</h1>
+<p class="page-sub">One of New Zealand's most established Indian community organisations — over a decade of service through cultural celebration, community welfare, and meaningful connection.</p>
+</div>
+</section>
+
+<!-- ── WHO WE ARE ── -->
+<section class="section">
+<div class="container">
+<div class="section-header">
+<div class="section-eyebrow">Who We Are</div>
+<h2 class="section-title">Serving the Indian Diaspora in Aotearoa</h2>
+</div>
+<p class="about-body">Devbhoomi Charitable Trust NZ is one of New Zealand's most established Indian community organisations — over a decade of service through cultural celebration, community welfare, and meaningful connection. From being the first in New Zealand to celebrate Uttarakhand State Foundation Day, to delivering government programmes for the Ministry of Education, the Trust has earned recognition at the highest levels of civic and political life in Aotearoa.</p>
+<p class="about-body">The Trust is a registered charitable trust incorporated under the Charitable Trusts Act, operating nationwide across New Zealand. Our work spans religious and cultural activities, community development, and support services for the general public — with a particular focus on the wellbeing of the Indian and Uttarakhand diaspora communities.</p>
+<div class="milestone-row">
+<span class="ms-badge"><i class="ti ti-star" aria-hidden="true"></i> First in NZ — Uttarakhand Foundation Day</span>
+<span class="ms-badge"><i class="ti ti-building" aria-hidden="true"></i> Ministry of Education Partner</span>
+<span class="ms-badge"><i class="ti ti-certificate" aria-hidden="true"></i> Registered Charity CC61651</span>
+<span class="ms-badge"><i class="ti ti-users" aria-hidden="true"></i> Trusted across all political parties</span>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+<a href="https://www.dbctnz.org.nz/our-story" class="btn btn-primary">Read Our Full Story</a>
+<a href="/mission" class="btn btn-outline">Our Mission</a>
+<a href="https://www.register.charities.govt.nz/Charity/CC61651" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:12px;">Charity Register ↗</a>
+</div>
+</div>
+</section>
+
+<!-- ── WHAT WE DO / PURPOSE ── -->
+<section class="section bg-snow">
+<div class="container">
+<div class="section-header">
+<div class="section-eyebrow">Our Purpose</div>
+<h2 class="section-title">What We're Registered To Do</h2>
+<p class="section-sub">As set out in our charitable purposes on the NZ Charities Register.</p>
+</div>
+<div class="purpose-grid">
+<div class="purpose-item"><i class="ti ti-om" aria-hidden="true"></i><span>Conduct events to increase understanding of Hindu philosophy</span></div>
+<div class="purpose-item"><i class="ti ti-heart-handshake" aria-hidden="true"></i><span>Volunteering with the local community</span></div>
+<div class="purpose-item"><i class="ti ti-stethoscope" aria-hidden="true"></i><span>Promoting public health via education and counselling</span></div>
+<div class="purpose-item"><i class="ti ti-coin" aria-hidden="true"></i><span>Promoting financial and digital literacy</span></div>
+<div class="purpose-item"><i class="ti ti-flag" aria-hidden="true"></i><span>Celebrating Hindu festivals and promoting inter-community harmony</span></div>
+<div class="purpose-item"><i class="ti ti-leaf" aria-hidden="true"></i><span>Promoting sustainable living and efficient waste management</span></div>
+<div class="purpose-item"><i class="ti ti-school" aria-hidden="true"></i><span>Sponsorship and assistance for academic achievement</span></div>
+<div class="purpose-item"><i class="ti ti-hand-heart" aria-hidden="true"></i><span>Supporting the needy — disaster relief, refugees, and migrants</span></div>
+</div>
+</div>
+</section>
+
+<!-- ── TRUSTEES & OFFICE BEARERS ── -->
+<section class="section">
+<div class="container">
+<div class="section-header centered">
+<div class="section-eyebrow">Our People</div>
+<h2 class="section-title">Trustees &amp; Office Bearers</h2>
+<p class="section-sub">The volunteers who lead Devbhoomi Charitable Trust NZ, as registered with the NZ Charities Register.</p>
+</div>
+<div class="officers-grid" id="officers-grid">
+  <!-- Populated by JS from officers.json -->
+</div>
+<p class="officers-note">Full officer profiles and photos coming soon.</p>
+</div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-strip">
+<h3>Want to know more about our work?</h3>
+<div class="cta-strip-btns">
+<a href="https://www.dbctnz.org.nz/our-story" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:#fff;">Read Our Story</a>
+<a href="/mission" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:#fff;">Our Mission</a>
+<a href="/contact" class="btn btn-ochre">Get In Touch</a>
+</div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+<div class="footer-grid">
+<div class="footer-brand">
+<img src="images/uploads/main-logo.png" alt="Devbhoomi Charitable Trust NZ">
+<p>Connecting New Zealand's Indian diaspora with the land and people of Dev Bhoomi — through welfare, culture, and community.</p>
+<div class="footer-charity"><i class="ti ti-certificate" style="color:var(--ochre-lt);"></i> <a href="https://www.register.charities.govt.nz/Charity/CC61651" target="_blank">Registered Charity CC61651</a></div>
+<p style="margin-top:14px;">130 Kirton Drive, Riverstone Terraces, Upper Hutt 5018, New Zealand</p>
+</div>
+<div class="footer-col">
+<h4>About</h4>
+<a href="/about" class="footer-link">Our Organisation</a>
+<a href="https://www.dbctnz.org.nz/our-story" class="footer-link">Our Story</a>
+<a href="/mission" class="footer-link">Our Mission</a>
+<a href="https://www.register.charities.govt.nz/Charity/CC61651" target="_blank" class="footer-link">Charity Register ↗</a>
+</div>
+<div class="footer-col">
+<h4>Get Involved</h4>
+<a href="https://www.dbctnz.org.nz/membership" class="footer-link">Join the Trust</a>
+<a href="https://www.dbctnz.org.nz/#donate" class="footer-link">Donate</a>
+<a href="https://www.dbctnz.org.nz/#events" class="footer-link">Events</a>
+<a href="https://www.dbctnz.org.nz/#initiatives" class="footer-link">Initiatives</a>
+</div>
+<div class="footer-col">
+<h4>Connect</h4>
+<a href="https://www.facebook.com/DevbhoomiAssociationNZ" target="_blank" class="footer-link">Facebook ↗</a>
+<a href="https://www.instagram.com/dbctnz/" target="_blank" class="footer-link">Instagram ↗</a>
+<a href="mailto:info@dbctnz.org.nz" class="footer-link">info@dbctnz.org.nz</a>
+<a href="/contact" class="footer-link">Contact Us</a>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="footer-legal">© 2026 Devbhoomi Charitable Trust NZ. All rights reserved.</div>
+<div class="footer-legal-links">
+<a href="#" class="footer-link">Privacy Policy</a>
+<a href="#" class="footer-link">Terms of Use</a>
+</div>
+</div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+  // ── HAMBURGER MENU ──
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobile-menu');
+  var menuOverlay = document.getElementById('menu-overlay');
+  function openMenu() {
+    hamburger.classList.add('open');
+    mobileMenu.classList.add('open');
+    menuOverlay.classList.add('open');
+    hamburger.setAttribute('aria-expanded','true');
+    mobileMenu.setAttribute('aria-hidden','false');
+  }
+  window.closeMenu = function closeMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    menuOverlay.classList.remove('open');
+    hamburger.setAttribute('aria-expanded','false');
+    mobileMenu.setAttribute('aria-hidden','true');
+  };
+  hamburger.addEventListener('click', function() {
+    if (mobileMenu.classList.contains('open')) { closeMenu(); } else { openMenu(); }
+  });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeMenu(); });
+
+  // ── NAV DROPDOWNS ──
+  function closeAllDropdowns(){
+    document.querySelectorAll('.nav-dropdown.open').forEach(function(m){ m.classList.remove('open'); });
+    document.querySelectorAll('.nav-drop-toggle[aria-expanded="true"]').forEach(function(t){ t.setAttribute('aria-expanded','false'); });
+  }
+  document.querySelectorAll('.nav-drop-toggle').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var menu = btn.nextElementSibling;
+      var isOpen = menu.classList.contains('open');
+      closeAllDropdowns();
+      if(!isOpen){ menu.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+    });
+  });
+  document.addEventListener('click', closeAllDropdowns);
+
+  // ── OFFICERS FROM JSON ──
+  // To add names, photos, or bios later: just edit /officers.json — no HTML changes needed.
+  // photo: path to an image in /images/uploads/, or leave "" for a placeholder icon.
+  var grid = document.getElementById('officers-grid');
+
+  // Bios longer than this get clamped to 2 lines with a Read more toggle.
+  var BIO_CLAMP_THRESHOLD = 90;
+
+  function renderOfficers(data) {
+    var officers = (data && data.officers) || [];
+    if (officers.length === 0) {
+      grid.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:13px;grid-column:1/-1;">Officer details coming soon.</p>';
+      return;
+    }
+    grid.innerHTML = officers.map(function(o, i) {
+      var photoHtml = o.photo
+        ? '<img src="' + o.photo + '" alt="' + o.name + '">'
+        : '<i class="ti ti-user" aria-hidden="true"></i>';
+      var bioHtml = '';
+      if (o.bio) {
+        var needsClamp = o.bio.length > BIO_CLAMP_THRESHOLD;
+        bioHtml = '<p class="officer-bio' + (needsClamp ? ' clamped' : '') + '" id="bio-' + i + '">' + o.bio + '</p>' +
+          (needsClamp ? '<button type="button" class="officer-bio-toggle" data-bio-id="bio-' + i + '">Read more</button>' : '');
+      }
+      return '<div class="officer-card">' +
+        '<div class="officer-photo">' + photoHtml + '</div>' +
+        '<div class="officer-name">' + o.name + '</div>' +
+        '<div class="officer-position">' + o.position + '</div>' +
+        bioHtml +
+        '</div>';
+    }).join('');
+
+    // Wire up Read more / Show less toggles
+    grid.querySelectorAll('.officer-bio-toggle').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var bioEl = document.getElementById(btn.getAttribute('data-bio-id'));
+        var isClamped = bioEl.classList.toggle('clamped');
+        btn.textContent = isClamped ? 'Read more' : 'Show less';
+      });
+    });
+  }
+
+  fetch('/officers.json')
+    .then(function(r) { return r.json(); })
+    .then(renderOfficers)
+    .catch(function() {
+      grid.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:13px;grid-column:1/-1;">Officer details coming soon.</p>';
+    });
+
+});
+</script>
+
+</body>
+</html>
