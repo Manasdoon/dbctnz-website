@@ -1,3 +1,19 @@
 {
-  "events": []
+  "events": [
+    {
+      "topic_tbc": false,
+      "city": "Wellington",
+      "name": "Diwali in the Hutt",
+      "time": "11:30am - 4:00 pm ",
+      "cost": "No cost, a free event. ",
+      "date": "2026-10-31",
+      "date_display": "Saturday 31st October",
+      "note": "Enquire with us for stalls, performances and volunteering. ",
+      "location": "Chilton School, Lower Hutt ",
+      "series": "Diwali",
+      "registration": false,
+      "id": "Diwali in the Hutt",
+      "description": "This event brings together the best of Diwali celebrations for everyone to enjoy, whether you're marking the occasion with your family or experiencing it for the first time.\n\nCultural Performances — Enjoy a vibrant program of traditional and contemporary dance and music\nFood Stalls — Sample a delicious range of festive food from local vendors\nRetail Stalls — Browse unique products, clothing, and gifts\nKids' Activities — A dedicated zone to keep the little ones entertained all day\nFace Painting — Fun designs for children of all ages\nHenna Corners — Get beautifully hand-painted henna designs\nSpot Prizes & Raffles — Stick around for chances to win great prizes throughout the day\nA celebration for everyone\n\nDiwali symbolises the victory of light over darkness and good over evil. This event is a chance for our whole community — regardless of background — to come together, share in the festivities, and celebrate the rich traditions of Diwali.\n\nBring your family and friends and be part of the light this Labour Weekend!"
+    }
+  ]
 }
