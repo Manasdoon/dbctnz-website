@@ -316,17 +316,21 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encode(formData)
-    })
-    .then(function() {
-      form.style.display = 'none';
-      successEl.classList.add('show');
-    })
-    .catch(function() {
-      errorEl.classList.add('show');
-    });
+  method: 'POST',
+  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+  body: encode(formData)
+})
+.then(function(response) {
+  if (response.ok) {
+    form.style.display = 'none';
+    successEl.classList.add('show');
+  } else {
+    errorEl.classList.add('show');
+  }
+})
+.catch(function() {
+  errorEl.classList.add('show');
+});
   });
 
 });
