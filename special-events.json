@@ -15,40 +15,6 @@
       "id": "Harela",
       "flyer_image": "/images/uploads/photo-2026-07-17-16-47-44-1-.jpg",
       "category": "Cultural event"
-    },
-    {
-      "active": true,
-      "header_color_to": "#2c3e55",
-      "link_url": " https://forms.gle/e3hU8Fyp19PtQBp17",
-      "name": "Matariki and Hindu Traditions",
-      "time": "7:00 - 8:00 pm NZT",
-      "tagline": "✨ Matariki & Hindu Traditions Webinar ✨ Join us for an exploration of the connections between Matariki and Hindu traditions, as we reflect on the significance of celestial beings and their influence on collective culture. Are there parallels between the Nine Stars of Matariki and the Saptrishi (Ursa Major) constilation of the Hindu tradition? What can these ancient wisdom traditions teach us about community, remembrance, renewal, and our relationship with the cosmos? Come together in the spirit of learning, celebration, and cultural understanding as we explore these shared themes and perspectives.",
-      "date": "2026-07-26",
-      "link_label": "Register Here",
-      "date_display": "26th July 2026",
-      "location": "Google Meet Webinar, register:   https://forms.gle/e3hU8Fyp19PtQBp17",
-      "subtitle": "GOPIO and Devbhoomi Charitable Trust presents",
-      "header_color_from": "#1a2332",
-      "id": "Matariki 2026",
-      "flyer_image": "/images/uploads/gemini_generated_image_jim39qjim39qjim3.png",
-      "category": "Webinar"
-    },
-    {
-      "active": true,
-      "header_color_to": "#2c3e55",
-      "link_url": "https://docs.google.com/forms/d/e/1FAIpQLScPdoXKPU1hySOQ-hPV56Qt-kQHTr6y1cVCifSXzSQRKkyzSw/viewform",
-      "name": "SKILLS  WORKSHOP",
-      "time": "9:00 am - 12:30 pm",
-      "tagline": " This is a two-morning programme with sessions specifically tailored to support parents of children with diverse learning needs.. Learn strategies to support children with special needs and learning differences. Connect with experts and other parents.  Please note: Transport can be provided, translators provided, morning tea provided. Parents will receive a Certificate of Completion and a $25 Gift voucher from Sensory Sam on day 2",
-      "date": "2026-07-28",
-      "link_label": "Register Here",
-      "date_display": "28th July and 4th August",
-      "location": "Belmont School - 709 Western Hutt Road, Belmont, Lower Hutt ",
-      "subtitle": "A.I.S.H.A. CHARITABLE TRUST LTD Empowering Every Learner Embracing Every Difference",
-      "header_color_from": "#1a2332",
-      "id": "SKILLS  WORKSHOP ",
-      "flyer_image": "/images/uploads/moe.jpg",
-      "category": "Workshop"
     }
   ]
 }
