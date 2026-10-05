@@ -3,17 +3,17 @@
     {
       "active": true,
       "header_color_to": "#2c3e55",
-      "link_url": "https://forms.gle/CqK1eVuKPj5kMMqs7",
-      "name": "DBCTNZ - Hanuman Ansh ",
-      "time": "7 pm onwards",
-      "tagline": "Please join for premier of much awaited Hanuman Ansh. Exclusive premier on 16th at 7pm. ",
-      "date": "2026-09-16",
-      "link_label": "Register here",
-      "date_display": "Wednesday the 16th September",
-      "location": "68 Queen Street, Upper Hutt Central, Upper Hutt 5018",
+      "link_url": "https://www.facebook.com/DevbhoomiAssociationNZ",
+      "name": "Diwali in the hutt",
+      "time": "11:30 am onwards",
+      "tagline": "please become part of our free community event to celebrate Dilwai at Chilton St James school by Devbhoomi Charitable Trust. Supported by local business, enjoy delicious snacks, networking, kids zone, giveaway's, cultural performances and many more. ",
+      "date": "2026-10-31",
+      "link_label": "Our FB page for updates",
+      "date_display": "Saturday the 31st October from 11:30-4pm ",
+      "location": "124 Waterloo Road, Hutt Central,",
       "header_color_from": "#1a2332",
-      "id": "Hanuman Ansh",
-      "flyer_image": "/images/uploads/hanuman-ansh.png",
+      "id": "Diwali in the Hutt",
+      "flyer_image": "/images/uploads/diwali-in-the-hutt.png",
       "category": "Cultural event"
     }
   ]
